@@ -5,6 +5,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectToMongo from "./db";
+import otpRoutes from "./routes/token";
+import authRoutes from "./routes/auth";
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -27,6 +29,9 @@ import "./models/Token";
 import "./models/User";
 import "./models/Category";
 import "./models/Expense";
+
+app.use("/api/otp", otpRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(port, ()=> {
     console.log(`Server started successfully at port ${port}.`);
