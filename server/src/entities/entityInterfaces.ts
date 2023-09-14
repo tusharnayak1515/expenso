@@ -28,6 +28,7 @@ export interface IExpense {
     amount: number;
     category: Types.ObjectId | string;
     expenseType: string;
+    comment: string;
     expenseDate: Date;
     createdAt?: number;
     updatedAt?: number;

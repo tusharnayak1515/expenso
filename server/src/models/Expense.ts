@@ -18,6 +18,10 @@ const ExpenseSchema = new Schema<IExpenseDocument, IExpenseModel>({
         type: String,
         required: true
     },
+    comment: {
+        type: String,
+        required: true
+    },
     expenseDate: {
         type: Date,
         required: true
