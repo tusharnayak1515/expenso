@@ -30,6 +30,7 @@ export interface IExpense {
     expenseType: string;
     comment: string;
     expenseDate: Date;
+    user: Types.ObjectId | string;
     createdAt?: number;
     updatedAt?: number;
 }

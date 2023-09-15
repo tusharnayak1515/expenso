@@ -26,6 +26,10 @@ const ExpenseSchema = new Schema<IExpenseDocument, IExpenseModel>({
         type: Date,
         required: true
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
     createdAt: Number,
     updatedAt: Number,
 }, { timestamps: true, versionKey: false });

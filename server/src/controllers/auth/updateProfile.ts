@@ -25,6 +25,8 @@ const updateProfile = async (req: Request, res: Response) => {
             const name = fields?.name?.[0];
             const email = fields?.email?.[0];
 
+            let user : IUser | null = await User.findById(userId).exec();
+
             let image: string | null = null;
 
             for (const key of Object.keys(files)) {
@@ -36,20 +38,24 @@ const updateProfile = async (req: Request, res: Response) => {
         
                 const path = file.newFilename + extension;
                 const newPath = "src/uploads/" + path;
-                mv(file.filepath, newPath, (err) => {
-                  if (err) {
-                    return;
-                  }
-                });
-        
-                image = `${APP_URL}/${newPath}`;
+
+                if(user?.dp !== `${APP_URL}/${newPath}`) {
+                    mv(file.filepath, newPath, (err) => {
+                      if (err) {
+                        return;
+                      }
+                    });
+            
+                    image = `${APP_URL}/${newPath}`;
+                }
+                else {
+                    image = user?.dp;
+                }
             }
 
             if(!image) {
-                image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
+                image = user?.dp || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
             }
-
-            let user : IUser | null = await User.findById(userId).exec();
 
             user = await User.findByIdAndUpdate(userId, {name,email,dp:image}, {new: true}).exec();
 
