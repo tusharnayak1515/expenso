@@ -26,7 +26,7 @@ const Navbar = () => {
           </div>
           <p>John Doe</p>
         </div>
-        <HiOutlineMenu className={`text-3xl cursor-pointer`} />
+        <HiOutlineMenu className={`block md_link:hidden text-3xl cursor-pointer`} />
       </div>
     </div>
   );
