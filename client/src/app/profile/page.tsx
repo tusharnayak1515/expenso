@@ -4,7 +4,9 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import dynamic from "next/dynamic";
-const Details = dynamic(()=> import("@/components/profile/Details"), {ssr: false});
+const Details = dynamic(() => import("@/components/profile/Details"), {
+  ssr: false,
+});
 
 const Profile = () => {
   const router = useRouter();
@@ -21,7 +23,11 @@ const Profile = () => {
   }, [user, router]);
 
   return (
-    <div>
+    <div
+      className={`col-span-12 p-6 text-slate-400 
+    flex flex-col justify-start items-center gap-4 
+    rounded-md bg-slate-900`}
+    >
       <Details />
     </div>
   );
