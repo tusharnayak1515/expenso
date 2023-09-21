@@ -20,20 +20,12 @@ const Home = () => {
 
   return (
     <>
-      <div
-        className={`h-[calc(100vh-80px)] w-full p-6 grid grid-cols-12 gap-6 bg-slate-600`}
-      >
-        <div className={`col-span-2`}>
-          <Sidebar />
-        </div>
+      <div className={`col-span-9`}>
+        <Dashboard />
+      </div>
 
-        <div className={`col-span-7`}>
-          <Dashboard />
-        </div>
-
-        <div className={`col-span-3`}>
-          <History />
-        </div>
+      <div className={`col-span-3`}>
+        <History />
       </div>
     </>
   );

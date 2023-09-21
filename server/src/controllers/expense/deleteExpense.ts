@@ -20,10 +20,21 @@ const deleteExpense = async (req:Request, res:Response)=> {
 
         await Expense.findByIdAndDelete(expenseId, {new: true});
 
-        expense = await Category.populate(expense, {path: "category"});
+        let year : any = new Date().getFullYear();
+        let month : any = new Date().getMonth() + 1;
+
+        const startOfMonth = new Date(Number(year), Number(month) - 1, 1);
+        const endOfMonth = new Date(Number(year), Number(month), 0);
+
+        let expenses : IExpense[] | any = await Expense.find({user: userId, expenseDate : {
+            $gte: startOfMonth,
+            $lte: endOfMonth,
+        }}).sort("-createdAt");
+
+        expenses = await Category.populate(expenses, {path: "category"});
 
         success = true;
-        return res.status(200).json({success, expense});
+        return res.status(200).json({success, expenses});
     } catch (error:any) {
         return res.status(500).json({success, error: error.message});
     }

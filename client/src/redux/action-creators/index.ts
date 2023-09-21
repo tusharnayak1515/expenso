@@ -64,29 +64,40 @@ export const setExpense = (expense:any)=>  async(dispatch:any)=> {
     });
 }
 
-export const addExpense = (expense:any)=>  async(dispatch:any)=> {
+export const addExpense = (expenses:any)=>  async(dispatch:any)=> {
     dispatch({
         type: "add-expense",
         payload: {
-            expense
+            expenses
         }
     });
 }
 
-export const updateExpense = (expense:any)=>  async(dispatch:any)=> {
+export const updateExpense = (expenses:any)=>  async(dispatch:any)=> {
     dispatch({
         type: "update-expense",
         payload: {
-            expense
+            expenses
         }
     });
 }
 
-export const deleteExpense = (expense:any)=>  async(dispatch:any)=> {
+export const deleteExpense = (expenses:any)=>  async(dispatch:any)=> {
     dispatch({
         type: "delete-expense",
         payload: {
-            expense
+            expenses
+        }
+    });
+}
+
+// ************************************* Categories Section *********************************************** \\
+
+export const setAllCategories = (categories:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-categories",
+        payload: {
+            categories
         }
     });
 }

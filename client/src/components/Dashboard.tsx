@@ -10,7 +10,10 @@ import { GoDotFill } from "react-icons/go";
 import { fetchMyExpenses } from "@/apiCalls/expense";
 import { actionCreators } from "@/redux";
 import LoadingSpinner from "./LoadingSpinner";
+import AddExpense from "./expenses/AddExpense";
 Chart.register(CategoryScale);
+
+import { IoMdAdd } from "react-icons/io";
 
 const Dashboard = () => {
   const dispatch: any = useDispatch();
@@ -25,6 +28,7 @@ const Dashboard = () => {
   const [spendAmount, setSpendAmount]: any = useState(0);
   const [investmentAmount, setInvestmentAmount]: any = useState(0);
   const [labels, setLabels]: any = useState([]);
+  const [isAddExpense, setIsAddExpense] = useState(false);
 
   const fetchExpenses = async () => {
     try {
@@ -34,14 +38,12 @@ const Dashboard = () => {
         month: date.getMonth() + 1,
       });
       if (res.success) {
-        console.log("res: ", res);
         dispatch(actionCreators.setAllExpenses(res.expenses));
         const updatedGroupedExpenses: any = {};
 
         let temp: number[] = [...amounts];
         let temp2: string[] = [...labels];
         expenses.forEach((expense: any) => {
-          console.log("expense: ",expense);
           const categoryName = expense.category.name;
           const expenseType = expense.expenseType;
 
@@ -54,11 +56,11 @@ const Dashboard = () => {
           }
 
           if (expenseType === "credit") {
-            setCreditAmount((prev:number)=> prev + expense.amount);
+            setCreditAmount((prev: number) => prev + expense.amount);
           } else if (expenseType === "debit") {
-            setSpendAmount((prev:number)=> prev + expense.amount);
+            setSpendAmount((prev: number) => prev + expense.amount);
           } else if (expenseType === "investment") {
-            setInvestmentAmount((prev:number)=> prev + expense.amount);
+            setInvestmentAmount((prev: number) => prev + expense.amount);
           }
 
           updatedGroupedExpenses[categoryName].push(expense);
@@ -80,11 +82,6 @@ const Dashboard = () => {
       );
     }
   };
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchExpenses();
-  }, [expenses?.length]);
 
   const data = {
     labels: [...labels],
@@ -113,6 +110,11 @@ const Dashboard = () => {
     ],
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    fetchExpenses();
+  }, [expenses?.length]);
+
   return (
     <>
       {isLoading && <LoadingSpinner />}
@@ -120,6 +122,17 @@ const Dashboard = () => {
         className={`h-[calc(100vh-120px)] overflow-y-scroll w-full text-[17px] text-white
       flex flex-col justify-start items-center gap-2 bg-transparent`}
       >
+        <button
+          className={`self-start mb-4 py-2 px-4 
+          flex justify-start items-center gap-2 
+          text-slate-400 border border-slate-400 rounded-md 
+          hover:bg-slate-950 bg-slate-900 transition-all duration-300`}
+          onClick={() => setIsAddExpense(true)}
+        >
+          <IoMdAdd /> Add Expense
+        </button>
+
+        {isAddExpense && <AddExpense setIsAddExpense={setIsAddExpense} />}
         <div className={`w-full grid grid-cols-3 gap-4`}>
           <div
             className={`h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}

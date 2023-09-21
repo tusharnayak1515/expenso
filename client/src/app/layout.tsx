@@ -4,11 +4,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 
-const Navbar = dynamic(()=> import("@/components/Navbar"), {ssr: false});
+const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
 
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import dynamic from "next/dynamic";
+import HomeLayout from "@/components/layouts/HomeLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Navbar />
-          {children}
+          <HomeLayout>{children}</HomeLayout>
           <div id="modal"></div>
           <ToastContainer />
         </Providers>

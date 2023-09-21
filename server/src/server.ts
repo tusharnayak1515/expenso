@@ -8,6 +8,7 @@ import connectToMongo from "./db";
 import otpRoutes from "./routes/token";
 import authRoutes from "./routes/auth";
 import expenseRoutes from "./routes/expense";
+import categoryRoutes from "./routes/category";
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -35,51 +36,52 @@ import Category from "./models/Category";
 app.use("/api/otp", otpRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
+app.use("/api/categories", categoryRoutes);
 
 const addCategories = async ()=> {
-    await Category.create({
-        name: "shopping"
-    });
+    // await Category.create({
+    //     name: "shopping"
+    // });
 
-    await Category.create({
-        name: "house rent"
-    });
+    // await Category.create({
+    //     name: "house rent"
+    // });
 
-    await Category.create({
-        name: "recharge"
-    });
+    // await Category.create({
+    //     name: "recharge"
+    // });
 
-    await Category.create({
-        name: "medicines"
-    });
+    // await Category.create({
+    //     name: "medicines"
+    // });
 
-    await Category.create({
-        name: "grocery"
-    });
+    // await Category.create({
+    //     name: "grocery"
+    // });
 
-    await Category.create({
-        name: "gold"
-    });
+    // await Category.create({
+    //     name: "gold"
+    // });
 
-    await Category.create({
-        name: "mutual fund"
-    });
+    // await Category.create({
+    //     name: "mutual fund"
+    // });
 
-    await Category.create({
-        name: "stock trading"
-    });
+    // await Category.create({
+    //     name: "stock trading"
+    // });
 
     await Category.create({
         name: "other investment"
     });
 
-    await Category.create({
-        name: "salary"
-    });
+    // await Category.create({
+    //     name: "salary"
+    // });
 
-    await Category.create({
-        name: "other"
-    });
+    // await Category.create({
+    //     name: "other"
+    // });
 }
 
 // addCategories();

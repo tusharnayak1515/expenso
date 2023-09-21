@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Category from "../../models/Category";
-import { ICategory, IExpense } from "../../entities/entityInterfaces";
+import { IExpense } from "../../entities/entityInterfaces";
 import Expense from "../../models/Expense";
 
 const getMyExpenses = async (req:Request, res:Response)=> {

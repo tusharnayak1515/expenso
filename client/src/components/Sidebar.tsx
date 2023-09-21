@@ -11,10 +11,11 @@ import { GoGoal } from "react-icons/go";
 import { RiShutDownLine } from "react-icons/ri";
 import { actionCreators } from "@/redux";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const Sidebar = () => {
   const router = useRouter();
+  const params = usePathname();
   const dispatch: any = useDispatch();
 
   const onLinkClick = (route: string) => {
@@ -64,7 +65,7 @@ const Sidebar = () => {
     >
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+      cursor-pointer rounded-md ${params === '/' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("dashboard")}
       >
         <RxDashboard className={`text-2xl`} />
@@ -73,7 +74,7 @@ const Sidebar = () => {
 
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+      cursor-pointer rounded-md ${params === '/credits' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("credits")}
       >
         <FaMoneyBill className={`text-2xl`} />
@@ -82,7 +83,7 @@ const Sidebar = () => {
 
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+      cursor-pointer rounded-md ${params === '/expenses' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("expenses")}
       >
         <GiExpense className={`text-2xl`} />
@@ -91,7 +92,7 @@ const Sidebar = () => {
 
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+      cursor-pointer rounded-md ${params === '/investments' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("investments")}
       >
         <AiFillGold className={`text-2xl`} />
@@ -100,7 +101,7 @@ const Sidebar = () => {
 
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+      cursor-pointer rounded-md ${params === '/goals' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("goals")}
       >
         <GoGoal className={`text-2xl`} />
@@ -109,7 +110,7 @@ const Sidebar = () => {
 
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+      cursor-pointer rounded-md ${params === '/profile' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("profile")}
       >
         <FaUserAlt className={`text-2xl`} />

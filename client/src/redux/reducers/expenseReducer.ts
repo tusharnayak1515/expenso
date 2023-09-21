@@ -1,6 +1,7 @@
 const initState = {
   expense: null,
   expenses: [],
+  categories: [],
 };
 
 const expenseReducer = (state = initState, action: any) => {
@@ -19,31 +20,39 @@ const expenseReducer = (state = initState, action: any) => {
     };
   }
   else if (action.type === "add-expense") {
-    const { expense } = action.payload;
+    const { expenses } = action.payload;
     return {
       ...state,
-      expenses: [...state.expenses, expense]
+      expenses: expenses
     };
   }
   else if (action.type === "update-expense") {
-    const { expense } = action.payload;
+    const { expenses } = action.payload;
     return {
       ...state,
-      expenses: state.expenses.map((item:any)=> item?._id === expense?._id ? expense : item)
+      expenses: expenses
     };
   }
   else if (action.type === "delete-expense") {
-    const { expense } = action.payload;
+    const { expenses } = action.payload;
     return {
       ...state,
-      expenses: state.expenses.filter((item:any)=> item?._id !== expense?._id)
+      expenses: expenses
+    };
+  }
+  else if (action.type === "set-categories") {
+    const { categories } = action.payload;
+    return {
+      ...state,
+      categories: categories
     };
   }
   else if (action.type === "logout") {
     return {
       ...state,
       expense: null,
-      expenses: []
+      expenses: [],
+      categories: []
     };
   }
   else {
