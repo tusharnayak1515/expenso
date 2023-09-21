@@ -14,11 +14,11 @@ const AddExpense = ({setIsAddExpense}:any) => {
     shallowEqual
   );
 
-  const [expenseTypes, setExpenseTypes] = useState([
+  const expenseTypes = [
     "credit",
     "debit",
     "investment",
-  ]);
+  ];
 
   const initExpenseData: any = {
     amount: "",

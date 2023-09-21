@@ -5,10 +5,11 @@ const url = process.env.NODE_ENV === "development" ? "http://localhost:9000" : "
 type fetchExpensesPropType = {
     year: number;
     month: number;
+    expenseType: any;
 }
 
-export const fetchMyExpenses = async ({ year, month }: fetchExpensesPropType) => {
-    const { data } = await api.get(`${url}/api/expense?year=${year}&month=${month}`);
+export const fetchMyExpenses = async ({ year, month, expenseType }: fetchExpensesPropType) => {
+    const { data } = await api.get(`${url}/api/expense?year=${year}&month=${month}&expenseType=${expenseType}`);
     return data;
 }
 

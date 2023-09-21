@@ -74,33 +74,6 @@ const Sidebar = () => {
 
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md ${params === '/credits' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
-        onClick={() => onLinkClick("credits")}
-      >
-        <FaMoneyBill className={`text-2xl`} />
-        <p>Credit</p>
-      </div>
-
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md ${params === '/expenses' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
-        onClick={() => onLinkClick("expenses")}
-      >
-        <GiExpense className={`text-2xl`} />
-        <p>Expenses</p>
-      </div>
-
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md ${params === '/investments' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
-        onClick={() => onLinkClick("investments")}
-      >
-        <AiFillGold className={`text-2xl`} />
-        <p>Investments</p>
-      </div>
-
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
       cursor-pointer rounded-md ${params === '/goals' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
         onClick={() => onLinkClick("goals")}
       >
