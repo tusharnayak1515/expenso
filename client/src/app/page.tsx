@@ -1,16 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { shallowEqual, useSelector } from "react-redux";
 
-import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import History from "@/components/History";
 import Dashboard from "@/components/Dashboard";
 
 const Home = () => {
+  const router = useRouter();
+  const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/signin");
+    }
+  }, [user, router]);
+
   return (
     <>
-      <Navbar />
       <div
         className={`h-[calc(100vh-80px)] w-full p-6 grid grid-cols-12 gap-6 bg-slate-600`}
       >

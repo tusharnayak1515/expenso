@@ -1,9 +1,11 @@
 "use client";
 
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { userSignin } from "@/apiCalls/auth";
 import Link from "next/link";
-import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { actionCreators } from "@/redux";
 
 const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/;
@@ -13,6 +15,9 @@ type AuthPropTypes = {
 };
 
 const Auth = ({ type }: AuthPropTypes) => {
+
+  const dispatch:any = useDispatch();
+
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -39,8 +44,7 @@ const Auth = ({ type }: AuthPropTypes) => {
         const res = await userSignin({ email, password });
         if (res.success) {
           localStorage.setItem("expenso_user_profile", JSON.stringify(res.user));
-        //   dispatch(actionCreators.userSignin(res.user,null));
-        //   setShow(false);
+          dispatch(actionCreators.userSignin(res.user));
           toast.success("Welcome Back", {
             position: "top-right",
             autoClose: 3000,

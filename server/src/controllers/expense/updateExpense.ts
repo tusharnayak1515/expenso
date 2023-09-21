@@ -29,7 +29,7 @@ const updateExpense = async (req:Request, res:Response)=> {
         expense = await Category.populate(expense, {path: "category"});
 
         success = true;
-        return res.status(201).json({success, expense});
+        return res.status(200).json({success, expense});
     } catch (error:any) {
         return res.status(500).json({success, error: error.message});
     }

@@ -1,8 +1,14 @@
-import "./globals.css";
+import { Providers } from "@/redux/provider";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
+
+const Navbar = dynamic(()=> import("@/components/Navbar"), {ssr: false});
+
+import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
-        <ToastContainer />
+        <Providers>
+          <Navbar />
+          {children}
+          <div id="modal"></div>
+          <ToastContainer />
+        </Providers>
       </body>
     </html>
   );

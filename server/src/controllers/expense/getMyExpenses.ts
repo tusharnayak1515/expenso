@@ -34,7 +34,7 @@ const getMyExpenses = async (req:Request, res:Response)=> {
         expenses = await Category.populate(expenses, {path: "category"});
 
         success = true;
-        return res.status(201).json({success, expenses});
+        return res.status(200).json({success, expenses});
     } catch (error:any) {
         return res.status(500).json({success, error: error.message});
     }
