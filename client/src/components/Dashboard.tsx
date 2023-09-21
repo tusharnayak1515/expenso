@@ -22,13 +22,15 @@ import { fetchAllCategories } from "@/apiCalls/category";
 
 const Dashboard = () => {
   const dispatch: any = useDispatch();
-  const { expenses, categories } = useSelector(
+  const { expenses } = useSelector(
     (state: any) => state.expenseReducer,
     shallowEqual
   );
 
   const [groupedExpenses, setGroupedExpenses]: any = useState([]);
   const [activeExpenseType, setActiveExpenseType]: any = useState("all");
+  const date = new Date();
+  const [activeDate, setActiveDate]: any = useState(`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`);
   const [isLoading, setIsLoading]: any = useState(false);
   const [creditAmount, setCreditAmount]: any = useState(0);
   const [spendAmount, setSpendAmount]: any = useState(0);
@@ -38,20 +40,17 @@ const Dashboard = () => {
   const handleExpenseTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     setActiveExpenseType(e.target.value);
-    if(e.target.value === "all") {
-      fetchExpenses(null);
-    }
-    else {
-      if(e.target.value === "credit") {
+    if (e.target.value === "all") {
+      fetchExpenses(null,null,null);
+    } else {
+      if (e.target.value === "credit") {
         setCreditAmount(0);
-      }
-      else if(e.target.value === "debit") {
+      } else if (e.target.value === "debit") {
         setSpendAmount(0);
-      }
-      else if(e.target.value === "investment") {
+      } else if (e.target.value === "investment") {
         setInvestmentAmount(0);
       }
-      fetchExpenses(e.target.value);
+      fetchExpenses(null,null,e.target.value);
     }
   };
 
@@ -69,12 +68,12 @@ const Dashboard = () => {
     }
   };
 
-  const fetchExpenses = async (expenseType:any) => {
+  const fetchExpenses = async (year:any,month:any,expenseType: any) => {
     try {
       const date = new Date();
       const res: any = await fetchMyExpenses({
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
+        year: year || date.getFullYear(),
+        month: month || date.getMonth() + 1,
         expenseType,
       });
 
@@ -161,7 +160,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchExpenses(null);
+    fetchExpenses(null,null,null);
     getAllCategories();
   }, []);
 
@@ -193,14 +192,34 @@ const Dashboard = () => {
             outline-none bg-slate-800`}
           >
             <option value="all">All</option>
-            {["credit","debit","investment"]?.map((expenseType: string, index: number) => {
-              return (
-                <option key={index} value={expenseType}>
-                  {expenseType}
-                </option>
-              );
-            })}
+            {["credit", "debit", "investment"]?.map(
+              (expenseType: string, index: number) => {
+                return (
+                  <option key={index} value={expenseType}>
+                    {expenseType}
+                  </option>
+                );
+              }
+            )}
           </select>
+
+          <input
+            type="month"
+            name="datePicker"
+            id="datePicker"
+            defaultValue={activeDate}
+            onChange={(e)=> {
+              e.preventDefault();
+              const year = e.target.value.split("-")[0];
+              console.log("year: ",year);
+              const month = e.target.value.split("-")[1];
+              console.log("month: ",month);
+              console.log(e.target.value);
+              fetchExpenses(year,month,activeExpenseType);
+            }}
+            className={`py-2 px-4 border border-slate-400 rounded-md 
+            outline-none bg-slate-800`}
+          />
         </div>
 
         {isAddExpense && <AddExpense setIsAddExpense={setIsAddExpense} />}

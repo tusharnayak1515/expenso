@@ -12,6 +12,7 @@ const getMyExpenses = async (req: Request, res: Response) => {
         let month: any = req.query.month;
         let expenseType: any = req.query.expenseType;
 
+        
         if ((year && month) && (isNaN(Number(year)) || isNaN(Number(month)))) {
             return res.status(400).json({ error: "Invalid year or month parameter." });
         }
@@ -23,6 +24,8 @@ const getMyExpenses = async (req: Request, res: Response) => {
         if (!month) {
             month = new Date().getMonth() + 1;
         }
+        console.log("year: ",year);
+        console.log("month: ",Number(month));
 
         const startOfMonth = new Date(Number(year), Number(month) - 1, 1);
         const endOfMonth = new Date(Number(year), Number(month), 0);
@@ -35,9 +38,11 @@ const getMyExpenses = async (req: Request, res: Response) => {
             },
         };
 
-        if (expenseType !== 'null') {
+        if (expenseType && expenseType !== 'null' && expenseType !== "all") {
             filters.expenseType = expenseType;
         }
+
+        console.log("filters: ",filters);
 
         let expenses: IExpense[] | any = await Expense.find(filters).sort("-createdAt");
 
