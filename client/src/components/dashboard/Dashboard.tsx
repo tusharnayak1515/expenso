@@ -9,8 +9,8 @@ import Chart from "chart.js/auto";
 import { GoDotFill } from "react-icons/go";
 import { fetchMyExpenses } from "@/apiCalls/expense";
 import { actionCreators } from "@/redux";
-import LoadingSpinner from "./LoadingSpinner";
-const AddExpense = dynamic(() => import("@/components/expenses/AddExpense"), {
+import LoadingSpinner from "../LoadingSpinner";
+const AddExpense = dynamic(() => import("@/components/modals/AddExpense"), {
   ssr: false,
 });
 

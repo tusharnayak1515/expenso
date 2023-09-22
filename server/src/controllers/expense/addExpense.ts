@@ -15,7 +15,7 @@ const addExpense = async (req:Request, res:Response)=> {
             return res.status(404).json({success, error: "Invalid category"});
         }
 
-        let expense : IExpense | any = await Expense.create({
+        await Expense.create({
             amount,
             category: categoryId,
             expenseType,

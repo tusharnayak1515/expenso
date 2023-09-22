@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { shallowEqual, useSelector } from "react-redux";
 
 import Sidebar from "@/components/Sidebar";
-import History from "@/components/History";
-import Dashboard from "@/components/Dashboard";
+import Dashboard from "@/components/dashboard/Dashboard";
 import { getCookie } from "cookies-next";
+import History from "@/components/dashboard/History";
 
 const Home = () => {
   const router = useRouter();
