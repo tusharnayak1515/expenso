@@ -19,9 +19,9 @@ const Signup = () => {
   }, [user,router]);
   
   return (
-    <>
+    <div className={`h-full col-span-12`}>
       <Auth type="signup" />
-    </>
+    </div>
   );
 };
 

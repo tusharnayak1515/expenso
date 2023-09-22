@@ -15,7 +15,7 @@ type signupProps = {
     name: String;
     email: String;
     password: String;
-    otp: Number;
+    otp: number;
 }
 
 export const userSignup = async ({ name, email, password, otp }: signupProps) => {

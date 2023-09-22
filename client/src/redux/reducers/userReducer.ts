@@ -23,15 +23,7 @@ const initState = {
 };
 
 const userReducer = (state = initState, action: any) => {
-  if (action.type === "signup") {
-    const { user, profile } = action.payload;
-    return {
-      ...state,
-      user: user,
-      profile: profile
-    };
-  }
-  else if (action.type === "signin") {
+  if (action.type === "signin") {
     const { user, profile } = action.payload;
     return {
       ...state,

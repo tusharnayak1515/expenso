@@ -7,6 +7,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import Sidebar from "@/components/Sidebar";
 import History from "@/components/History";
 import Dashboard from "@/components/Dashboard";
+import { getCookie } from "cookies-next";
 
 const Home = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const Home = () => {
   useEffect(() => {
     if (!user) {
       router.replace("/signin");
+      localStorage.removeItem("expenso_user_profile");
     }
   }, [user, router]);
 

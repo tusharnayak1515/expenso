@@ -16,6 +16,7 @@ const signup = async (req: Request, res: Response) => {
     }
 
     let token: IToken | null = await Token.findOne({ email }).exec();
+    console.log("token: ",token);
     if (!token) {
       return res.status(404).json({ success, error: "Invalid Token." });
     }

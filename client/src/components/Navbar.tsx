@@ -18,7 +18,7 @@ const Navbar = () => {
       <Link href={"/"} className={`text-2xl font-bold cursor-pointer`}>Expenso</Link>
 
       <div className={`flex justify-start items-center gap-6`}>
-        <div className={`flex justify-start items-center gap-2`}>
+        {profile && <div className={`flex justify-start items-center gap-2`}>
           <div className={`relative h-10 w-10 rounded-full`}>
             <Image
               src={profile?.dp}
@@ -28,7 +28,7 @@ const Navbar = () => {
             />
           </div>
           <p>{profile?.name}</p>
-        </div>
+        </div>}
         <HiOutlineMenu className={`block md_link:hidden text-3xl cursor-pointer`} />
       </div>
     </div>

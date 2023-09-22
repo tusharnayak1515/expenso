@@ -2,16 +2,6 @@ import { deleteCookie, getCookie } from "cookies-next";
 
 // ************************************* User Section *********************************************** \\
 
-export const userSignup = (user:any)=>  async(dispatch:any)=> {
-    dispatch({
-        type: "signup",
-        payload: {
-            user: getCookie("authorization"),
-            profile: user
-        }
-    });
-}
-
 export const userSignin = (user:any)=>  async(dispatch:any)=> {
     dispatch({
         type: "signin",
