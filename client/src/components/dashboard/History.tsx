@@ -20,7 +20,7 @@ const History = () => {
     <>
       {expense && <ViewExpense expense={expense} setExpense={setExpense} />}
       <div
-        className={`h-[calc(100vh-120px)] overflow-y-scroll w-full text-[17px] text-slate-400 
+        className={`h-auto md_link:h-[calc(100vh-120px)] overflow-y-scroll w-full text-[17px] text-slate-400 
     flex flex-col justify-start items-center rounded-md bg-slate-900`}
       >
         <div

@@ -22,11 +22,11 @@ const Home = () => {
 
   return (
     <>
-      <div className={`col-span-9`}>
+      <div className={`col-span-12 md_link:col-span-8 xl1:col-span-9`}>
         <Dashboard />
       </div>
 
-      <div className={`col-span-3`}>
+      <div className={`col-span-12 md_link:col-span-4 xl1:col-span-3`}>
         <History />
       </div>
     </>

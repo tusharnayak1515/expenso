@@ -2,18 +2,16 @@
 
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useRouter, usePathname } from "next/navigation";
 
 import { RxDashboard } from "react-icons/rx";
-import { FaMoneyBill, FaUserAlt } from "react-icons/fa";
-import { GiExpense } from "react-icons/gi";
-import { AiFillGold } from "react-icons/ai";
+import { FaUserAlt } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
 import { RiShutDownLine } from "react-icons/ri";
 import { actionCreators } from "@/redux";
 import { toast } from "react-toastify";
-import { useRouter, usePathname } from "next/navigation";
 
-const Sidebar = () => {
+const Sidebar = ({modal, setShowMenu}:any) => {
   const router = useRouter();
   const params = usePathname();
   const dispatch: any = useDispatch();
@@ -43,6 +41,9 @@ const Sidebar = () => {
         router.push("/");
         break;
     }
+    if(modal) {
+      setShowMenu(false);
+    }
   };
 
   const onLogout = () => {
@@ -60,9 +61,11 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`h-[calc(100vh-120px)] w-full p-3 text-[17px] text-slate-400 
+      className={`${modal ? 'h-[100vh]' : 'h-[calc(100vh-120px)]'} w-full p-3 text-[17px] text-slate-400 
     flex flex-col justify-start items-start gap-2 rounded-md bg-slate-900`}
     >
+      {modal && <h1 className={`my-4 text-3xl text-slate-400 font-bold mx-auto`}>Expenso</h1>}
+
       <div
         className={`w-full p-3 flex justify-start items-center gap-4 
       cursor-pointer rounded-md ${params === '/' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}

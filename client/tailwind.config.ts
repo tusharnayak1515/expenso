@@ -20,6 +20,7 @@ const config: Config = {
       lg: "1024px",
       lg1: "1180px",
       xl: "1280px",
+      xl1: "1450px",
       "2xl": "1536px",
       "3xl": "1650px",
       "4xl": "1850px",

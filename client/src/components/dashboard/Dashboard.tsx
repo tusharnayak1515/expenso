@@ -36,6 +36,7 @@ const Dashboard = () => {
   const [spendAmount, setSpendAmount]: any = useState(0);
   const [investmentAmount, setInvestmentAmount]: any = useState(0);
   const [isAddExpense, setIsAddExpense] = useState(false);
+  const [legendPosition, setLegendPosition]:any = useState("right");
 
   const handleExpenseTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
@@ -162,13 +163,25 @@ const Dashboard = () => {
     setIsLoading(true);
     fetchExpenses(null,null,null);
     getAllCategories();
-  }, []);
+    const handleResize = () => {
+      if (window.innerWidth < 980) {
+        setLegendPosition("bottom");
+      } else {
+        setLegendPosition("right");
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
 
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       {isLoading && <LoadingSpinner />}
       <div
-        className={`h-[calc(100vh-120px)] overflow-y-scroll w-full text-[17px] text-white
+        className={`h-full md_link:h-[calc(100vh-120px)] overflow-y-hidden md_link:overflow-y-scroll w-full text-[17px] text-white
       flex flex-col justify-start items-center gap-2 bg-transparent`}
       >
         <div
@@ -223,9 +236,9 @@ const Dashboard = () => {
         </div>
 
         {isAddExpense && <AddExpense setIsAddExpense={setIsAddExpense} />}
-        <div className={`w-full grid grid-cols-3 gap-4`}>
+        <div className={`w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4`}>
           <div
-            className={`h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            className={`h-[100px] sm:h-[120px] md:h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
           >
             <div className={`flex justify-start items-center gap-1`}>
               <GoDotFill className={`text-green-400 text-xl`} />
@@ -235,7 +248,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className={`h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            className={`h-[100px] sm:h-[120px] md:h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
           >
             <div className={`flex justify-start items-center gap-1`}>
               <GoDotFill className={`text-red-400 text-xl`} />
@@ -245,7 +258,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className={`h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            className={`h-[100px] sm:h-[120px] md:h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
           >
             <div className={`flex justify-start items-center gap-1`}>
               <GoDotFill className={`text-orange-400 text-xl`} />
@@ -269,7 +282,7 @@ const Dashboard = () => {
                 maintainAspectRatio: true,
                 plugins: {
                   legend: {
-                    position: "right",
+                    position: legendPosition,
                     labels: {
                       padding: 30,
                       boxPadding: 20,
