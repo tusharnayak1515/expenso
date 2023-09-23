@@ -7,6 +7,7 @@ import ReactDom from "react-dom";
 import { MdCloudUpload } from "react-icons/md";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../LoadingSpinner";
 
 const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
   const dispatch: any = useDispatch();
@@ -44,34 +45,34 @@ const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
   const onUpdateProfile = async () => {
     setLoading(true);
     try {
-        const formData = new FormData();
-        formData.append("name", userDetails?.name);
-        formData.append("email", userDetails?.email);
-        if(dp && dp === profile?.dp) {
-            formData.append("dp",profile?.dp);
-        }
-        else if(dp) {
-            formData.append("dp", dp);
-        }
-        else {
-            formData.append("dp", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png");
-        }
-        // console.log("formData: ", formData);
-        const res = await updateProfile(formData);
-        if (res.success) {
-          dispatch(actionCreators.updateProfile(res.user));
-          setLoading(false);
-          setIsUpdateProfile(false);
-          toast.success("Profile updated successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
+      const formData = new FormData();
+      formData.append("name", userDetails?.name);
+      formData.append("email", userDetails?.email);
+      if (dp && dp === profile?.dp) {
+        formData.append("dp", profile?.dp);
+      } else if (dp) {
+        formData.append("dp", dp);
+      } else {
+        formData.append(
+          "dp",
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+        );
+      }
+      const res = await updateProfile(formData);
+      if (res.success) {
+        dispatch(actionCreators.updateProfile(res.user));
+        setLoading(false);
+        setIsUpdateProfile(false);
+        toast.success("Profile updated successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error: any) {
       setLoading(false);
       toast.error(error.response.data.error, {
@@ -88,6 +89,7 @@ const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
 
   return ReactDom.createPortal(
     <div className={`fixed inset-0 p-6 bg-[#0000005f] z-[600]`}>
+      {loading && <LoadingSpinner />}
       <div
         className={`h-[80vh] w-[100%] xxs:w-[350px] xs:w-[400px] md:w-[450px] overflow-y-scroll
         my-10 mx-auto text-slate-400 p-6 

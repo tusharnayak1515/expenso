@@ -37,3 +37,14 @@ export const updateProfile = async(formData:any)=> {
     const {data} = await api.put(`${url}/api/auth/update-profile`, formData);
     return data;
 }
+
+type updatePasswordPropType = {
+    oldPassword: String;
+    newPassword: String;
+    confirmPassword: String;
+}
+
+export const updatePassword = async({oldPassword, newPassword, confirmPassword}:updatePasswordPropType)=> {
+    const {data} = await api.put(`${url}/api/auth/change-password`, {oldPassword, newPassword, confirmPassword});
+    return data;
+}
