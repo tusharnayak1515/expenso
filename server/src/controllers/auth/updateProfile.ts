@@ -24,32 +24,38 @@ const updateProfile = async (req: Request, res: Response) => {
 
             const name = fields?.name?.[0];
             const email = fields?.email?.[0];
+            const dp = fields?.dp?.[0];
 
             let user : IUser | null = await User.findById(userId).exec();
 
-            let image: string | null = null;
+            let image: string | any = null;
 
-            for (const key of Object.keys(files)) {
-                const val: any = files[key];
-                const file: any = val[0];
-                const extension = file.originalFilename.substring(
-                  file.originalFilename.lastIndexOf(".")
-                );
-        
-                const path = file.newFilename + extension;
-                const newPath = "src/uploads/" + path;
-
-                if(user?.dp !== `${APP_URL}/${newPath}`) {
-                    mv(file.filepath, newPath, (err) => {
-                      if (err) {
-                        return;
-                      }
-                    });
+            if(dp !== null && dp !== undefined) {
+                image = dp;
+            }
+            else {
+                for (const key of Object.keys(files)) {
+                    const val: any = files[key];
+                    const file: any = val[0];
+                    const extension = file.originalFilename.substring(
+                      file.originalFilename.lastIndexOf(".")
+                    );
             
-                    image = `${APP_URL}/${newPath}`;
-                }
-                else {
-                    image = user?.dp;
+                    const path = file.newFilename + extension;
+                    const newPath = "src/uploads/" + path;
+    
+                    if(user?.dp !== `${APP_URL}/${newPath}`) {
+                        mv(file.filepath, newPath, (err) => {
+                          if (err) {
+                            return;
+                          }
+                        });
+                
+                        image = `${APP_URL}/${newPath}`;
+                    }
+                    else {
+                        image = user?.dp;
+                    }
                 }
             }
 

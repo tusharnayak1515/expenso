@@ -1,8 +1,9 @@
 "use client";
 
+import React, {useState} from "react";
 import Image from "next/image";
-import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
+import UpdateProfileModal from "../modals/UpdateProfileModal";
 
 const Details = () => {
   const { profile } = useSelector(
@@ -10,13 +11,36 @@ const Details = () => {
     shallowEqual
   );
 
+  const [isUpdateProfile, setIsUpdateProfile] = useState(false);
+  const [isChangePassword, setIsChangePassword] = useState(false);
+
   return (
     <>
-      <div className={`relative h-[12rem] w-[12rem] rounded-full`}>
+
+      {isUpdateProfile && <UpdateProfileModal setIsUpdateProfile={setIsUpdateProfile} /> }
+
+      <div className={`relative h-[13rem] w-[13rem] rounded-full`}>
         <Image src={profile?.dp} alt="DP" fill className={`rounded-full`} />
       </div>
       <p>Name: {profile?.name}</p>
       <p>Email: {profile?.email}</p>
+
+      <button
+        className={`w-[180px] py-2 px-4 text-slate-400 font-semibold 
+      border border-slate-400 rounded-md 
+      hover:bg-slate-900 bg-slate-950 transition-all duration-300`}
+      onClick={()=> setIsUpdateProfile(true)}
+      >
+        Update Profile
+      </button>
+
+      <button
+        className={`w-[180px] py-2 px-4 text-slate-400 font-semibold 
+      border border-slate-400 rounded-md 
+      hover:bg-slate-950 bg-slate-900 transition-all duration-300`}
+      >
+        Change Password
+      </button>
     </>
   );
 };

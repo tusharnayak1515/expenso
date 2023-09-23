@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import ReactDom from "react-dom";
 import Sidebar from "../Sidebar";

@@ -32,3 +32,8 @@ export const userSignin = async ({ email, password }: signinProps) => {
     const { data } = await api.post(`${url}/api/auth/signin`, { email, password });
     return data;
 }
+
+export const updateProfile = async(formData:any)=> {
+    const {data} = await api.put(`${url}/api/auth/update-profile`, formData);
+    return data;
+}

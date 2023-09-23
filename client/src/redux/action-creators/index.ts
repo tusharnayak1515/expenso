@@ -12,7 +12,7 @@ export const userSignin = (user:any)=>  async(dispatch:any)=> {
     });
 }
 
-export const updateUserProfile = (user:any)=> async(dispatch:any)=> {
+export const updateProfile = (user:any)=> async(dispatch:any)=> {
     if(typeof localStorage !== "undefined") {
         localStorage.setItem("expenso_user_profile", JSON.stringify(user));
     }
