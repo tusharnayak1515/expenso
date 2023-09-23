@@ -70,6 +70,9 @@ const Dashboard = () => {
   };
 
   const fetchExpenses = async (year:any,month:any,expenseType: any) => {
+    setCreditAmount(0);
+    setSpendAmount(0);
+    setInvestmentAmount(0);
     try {
       const date = new Date();
       const res: any = await fetchMyExpenses({
@@ -177,6 +180,7 @@ const Dashboard = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <>
       {isLoading && <LoadingSpinner />}
