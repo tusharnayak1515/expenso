@@ -11,6 +11,16 @@ export const sendOtp = async ({ email }: sendOtpProps) => {
     return data;
 }
 
+type resetOtpProps = {
+    email: String;
+    otp: number;
+}
+
+export const verifyOtp = async ({ email, otp }: resetOtpProps) => {
+    const { data } = await api.post(`${url}/api/otp/verify`, { email, otp });
+    return data;
+}
+
 type signupProps = {
     name: String;
     email: String;
@@ -46,5 +56,17 @@ type updatePasswordPropType = {
 
 export const updatePassword = async({oldPassword, newPassword, confirmPassword}:updatePasswordPropType)=> {
     const {data} = await api.put(`${url}/api/auth/change-password`, {oldPassword, newPassword, confirmPassword});
+    return data;
+}
+
+type resetPasswordPropType = {
+    email: String;
+    newPassword: String;
+    confirmPassword: String;
+    otp: number;
+}
+
+export const resetPassword = async({email, newPassword, confirmPassword, otp}:resetPasswordPropType)=> {
+    const {data} = await api.put(`${url}/api/auth/reset-password`, {email, newPassword, confirmPassword, otp});
     return data;
 }

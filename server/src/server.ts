@@ -71,9 +71,9 @@ const addCategories = async ()=> {
     //     name: "stock trading"
     // });
 
-    await Category.create({
-        name: "other investment"
-    });
+    // await Category.create({
+    //     name: "other investment"
+    // });
 
     // await Category.create({
     //     name: "salary"
@@ -81,6 +81,10 @@ const addCategories = async ()=> {
 
     // await Category.create({
     //     name: "other"
+    // });
+
+    // await Category.create({
+    //     name: "food"
     // });
 }
 

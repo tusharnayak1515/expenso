@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { actionCreators } from "@/redux";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "./LoadingSpinner";
+import ResetPasswordModal from "./modals/ResetPasswordModal";
 
 const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/;
@@ -27,6 +28,7 @@ const Auth = ({ type }: AuthPropTypes) => {
     otp: "",
   });
 
+  const [isResetPassword, setIsResetPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -228,6 +230,7 @@ const Auth = ({ type }: AuthPropTypes) => {
   return (
     <>
       {isLoading && <LoadingSpinner />}
+      {isResetPassword && <ResetPasswordModal setIsResetPassword={setIsResetPassword} />}
       <div
         className={`h-auto w-full p-4 md:p-6 flex flex-col justify-center md:justify-start items-center gap-4`}
       >
@@ -292,6 +295,10 @@ const Auth = ({ type }: AuthPropTypes) => {
               className={`w-full py-2 px-4 border border-slate-400 rounded-md outline-none bg-slate-800`}
             />
           </div>
+
+          {type === "signin" && <div className={`w-full flex justify-end items-center`}>
+            <p className={`text-sm text-blue-400 font-semibold cursor-pointer hover:underline`} onClick={()=> setIsResetPassword(true)}>Forgot password?</p>
+            </div>}
 
           {type === "signup" && otpSent && (
             <div
