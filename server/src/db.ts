@@ -5,13 +5,14 @@ const mongoUri =
     ? "mongodb://0.0.0.0:27017/expenso?retryWrites=true&w=majority"
     : process.env.MONGO_URI;
 
+
 const connectToMongo = () => {
   mongoose
     .connect(mongoUri!)
     .then(() => {
       console.log(`Connected to MongoDB successfully.`);
     })
-    .catch((error:any) => {
+    .catch((error: any) => {
       console.log(`MongoDB connection error: ${error.message}`);
     });
 };

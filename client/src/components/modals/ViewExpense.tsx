@@ -7,7 +7,7 @@ import ReactDom from "react-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ViewExpense = ({ expense, setExpense }: any) => {
+const ViewExpense = ({ expense, setExpense, setIsUpdated }: any) => {
   const dispatch: any = useDispatch();
   const { categories } = useSelector(
     (state: any) => state.expenseReducer,
@@ -64,6 +64,7 @@ const ViewExpense = ({ expense, setExpense }: any) => {
           });
           setExpenseData(initExpenseData);
           setExpense(null);
+          setIsUpdated(true);
         }
       } else if (Number(amount.toString()) <= 0) {
         toast.error("Amount must be greater than 0", {
@@ -97,6 +98,7 @@ const ViewExpense = ({ expense, setExpense }: any) => {
         });
       }
     } catch (error: any) {
+      console.log("error: ",error);
       toast.error(error.response.data.error, {
         position: "top-right",
         autoClose: 3000,
@@ -138,6 +140,7 @@ const ViewExpense = ({ expense, setExpense }: any) => {
             progress: undefined,
           });
           setExpense(null);
+          setIsUpdated(true);
         }
       }
     } catch (error: any) {

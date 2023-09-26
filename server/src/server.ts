@@ -13,7 +13,7 @@ import categoryRoutes from "./routes/category";
 const app = express();
 const port = process.env.PORT || 9000;
 
-const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
+const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "http://localhost:3000";
 
 app.use(cors({
     origin: FRONTEND_URL,

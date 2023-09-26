@@ -8,7 +8,7 @@ const ViewExpense = dynamic(()=> import("../modals/ViewExpense"), {ssr: false});
 
 import { MdOutlineHistory } from "react-icons/md";
 
-const History = () => {
+const History = ({setIsUpdated}:any) => {
   const { expenses } = useSelector(
     (state: any) => state.expenseReducer,
     shallowEqual
@@ -18,7 +18,7 @@ const History = () => {
 
   return (
     <>
-      {expense && <ViewExpense expense={expense} setExpense={setExpense} />}
+      {expense && <ViewExpense expense={expense} setExpense={setExpense} setIsUpdated={setIsUpdated} />}
       <div
         className={`h-auto md_link:h-[calc(100vh-120px)] overflow-y-scroll w-full text-[17px] text-slate-400 
     flex flex-col justify-start items-center rounded-md bg-slate-900`}

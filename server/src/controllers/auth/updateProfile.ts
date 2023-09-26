@@ -4,7 +4,7 @@ import mv from "mv";
 import { IUser } from "../../entities/entityInterfaces";
 import User from "../../models/User";
 
-const APP_URL = process.env.NODE_ENV === "development" ? "http://localhost:9000" : "";
+const APP_URL = process.env.NODE_ENV === "development" ? "http://localhost:9000" : "http://localhost:9000";
 
 const updateProfile = async (req: Request, res: Response) => {
     let success = false;

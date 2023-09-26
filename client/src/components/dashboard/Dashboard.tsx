@@ -20,7 +20,7 @@ Chart.register(CategoryScale);
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllCategories } from "@/apiCalls/category";
 
-const Dashboard = () => {
+const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
   const dispatch: any = useDispatch();
   const { expenses } = useSelector(
     (state: any) => state.expenseReducer,
@@ -30,19 +30,21 @@ const Dashboard = () => {
   const [groupedExpenses, setGroupedExpenses]: any = useState([]);
   const [activeExpenseType, setActiveExpenseType]: any = useState("all");
   const date = new Date();
-  const [activeDate, setActiveDate]: any = useState(`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`);
+  const [activeDate, setActiveDate]: any = useState(
+    `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}`
+  );
   const [isLoading, setIsLoading]: any = useState(false);
   const [creditAmount, setCreditAmount]: any = useState(0);
   const [spendAmount, setSpendAmount]: any = useState(0);
   const [investmentAmount, setInvestmentAmount]: any = useState(0);
   const [isAddExpense, setIsAddExpense] = useState(false);
-  const [legendPosition, setLegendPosition]:any = useState("right");
+  const [legendPosition, setLegendPosition]: any = useState("right");
 
   const handleExpenseTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     setActiveExpenseType(e.target.value);
     if (e.target.value === "all") {
-      fetchExpenses(null,null,null);
+      fetchExpenses(null, null, null);
     } else {
       if (e.target.value === "credit") {
         setCreditAmount(0);
@@ -51,7 +53,7 @@ const Dashboard = () => {
       } else if (e.target.value === "investment") {
         setInvestmentAmount(0);
       }
-      fetchExpenses(null,null,e.target.value);
+      fetchExpenses(null, null, e.target.value);
     }
   };
 
@@ -69,7 +71,8 @@ const Dashboard = () => {
     }
   };
 
-  const fetchExpenses = async (year:any,month:any,expenseType: any) => {
+  const fetchExpenses = async (year: any, month: any, expenseType: any) => {
+    setIsLoading(true);
     setCreditAmount(0);
     setSpendAmount(0);
     setInvestmentAmount(0);
@@ -124,6 +127,9 @@ const Dashboard = () => {
         console.log("updatedGroupedExpenses: ", updatedGroupedExpenses);
         setGroupedExpenses(updatedGroupedExpenses);
         setIsLoading(false);
+        if(isUpdated) {
+          setIsUpdated(false);
+        }
       }
     } catch (error: any) {
       console.log(
@@ -164,7 +170,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchExpenses(null,null,null);
+    fetchExpenses(null, null, null);
     getAllCategories();
     const handleResize = () => {
       if (window.innerWidth < 980) {
@@ -179,7 +185,7 @@ const Dashboard = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isUpdated]);
 
   return (
     <>
@@ -225,24 +231,26 @@ const Dashboard = () => {
             name="datePicker"
             id="datePicker"
             defaultValue={activeDate}
-            onChange={(e)=> {
+            onChange={(e) => {
               e.preventDefault();
               const year = e.target.value.split("-")[0];
-              console.log("year: ",year);
+              console.log("year: ", year);
               const month = e.target.value.split("-")[1];
-              console.log("month: ",month);
+              console.log("month: ", month);
               console.log(e.target.value);
-              fetchExpenses(year,month,activeExpenseType);
+              fetchExpenses(year, month, activeExpenseType);
             }}
             className={`py-2 px-4 border border-slate-400 rounded-md 
             outline-none bg-slate-800`}
           />
         </div>
 
-        {isAddExpense && <AddExpense setIsAddExpense={setIsAddExpense} />}
-        <div className={`w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4`}>
+        {isAddExpense && <AddExpense setIsAddExpense={setIsAddExpense} setIsUpdated={setIsUpdated} />}
+        <div
+          className={`w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4`}
+        >
           <div
-            className={`h-[100px] sm:h-[120px] md:h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
           >
             <div className={`flex justify-start items-center gap-1`}>
               <GoDotFill className={`text-green-400 text-xl`} />
@@ -252,7 +260,7 @@ const Dashboard = () => {
           </div>
 
           <div
-            className={`h-[100px] sm:h-[120px] md:h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
           >
             <div className={`flex justify-start items-center gap-1`}>
               <GoDotFill className={`text-red-400 text-xl`} />
@@ -262,13 +270,23 @@ const Dashboard = () => {
           </div>
 
           <div
-            className={`h-[100px] sm:h-[120px] md:h-[150px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
           >
             <div className={`flex justify-start items-center gap-1`}>
               <GoDotFill className={`text-orange-400 text-xl`} />
               <p className={`text-slate-400`}>Investments</p>
             </div>
             <p className={`text-orange-400`}>₹ {investmentAmount}</p>
+          </div>
+
+          <div
+            className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+          >
+            <div className={`flex justify-start items-center gap-1`}>
+              <GoDotFill className={`text-purple-400 text-xl`} />
+              <p className={`text-slate-400`}>Balance</p>
+            </div>
+            <p className={`text-purple-400`}>₹ {creditAmount-spendAmount-investmentAmount}</p>
           </div>
         </div>
 

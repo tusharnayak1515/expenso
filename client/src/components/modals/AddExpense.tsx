@@ -7,7 +7,7 @@ import { actionCreators } from "@/redux";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { toast } from "react-toastify";
 
-const AddExpense = ({setIsAddExpense}:any) => {
+const AddExpense = ({setIsAddExpense, setIsUpdated}:any) => {
   const dispatch: any = useDispatch();
   const { categories } = useSelector(
     (state: any) => state.expenseReducer,
@@ -68,6 +68,7 @@ const AddExpense = ({setIsAddExpense}:any) => {
           });
           setExpenseData(initExpenseData);
           setIsAddExpense(false);
+          setIsUpdated(true);
         }
       } else if (Number(amount.toString()) <= 0) {
         toast.error("Amount must be greater than 0", {
