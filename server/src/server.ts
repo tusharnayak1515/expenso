@@ -9,6 +9,7 @@ import otpRoutes from "./routes/token";
 import authRoutes from "./routes/auth";
 import expenseRoutes from "./routes/expense";
 import categoryRoutes from "./routes/category";
+import goalRoutes from "./routes/goal";
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -31,12 +32,14 @@ import "./models/Token";
 import "./models/User";
 import "./models/Category";
 import "./models/Expense";
+import "./models/Goal";
 import Category from "./models/Category";
 
 app.use("/api/otp", otpRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/goals", goalRoutes);
 
 const addCategories = async ()=> {
     // await Category.create({

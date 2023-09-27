@@ -34,3 +34,13 @@ export interface IExpense {
     createdAt?: number;
     updatedAt?: number;
 }
+
+export interface IGoal {
+    goal: string;
+    amount: number;
+    status: string;
+    completedDate?: Date;
+    user: Types.ObjectId | string;
+    createdAt?: number;
+    updatedAt?: number;
+}
