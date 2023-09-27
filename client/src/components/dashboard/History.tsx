@@ -42,7 +42,6 @@ const History = ({setIsUpdated}:any) => {
                 hover:bg-slate-950 bg-slate-900`}
                 onClick={()=> setExpense(expense)}
               >
-                <p>{expense?.category?.name}</p>
 
                 <p
                   className={`${
@@ -55,6 +54,8 @@ const History = ({setIsUpdated}:any) => {
                 >
                   ₹ {expense?.amount}
                 </p>
+
+                <p>{new Date(expense?.expenseDate).toLocaleDateString()}</p>
               </div>
             );
           })

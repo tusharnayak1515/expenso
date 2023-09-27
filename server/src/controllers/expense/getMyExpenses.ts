@@ -44,7 +44,7 @@ const getMyExpenses = async (req: Request, res: Response) => {
 
         console.log("filters: ",filters);
 
-        let expenses: IExpense[] | any = await Expense.find(filters).sort("-createdAt");
+        let expenses: IExpense[] | any = await Expense.find(filters).sort("-expenseDate");
 
         expenses = await Category.populate(expenses, { path: "category" });
 

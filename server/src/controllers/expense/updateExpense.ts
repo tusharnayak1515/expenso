@@ -35,7 +35,7 @@ const updateExpense = async (req:Request, res:Response)=> {
         let expenses : IExpense[] | any = await Expense.find({user: userId, expenseDate : {
             $gte: startOfMonth,
             $lte: endOfMonth,
-        }}).sort("-createdAt");
+        }}).sort("-expenseDate");
 
         expenses = await Category.populate(expenses, {path: "category"});
 
