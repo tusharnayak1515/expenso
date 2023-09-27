@@ -127,7 +127,7 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
         console.log("updatedGroupedExpenses: ", updatedGroupedExpenses);
         setGroupedExpenses(updatedGroupedExpenses);
         setIsLoading(false);
-        if(isUpdated) {
+        if (isUpdated) {
           setIsUpdated(false);
         }
       }
@@ -245,7 +245,12 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
           />
         </div>
 
-        {isAddExpense && <AddExpense setIsAddExpense={setIsAddExpense} setIsUpdated={setIsUpdated} />}
+        {isAddExpense && (
+          <AddExpense
+            setIsAddExpense={setIsAddExpense}
+            setIsUpdated={setIsUpdated}
+          />
+        )}
         <div
           className={`w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4`}
         >
@@ -279,15 +284,19 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
             <p className={`text-orange-400`}>₹ {investmentAmount}</p>
           </div>
 
-          <div
-            className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
-          >
-            <div className={`flex justify-start items-center gap-1`}>
-              <GoDotFill className={`text-purple-400 text-xl`} />
-              <p className={`text-slate-400`}>Balance</p>
+          {activeExpenseType === "all" && (
+            <div
+              className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
+            >
+              <div className={`flex justify-start items-center gap-1`}>
+                <GoDotFill className={`text-purple-400 text-xl`} />
+                <p className={`text-slate-400`}>Balance</p>
+              </div>
+              <p className={`text-purple-400`}>
+                ₹ {creditAmount - spendAmount - investmentAmount}
+              </p>
             </div>
-            <p className={`text-purple-400`}>₹ {creditAmount-spendAmount-investmentAmount}</p>
-          </div>
+          )}
         </div>
 
         <div
