@@ -11,7 +11,7 @@ const HomeLayout = ({ children }: any) => {
       className={`min-h-[calc(100vh-80px)] w-full p-6 grid grid-cols-12 gap-4 bg-slate-600`}
     >
       {["/signup", "/signin"].indexOf(pathname) === -1 && (
-        <div className={`col-span-2 xl:col-span-2 hidden lg1:block`}>
+        <div className={`col-span-3 xl:col-span-2 hidden lg1:block`}>
           <Sidebar />
         </div>
       )}
@@ -20,7 +20,7 @@ const HomeLayout = ({ children }: any) => {
         className={`${
           ["/signup", "/signin"].indexOf(pathname) !== -1
             ? "col-span-12"
-            : "col-span-12 lg1:col-span-10 xl:col-span-10"
+            : "col-span-12 lg1:col-span-9 xl:col-span-10"
         } grid grid-cols-12 gap-6`}
       >
         {children}

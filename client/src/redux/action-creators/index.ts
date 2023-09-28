@@ -91,3 +91,23 @@ export const setAllCategories = (categories:any)=>  async(dispatch:any)=> {
         }
     });
 }
+
+// ************************************* Goals Section *********************************************** \\
+
+export const setMyGoals = (goals:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-goals",
+        payload: {
+            goals
+        }
+    });
+}
+
+export const setGoal = (goal:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-goal",
+        payload: {
+            goal
+        }
+    });
+}

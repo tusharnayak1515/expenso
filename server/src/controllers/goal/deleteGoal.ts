@@ -13,6 +13,10 @@ const deleteGoal = async (req:Request, res:Response)=> {
             return res.status(404).json({success, error: "Invalid goal"});
         }
 
+        if(isGoal?.user.toString() !== userId) {
+            return res.status(401).json({success, error: "Not allowed"})
+        }
+
         await Goal.findByIdAndDelete(goalId, {new: true}).exec();
 
         let goals: IGoal[] | any = await Goal.find({user: userId}).sort("-createdAt").exec();

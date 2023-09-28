@@ -252,7 +252,7 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
           />
         )}
         <div
-          className={`w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4`}
+          className={`w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4`}
         >
           <div
             className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
@@ -283,20 +283,6 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
             </div>
             <p className={`text-orange-400`}>₹ {investmentAmount}</p>
           </div>
-
-          {activeExpenseType === "all" && (
-            <div
-              className={`h-[100px] sm:h-[120px] md:h-[130px] w-full p-4 flex flex-col justify-center items-start gap-4 rounded-md bg-slate-900`}
-            >
-              <div className={`flex justify-start items-center gap-1`}>
-                <GoDotFill className={`text-purple-400 text-xl`} />
-                <p className={`text-slate-400`}>Balance</p>
-              </div>
-              <p className={`text-purple-400`}>
-                ₹ {creditAmount - spendAmount - investmentAmount}
-              </p>
-            </div>
-          )}
         </div>
 
         <div

@@ -88,7 +88,7 @@ const Auth = ({ type }: AuthPropTypes) => {
     const { name, email, password, otp } = userDetails;
     try {
       if (
-        name.replace("/s/g", "").trim().length !== 0 &&
+        name.replace("/\s/g", "").trim().length !== 0 &&
         emailRegex.test(email) &&
         passwordRegex.test(password) &&
         otp.toString().length === 4
@@ -109,7 +109,7 @@ const Auth = ({ type }: AuthPropTypes) => {
             progress: undefined,
           });
         }
-      } else if (name.replace("/s/g", "").trim().length === 0) {
+      } else if (name.replace("/\s/g", "").trim().length === 0) {
         toast.error("Name cannot be empty", {
           position: "top-right",
           autoClose: 3000,
@@ -170,7 +170,7 @@ const Auth = ({ type }: AuthPropTypes) => {
     try {
       if (
         emailRegex.test(email) &&
-        password.replace("/s/g", "").trim().length !== 0
+        password.replace("/\s/g", "").trim().length !== 0
       ) {
         setIsLoading(true);
         const res = await userSignin({ email, password });
