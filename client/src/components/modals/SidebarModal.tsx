@@ -7,7 +7,7 @@ import { MdOutlineClose } from "react-icons/md";
 
 const SidebarModal = ({setShowMenu}:any) => {
   return ReactDom.createPortal(
-    <div className={`fixed inset-0 bg-[#0000005f] z-[600]`}>
+    <div className={`block lg1:hidden fixed inset-0 bg-[#0000005f] z-[600]`}>
         <div className={`relatiive h-[100vh] w-[250px]`}>
            <Sidebar modal={true} setShowMenu={setShowMenu} /> 
         </div>

@@ -1,20 +1,22 @@
 "use client";
 
 import React from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useRouter, usePathname } from "next/navigation";
 
 import { RxDashboard } from "react-icons/rx";
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaUserCheck } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
 import { RiShutDownLine } from "react-icons/ri";
 import { actionCreators } from "@/redux";
 import { toast } from "react-toastify";
+import { IoMdLogIn } from "react-icons/io";
 
-const Sidebar = ({modal, setShowMenu}:any) => {
+const Sidebar = ({ modal, setShowMenu }: any) => {
   const router = useRouter();
   const params = usePathname();
   const dispatch: any = useDispatch();
+  const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
 
   const onLinkClick = (route: string) => {
     switch (route) {
@@ -36,18 +38,27 @@ const Sidebar = ({modal, setShowMenu}:any) => {
       case "profile":
         router.push("/profile");
         break;
+      case "signup":
+        router.push("/signup");
+        break;
+      case "signin":
+        router.push("/signin");
+        break;
 
       default:
         router.push("/");
         break;
     }
-    if(modal) {
+    if (modal) {
       setShowMenu(false);
     }
   };
 
   const onLogout = () => {
     dispatch(actionCreators.logout());
+    if (modal) {
+      setShowMenu(false);
+    }
     toast.success("Logged out successfully", {
       position: "top-right",
       autoClose: 3000,
@@ -61,46 +72,88 @@ const Sidebar = ({modal, setShowMenu}:any) => {
 
   return (
     <div
-      className={`${modal ? 'h-[100vh]' : 'h-[calc(100vh-120px)]'} w-full p-3 text-[17px] text-slate-400 
+      className={`${
+        modal ? "h-[100vh]" : "h-[calc(100vh-120px)]"
+      } w-full p-3 text-[17px] text-slate-400 
     flex flex-col justify-start items-start gap-2 rounded-md bg-slate-900`}
     >
-      {modal && <h1 className={`my-4 text-3xl text-slate-400 font-bold mx-auto`}>Expenso</h1>}
+      {modal && (
+        <h1 className={`my-4 text-3xl text-slate-400 font-bold mx-auto`}>
+          Expenso
+        </h1>
+      )}
 
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md ${params === '/' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
-        onClick={() => onLinkClick("dashboard")}
-      >
-        <RxDashboard className={`text-2xl`} />
-        <p>Dashboard</p>
-      </div>
+      {user && (
+        <div
+          className={`w-full p-3 flex justify-start items-center gap-4 
+      cursor-pointer rounded-md ${
+        params === "/" ? "bg-slate-600" : "bg-transparent"
+      } hover:bg-slate-600 transition-all`}
+          onClick={() => onLinkClick("dashboard")}
+        >
+          <RxDashboard className={`text-2xl`} />
+          <p>Dashboard</p>
+        </div>
+      )}
 
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md ${params === '/goals' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
-        onClick={() => onLinkClick("goals")}
-      >
-        <GoGoal className={`text-2xl`} />
-        <p>Goals</p>
-      </div>
+      {user && (
+        <div
+          className={`w-full p-3 flex justify-start items-center gap-4 
+      cursor-pointer rounded-md ${
+        params === "/goals" ? "bg-slate-600" : "bg-transparent"
+      } hover:bg-slate-600 transition-all`}
+          onClick={() => onLinkClick("goals")}
+        >
+          <GoGoal className={`text-2xl`} />
+          <p>Goals</p>
+        </div>
+      )}
 
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
-      cursor-pointer rounded-md ${params === '/profile' ? 'bg-slate-600' : 'bg-transparent'} hover:bg-slate-600 transition-all`}
-        onClick={() => onLinkClick("profile")}
-      >
-        <FaUserAlt className={`text-2xl`} />
-        <p>Profile</p>
-      </div>
+      {user && (
+        <div
+          className={`w-full p-3 flex justify-start items-center gap-4 
+      cursor-pointer rounded-md ${
+        params === "/profile" ? "bg-slate-600" : "bg-transparent"
+      } hover:bg-slate-600 transition-all`}
+          onClick={() => onLinkClick("profile")}
+        >
+          <FaUserAlt className={`text-2xl`} />
+          <p>Profile</p>
+        </div>
+      )}
 
-      <div
-        className={`w-full p-3 flex justify-start items-center gap-4 
+      {user && (
+        <div
+          className={`w-full p-3 flex justify-start items-center gap-4 
       cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
-        onClick={onLogout}
-      >
-        <RiShutDownLine className={`text-2xl`} />
-        <p>Logout</p>
-      </div>
+          onClick={onLogout}
+        >
+          <RiShutDownLine className={`text-2xl`} />
+          <p>Logout</p>
+        </div>
+      )}
+
+      {!user && (
+        <div
+          className={`w-full p-3 flex justify-start items-center gap-4 
+      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+          onClick={() => onLinkClick("signup")}
+        >
+          <FaUserCheck className={`text-2xl`} />
+          <p>Signup</p>
+        </div>
+      )}
+
+      {!user && (
+        <div
+          className={`w-full p-3 flex justify-start items-center gap-4 
+      cursor-pointer rounded-md bg-transparent hover:bg-slate-600 transition-all`}
+          onClick={() => onLinkClick("signin")}
+        >
+          <IoMdLogIn className={`text-2xl`} />
+          <p>Signin</p>
+        </div>
+      )}
     </div>
   );
 };

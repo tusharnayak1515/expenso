@@ -95,7 +95,7 @@ const MyGoals = () => {
       {goals?.length === 0 ? (
         <p className={`text-xl`}>No Goals to show</p>
       ) : (
-        <div className="w-full overflow-x-auto">
+        <div className="w-full xl:w-[80%] overflow-x-auto">
           <table className="min-w-full">
             <thead>
               <tr>
