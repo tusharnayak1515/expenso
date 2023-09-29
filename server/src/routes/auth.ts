@@ -43,7 +43,10 @@ router.get(
 
             res.cookie("authorization", token, {
                 maxAge: 60 * 60 * 24 * 1000,
-                path: "/"
+                path: "/",
+                httpOnly: true,
+                sameSite: "none",
+                secure: true
             });
 
             // res.status(200).json({ success: true, token, user });

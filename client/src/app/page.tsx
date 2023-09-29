@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import Cookies from 'js-cookie';
 
 const Dashboard = dynamic(()=> import("@/components/dashboard/Dashboard"), {ssr: false});
 const History = dynamic(()=> import("@/components/dashboard/History"), {ssr: false});
@@ -31,6 +32,8 @@ const Home = () => {
   }
 
   useEffect(() => {
+    const token = Cookies.get('authorization');
+    console.log("js token: ",token);
     console.log("query token: ",query.get("token"));
     console.log("cookie token: ",getCookie("authorization"));
     if(query.get("token")) {
@@ -38,12 +41,11 @@ const Home = () => {
         setCookie("authorization",query.get("token"));
         dispatch(actionCreators.setToken(query.get("token")));
         router.replace("/");
-        return;
       }
     }
     console.log("user: ",user);
 
-    if (!getCookie("authorization")) {
+    if (!token) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
     }
