@@ -29,8 +29,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log("token: ",user);
-    console.log("cookie: ",getCookie("authorization"));
     if (!user) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
