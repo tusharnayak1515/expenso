@@ -31,7 +31,9 @@ const Home = () => {
 
   useEffect(() => {
     if(query.get("token")) {
-      setCookie("authorization",query.get("token"));
+      if (!getCookie("authorization")) {
+        setCookie("authorization",query.get("token"));
+      }
     }
 
     if (!getCookie("authorization")) {
