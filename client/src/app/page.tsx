@@ -33,7 +33,7 @@ const Home = () => {
     console.log("cookie token: ",getCookie("authorization"));
     if(query.get("token")) {
       if(!getCookie("authorization")) {
-        setCookie("authorization",`Bearer ${query.get("token")}`);
+        setCookie("authorization",query.get("token"));
         dispatch(actionCreators.setToken(query.get("token")));
         router.replace("/");
       }
