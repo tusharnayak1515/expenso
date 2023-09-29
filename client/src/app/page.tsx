@@ -22,6 +22,7 @@ const Home = () => {
     try {
       const res:any = await getProfile();
       if(res?.success) {
+        localStorage.setItem("expenso_user_profile", JSON.stringify(res?.user));
         dispatch(actionCreators.userSignin(res?.user));
       }
     } catch (error:any) {
