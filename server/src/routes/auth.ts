@@ -41,16 +41,14 @@ router.get(
             const token = `Bearer ${authInfo?.token}`;
             const user = authInfo?.user;
 
-            res.cookie("authorization", token, {
+            res.cookie("authorization", `Bearer ${token}`, {
                 maxAge: 60 * 60 * 24 * 1000,
-                path: "/",
-                sameSite: "none",
-                secure: true,
+                path: "/"
             });
 
             // res.status(200).json({ success: true, token, user });
 
-            const FRONTEND_URL = process.env.NODE_ENV === "production" ? `https://expenso-jet.vercel.app` : process.env.CLIENT_URL;
+            const FRONTEND_URL = process.env.NODE_ENV === "production" ? `https://expenso-jet.vercel.app?token=${token}` : process.env.CLIENT_URL;
 
             res.redirect(FRONTEND_URL!);
         })(req, res, next);

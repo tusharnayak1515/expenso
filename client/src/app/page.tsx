@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 const Dashboard = dynamic(()=> import("@/components/dashboard/Dashboard"), {ssr: false});
@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import { getCookie, setCookie } from "cookies-next";
 
 const Home = () => {
+  const query:any = useSearchParams();
   const router = useRouter();
   const dispatch:any = useDispatch();
   const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
@@ -30,6 +31,14 @@ const Home = () => {
 
   useEffect(() => {
     console.log("cookie token: ",getCookie("authorization"));
+    if(query.get("token")) {
+      if(!getCookie("authorization")) {
+        setCookie("authorization",`Bearer ${query.get("token")}`);
+        dispatch(actionCreators.setToken(query.get("token")));
+        router.replace("/");
+      }
+    }
+
     if (!getCookie("authorization")) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
