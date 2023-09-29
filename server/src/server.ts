@@ -29,6 +29,7 @@ store.on('error', (error) => {
 });
 
 const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-mocha.vercel.app";
+console.log("FRONTEND_URL: ",FRONTEND_URL);
 
 app.use(cors({
     origin: FRONTEND_URL,
