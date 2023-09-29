@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter as myRouter } from "next/router";
 import { useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
@@ -9,9 +10,10 @@ const History = dynamic(()=> import("@/components/dashboard/History"), {ssr: fal
 import { getProfile } from "@/apiCalls/auth";
 import { actionCreators } from "@/redux";
 import dynamic from "next/dynamic";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 const Home = () => {
+  const myrouter:any = myRouter();
   const router = useRouter();
   const dispatch:any = useDispatch();
   const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
@@ -29,14 +31,18 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if (!user) {
+    if(myrouter?.query?.token) {
+      setCookie("authorization",myrouter?.query?.token);
+    }
+
+    if (!getCookie("authorization")) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
     }
     else {
       fetchProfile();
     }
-  }, [user, router]);
+  }, [myrouter, router]);
 
   return (
     <>
