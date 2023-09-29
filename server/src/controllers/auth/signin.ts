@@ -44,7 +44,8 @@ const signin = async (req: Request, res: Response) => {
 
     res.cookie("authorization", `Bearer ${jwtToken}`, {
       maxAge: 60 * 60 * 24 * 1000,
-      path: "/"
+      sameSite: "none",
+      path: "/",
     });
 
     success = true;

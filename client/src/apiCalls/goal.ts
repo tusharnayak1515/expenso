@@ -1,6 +1,6 @@
 import api from "@/utils/api";
 
-const url = process.env.NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
+const url = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
 
 export const fetchMyGoals = async () => {
     const { data } = await api.get(`${url}/api/goals`);
