@@ -58,7 +58,8 @@ router.get("/logout", (req, res) => {
     req.logout(() => {
         console.log("Logout successfull");
     });
-    res.redirect(process.env.CLIENT_URL!);
+    const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-mocha.vercel.app" : process.env.CLIENT_URL;
+    res.redirect(FRONTEND_URL!);
 });
 
 router.post("/signup", signup);
