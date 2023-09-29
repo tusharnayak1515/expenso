@@ -19,6 +19,7 @@ const fetchUser = async (
   }
   try {
     const userToken = token.substring(7, token.length);
+    console.log("userToken: ", userToken);
     const data:any = jwt.verify(userToken, secret!);
 
     // Checking if a user exists with the id received from the jwt
