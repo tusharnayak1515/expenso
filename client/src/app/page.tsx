@@ -39,6 +39,7 @@ const Home = () => {
       localStorage.removeItem("expenso_user_profile");
     }
     else {
+      console.log("token: ", getCookie("authorization"));
       fetchProfile();
     }
   }, [query, router]);
