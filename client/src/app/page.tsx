@@ -43,7 +43,7 @@ const Home = () => {
     }
     console.log("user: ",user);
 
-    if (!user) {
+    if (!getCookie("authorization")) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
     }
