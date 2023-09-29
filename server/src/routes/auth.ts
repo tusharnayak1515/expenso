@@ -38,10 +38,10 @@ router.get(
                 return res.redirect('/api/auth/login/failed');
             }
 
-            const token = authInfo?.token;
+            const token = `Bearer ${authInfo?.token}`;
             const user = authInfo?.user;
 
-            res.cookie("authorization", `Bearer ${token}`, {
+            res.cookie("authorization", token, {
                 maxAge: 60 * 60 * 24 * 1000,
                 path: "/"
             });
