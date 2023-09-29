@@ -38,7 +38,7 @@ router.get(
                 return res.redirect('/api/auth/login/failed');
             }
 
-            const token = `Bearer ${authInfo?.token}`;
+            const token = authInfo?.token;
             const user = authInfo?.user;
 
             res.cookie("authorization", token, {
