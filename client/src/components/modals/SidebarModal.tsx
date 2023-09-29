@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react";
+import dynamic from "next/dynamic";
 import ReactDom from "react-dom";
-import Sidebar from "../Sidebar";
+const Sidebar = dynamic(()=> import("../Sidebar"), {ssr: false});
 import { MdOutlineClose } from "react-icons/md";
 
 const SidebarModal = ({setShowMenu}:any) => {

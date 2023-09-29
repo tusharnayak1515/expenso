@@ -1,15 +1,15 @@
 import { Providers } from "@/redux/provider";
 
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 
 const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
+const HomeLayout = dynamic(()=> import("@/components/layouts/HomeLayout"), {ssr: false});
 
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import dynamic from "next/dynamic";
-import HomeLayout from "@/components/layouts/HomeLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 

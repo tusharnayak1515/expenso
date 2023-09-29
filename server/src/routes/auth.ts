@@ -1,15 +1,78 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import signup from "../controllers/auth/signup";
 import signin from "../controllers/auth/signin";
 import fetchUser from "../middlewares/fetchUser";
 import changedPassword from "../controllers/auth/changePassword";
 import resetPassword from "../controllers/auth/resetPassword";
 import updateProfile from "../controllers/auth/updateProfile";
+import passport from "passport";
+import getProfile from "../controllers/auth/getProfile";
 
 const router = express.Router();
 
+router.get("/login/success", (req, res) => {
+    if (req.user) {
+        res.status(200).json({
+            success: true,
+            message: "Successfully Logged In",
+            user: req.user,
+        });
+    } else {
+        res.status(403).json({ error: true, message: "Not Authorized" });
+    }
+});
+
+router.get("/login/failed", (req, res) => {
+    res.status(401).json({
+        success: false,
+        error: "Log in failure",
+    });
+});
+
+router.get("/google", passport.authenticate("google"));
+
+router.get(
+    "/google/callback", (req, res, next) => {
+        passport.authenticate("google", (err: any, authInfo: any) => {
+            if (err) {
+                return res.redirect('/api/auth/login/failed');
+            }
+
+            const token = authInfo?.token;
+            const user = authInfo?.user;
+
+            res.cookie("authorization", `Bearer ${token}`, {
+                maxAge: 60 * 60 * 24 * 1000,
+                path: "/"
+            });
+
+            // res.status(200).json({ success: true, token, user });
+
+            res.redirect(process.env.CLIENT_URL!);
+        })(req, res, next);
+    });
+
+// (req:any, res:any)=> {
+//     const token = req?.authInfo?.token;
+//     res.cookie("authorization", `Bearer ${token}`, {
+//         maxAge: 60 * 60 * 24 * 1000,
+//         path: "/"
+//     });
+
+//     const user = req.user;
+//     return res.status(200).json({success: true, token, user});
+// }
+
+router.get("/logout", (req, res) => {
+    req.logout(() => {
+        console.log("Logout successfull");
+    });
+    res.redirect(process.env.CLIENT_URL!);
+});
+
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.get("/profile", fetchUser, getProfile);
 router.put("/update-profile", fetchUser, updateProfile);
 router.put("/change-password", fetchUser, changedPassword);
 router.put("/reset-password", resetPassword);

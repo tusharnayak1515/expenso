@@ -14,6 +14,7 @@ export interface IUser {
     email: string;
     dp?: string;
     password: string;
+    googleId?: string;
     createdAt?: number;
     updatedAt?: number;
 }

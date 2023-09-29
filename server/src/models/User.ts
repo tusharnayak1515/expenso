@@ -22,6 +22,10 @@ const UserSchema = new Schema<IUserDocument, IUserModel>({
         type: String,
         required: true
     },
+    googleId: {
+        type: String,
+        default: null
+    },
     createdAt: Number,
     updatedAt: Number,
 }, { timestamps: true, versionKey: false });

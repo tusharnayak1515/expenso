@@ -1,12 +1,13 @@
 "use client";
 
 import React, { Fragment, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector, shallowEqual } from "react-redux";
+const SidebarModal = dynamic(()=> import("./modals/SidebarModal"), {ssr: false});
 
 import { HiOutlineMenu } from "react-icons/hi";
-import SidebarModal from "./modals/SidebarModal";
 
 const Navbar = () => {
   const { profile } = useSelector(

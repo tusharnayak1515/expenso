@@ -70,3 +70,8 @@ export const resetPassword = async({email, newPassword, confirmPassword, otp}:re
     const {data} = await api.put(`${url}/api/auth/reset-password`, {email, newPassword, confirmPassword, otp});
     return data;
 }
+
+export const getProfile = async()=> {
+    const {data} = await api.get(`${url}/api/auth/profile`);
+    return data;
+}

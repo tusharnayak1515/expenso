@@ -1,7 +1,8 @@
 "use client"
 
 import React from "react";
-import Sidebar from "../Sidebar";
+import dynamic from "next/dynamic";
+const Sidebar = dynamic(()=> import("../Sidebar"), {ssr: false});
 import { usePathname } from "next/navigation";
 
 const HomeLayout = ({ children }: any) => {

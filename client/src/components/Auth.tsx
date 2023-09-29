@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { sendOtp, userSignin, userSignup } from "@/apiCalls/auth";
-import Link from "next/link";
 import { toast } from "react-toastify";
 import { actionCreators } from "@/redux";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "./LoadingSpinner";
 import ResetPasswordModal from "./modals/ResetPasswordModal";
+
+import { BiLogoGoogle } from "react-icons/bi";
 
 const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/;
@@ -88,7 +90,7 @@ const Auth = ({ type }: AuthPropTypes) => {
     const { name, email, password, otp } = userDetails;
     try {
       if (
-        name.replace("/\s/g", "").trim().length !== 0 &&
+        name.replace("/s/g", "").trim().length !== 0 &&
         emailRegex.test(email) &&
         passwordRegex.test(password) &&
         otp.toString().length === 4
@@ -109,7 +111,7 @@ const Auth = ({ type }: AuthPropTypes) => {
             progress: undefined,
           });
         }
-      } else if (name.replace("/\s/g", "").trim().length === 0) {
+      } else if (name.replace("/s/g", "").trim().length === 0) {
         toast.error("Name cannot be empty", {
           position: "top-right",
           autoClose: 3000,
@@ -170,7 +172,7 @@ const Auth = ({ type }: AuthPropTypes) => {
     try {
       if (
         emailRegex.test(email) &&
-        password.replace("/\s/g", "").trim().length !== 0
+        password.replace("/s/g", "").trim().length !== 0
       ) {
         setIsLoading(true);
         const res = await userSignin({ email, password });
@@ -180,7 +182,7 @@ const Auth = ({ type }: AuthPropTypes) => {
             "expenso_user_profile",
             JSON.stringify(res.user)
           );
-          setUserDetails({...userDetails, email: "", password: ""});
+          setUserDetails({ ...userDetails, email: "", password: "" });
           dispatch(actionCreators.userSignin(res.user));
           toast.success("Welcome Back", {
             position: "top-right",
@@ -227,10 +229,19 @@ const Auth = ({ type }: AuthPropTypes) => {
     }
   };
 
+  const googleAuth = () => {
+    window.open(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google/callback`,
+      "_self"
+    );
+  };
+
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      {isResetPassword && <ResetPasswordModal setIsResetPassword={setIsResetPassword} />}
+      {isResetPassword && (
+        <ResetPasswordModal setIsResetPassword={setIsResetPassword} />
+      )}
       <div
         className={`h-auto w-full p-4 md:p-6 flex flex-col justify-center md:justify-start items-center gap-4`}
       >
@@ -296,9 +307,16 @@ const Auth = ({ type }: AuthPropTypes) => {
             />
           </div>
 
-          {type === "signin" && <div className={`w-full flex justify-end items-center`}>
-            <p className={`text-sm text-blue-400 font-semibold cursor-pointer hover:underline`} onClick={()=> setIsResetPassword(true)}>Forgot password?</p>
-            </div>}
+          {type === "signin" && (
+            <div className={`w-full flex justify-end items-center`}>
+              <p
+                className={`text-sm text-blue-400 font-semibold cursor-pointer hover:underline`}
+                onClick={() => setIsResetPassword(true)}
+              >
+                Forgot password?
+              </p>
+            </div>
+          )}
 
           {type === "signup" && otpSent && (
             <div
@@ -319,9 +337,28 @@ const Auth = ({ type }: AuthPropTypes) => {
 
           <button
             type="submit"
-            className={`w-full py-2 px-4 font-semibold border border-slate-400 rounded-md hover:bg-slate-800 bg-slate-900 transition-all duration-300`}
+            className={`w-full py-2 px-4 font-semibold border border-slate-400 rounded-md 
+            hover:bg-slate-800 bg-slate-900 transition-all duration-300`}
           >
             {type === "signin" ? `Signin` : `Signup`}
+          </button>
+
+          <div className={`w-full flex justify-between items-center gap-2`}>
+            <div className={`w-full border border-slate-400`}></div>
+            <p className={`text-slate-400`}>OR</p>
+            <div className={`w-full border border-slate-400`}></div>
+          </div>
+
+          <button
+            type="button"
+            className={`w-full py-2 px-4 text-slate-400 
+              flex justify-center items-center gap-2 
+              border border-slate-400 rounded-md
+            hover:bg-slate-900 bg-slate-950 transition-all duration-300`}
+            onClick={googleAuth}
+          >
+            <BiLogoGoogle />
+            <span>Continue with Google</span>
           </button>
 
           {type === "signin" ? (

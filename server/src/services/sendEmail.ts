@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
 const sendEmail = async ({ subject, text, html, email }:any) => {
+  console.log("email: ",email);
   const mailOptions = {
     from: process.env.NODE_MAILER_EMAIL,
     to: email,
