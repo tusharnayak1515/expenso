@@ -41,6 +41,7 @@ const Home = () => {
         return;
       }
     }
+    console.log("user: ",user);
 
     if (!user) {
       router.replace("/signin");
