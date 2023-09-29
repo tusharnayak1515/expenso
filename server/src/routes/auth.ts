@@ -48,7 +48,9 @@ router.get(
 
             // res.status(200).json({ success: true, token, user });
 
-            res.redirect(process.env.CLIENT_URL!);
+            const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-mocha.vercel.app" : process.env.CLIENT_URL;
+
+            res.redirect(FRONTEND_URL!);
         })(req, res, next);
     });
 
