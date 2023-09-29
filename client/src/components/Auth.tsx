@@ -11,6 +11,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import ResetPasswordModal from "./modals/ResetPasswordModal";
 
 import { BiLogoGoogle } from "react-icons/bi";
+import { setCookie } from "cookies-next";
 
 const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/;
@@ -178,6 +179,7 @@ const Auth = ({ type }: AuthPropTypes) => {
         const res = await userSignin({ email, password });
         if (res.success) {
           setIsLoading(false);
+          setCookie("authorization",res.token);
           localStorage.setItem(
             "expenso_user_profile",
             JSON.stringify(res.user)
