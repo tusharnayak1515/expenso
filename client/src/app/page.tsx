@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter as myRouter } from "next/router";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 const Dashboard = dynamic(()=> import("@/components/dashboard/Dashboard"), {ssr: false});
@@ -13,7 +12,7 @@ import dynamic from "next/dynamic";
 import { getCookie, setCookie } from "cookies-next";
 
 const Home = () => {
-  const myrouter:any = myRouter();
+  const query:any = useSearchParams();
   const router = useRouter();
   const dispatch:any = useDispatch();
   const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
@@ -31,8 +30,8 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if(myrouter?.query?.token) {
-      setCookie("authorization",myrouter?.query?.token);
+    if(query?.token) {
+      setCookie("authorization",query?.token);
     }
 
     if (!getCookie("authorization")) {
@@ -42,7 +41,7 @@ const Home = () => {
     else {
       fetchProfile();
     }
-  }, [myrouter, router]);
+  }, [query, router]);
 
   return (
     <>
