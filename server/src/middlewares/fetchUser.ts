@@ -32,7 +32,7 @@ const fetchUser = async (
     next();
   } catch (error:any) {
     success = false;
-    return res.json({ success, error: error.message, status: 401 });
+    return res.status(401).json({ success, error: error.message });
   }
 };
 
