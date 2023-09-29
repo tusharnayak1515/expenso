@@ -45,6 +45,7 @@ router.get(
                 maxAge: 60 * 60 * 24 * 1000,
                 path: "/",
                 sameSite: "none",
+                secure: true,
             });
 
             // res.status(200).json({ success: true, token, user });

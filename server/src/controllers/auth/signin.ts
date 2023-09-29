@@ -46,6 +46,7 @@ const signin = async (req: Request, res: Response) => {
       maxAge: 60 * 60 * 24 * 1000,
       sameSite: "none",
       path: "/",
+      secure: true,
     });
 
     success = true;
