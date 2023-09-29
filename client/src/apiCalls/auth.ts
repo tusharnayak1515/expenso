@@ -39,6 +39,7 @@ type signinProps = {
 }
 
 export const userSignin = async ({ email, password }: signinProps) => {
+    console.log("url: ",url);
     const { data } = await api.post(`${url}/api/auth/signin`, { email, password });
     return data;
 }
