@@ -54,17 +54,6 @@ router.get(
         })(req, res, next);
     });
 
-// (req:any, res:any)=> {
-//     const token = req?.authInfo?.token;
-//     res.cookie("authorization", `Bearer ${token}`, {
-//         maxAge: 60 * 60 * 24 * 1000,
-//         path: "/"
-//     });
-
-//     const user = req.user;
-//     return res.status(200).json({success: true, token, user});
-// }
-
 router.get("/logout", (req, res) => {
     req.logout(() => {
         console.log("Logout successfull");
