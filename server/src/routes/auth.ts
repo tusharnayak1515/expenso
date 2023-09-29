@@ -48,7 +48,7 @@ router.get(
 
             // res.status(200).json({ success: true, token, user });
 
-            const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-mocha.vercel.app" : process.env.CLIENT_URL;
+            const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : process.env.CLIENT_URL;
 
             res.redirect(FRONTEND_URL!);
         })(req, res, next);
@@ -58,7 +58,7 @@ router.get("/logout", (req, res) => {
     req.logout(() => {
         console.log("Logout successfull");
     });
-    const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-mocha.vercel.app" : process.env.CLIENT_URL;
+    const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : process.env.CLIENT_URL;
     res.redirect(FRONTEND_URL!);
 });
 

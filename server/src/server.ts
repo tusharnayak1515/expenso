@@ -28,7 +28,7 @@ store.on('error', (error) => {
     console.error('MongoDB session store error:', error);
 });
 
-const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-mocha.vercel.app";
+const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-jet.vercel.app";
 console.log("FRONTEND_URL: ",FRONTEND_URL);
 
 app.use(cors({
