@@ -44,10 +44,9 @@ const Home = () => {
       localStorage.removeItem("expenso_user_profile");
     }
     else {
-      dispatch(actionCreators.setToken(getCookie("authorization")));
       fetchProfile();
     }
-  }, [user, router]);
+  }, [user, router, query.get("token")]);
 
   return (
     <>
