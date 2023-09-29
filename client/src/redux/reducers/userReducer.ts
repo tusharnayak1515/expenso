@@ -31,6 +31,13 @@ const userReducer = (state = initState, action: any) => {
       profile: profile
     };
   }
+  else if (action.type === "set-token") {
+    const { token } = action.payload;
+    return {
+      ...state,
+      user: token,
+    };
+  }
   else if (action.type === "edit-profile") {
     const { profile } = action.payload;
     return {

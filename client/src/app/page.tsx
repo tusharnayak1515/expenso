@@ -9,6 +9,7 @@ const History = dynamic(()=> import("@/components/dashboard/History"), {ssr: fal
 import { getProfile } from "@/apiCalls/auth";
 import { actionCreators } from "@/redux";
 import dynamic from "next/dynamic";
+import { getCookie, setCookie } from "cookies-next";
 
 const Home = () => {
   const router = useRouter();
@@ -28,11 +29,13 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if (!user) {
+    console.log("cookie token: ",getCookie("authorization"));
+    if (!getCookie("authorization")) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
     }
     else {
+      dispatch(actionCreators.setToken(getCookie("authorization")));
       fetchProfile();
     }
   }, [user, router]);

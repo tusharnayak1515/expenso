@@ -2,6 +2,15 @@ import { deleteCookie, getCookie } from "cookies-next";
 
 // ************************************* User Section *********************************************** \\
 
+export const setToken = (token:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-token",
+        payload: {
+            user: token
+        }
+    });
+}
+
 export const userSignin = (user:any)=>  async(dispatch:any)=> {
     dispatch({
         type: "signin",
