@@ -30,6 +30,7 @@ const Home = () => {
   }
 
   useEffect(() => {
+    console.log("query token: ",query.get("token"));
     console.log("cookie token: ",getCookie("authorization"));
     if(query.get("token")) {
       if(!getCookie("authorization")) {
