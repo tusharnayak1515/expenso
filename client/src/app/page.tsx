@@ -36,10 +36,11 @@ const Home = () => {
         setCookie("authorization",query.get("token"));
         dispatch(actionCreators.setToken(query.get("token")));
         router.replace("/");
+        return;
       }
     }
 
-    if (!getCookie("authorization")) {
+    if (!user) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
     }
