@@ -1,4 +1,5 @@
 import { deleteCookie, getCookie } from "cookies-next";
+import Cookies from 'js-cookie';
 
 // ************************************* User Section *********************************************** \\
 
@@ -34,6 +35,10 @@ export const updateProfile = (user:any)=> async(dispatch:any)=> {
 }
 
 export const logout = ()=>  async(dispatch:any)=> {
+    const token = Cookies.get('authorization');
+    if(token) {
+        Cookies.remove("authorization");
+    }
     deleteCookie("authorization");
     if(typeof localStorage !== "undefined") {
         localStorage.removeItem("expenso_user_profile");
