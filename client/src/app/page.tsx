@@ -46,6 +46,7 @@ const Home = () => {
       }
     }
 
+    console.log("token: ", token);
     console.log("user: ", user);
 
     if (!user) {
