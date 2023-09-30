@@ -10,6 +10,14 @@
     {
       "src": "/api/(.*)",
       "dest": "src/server.ts"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "public/uploads/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/server.ts"
     }
   ]
 }
