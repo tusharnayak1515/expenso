@@ -42,7 +42,7 @@ const updateProfile = async (req: Request, res: Response) => {
                       file.originalFilename.lastIndexOf(".")
                     );
             
-                    const newPath = path.join("uploads", file.newFilename + extension);
+                    const newPath = path.join(__dirname, 'public', file.newFilename + extension);
     
                     if(user?.dp !== `${APP_URL}/${newPath}`) {
                         mv(file.filepath, newPath, (err) => {
@@ -51,7 +51,7 @@ const updateProfile = async (req: Request, res: Response) => {
                           }
                         });
                 
-                        image = `${APP_URL}/${newPath}`;
+                        image = `${APP_URL}/${file.newFilename + extension}`;
                     }
                     else {
                         image = user?.dp;
