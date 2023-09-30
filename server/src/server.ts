@@ -84,7 +84,7 @@ app.use("/api/goals", goalRoutes);
 
 // updateSchema();
 
-const addCategories = async () => {
+// const addCategories = async () => {
     // await Category.create({
     //     name: "shopping"
     // });
@@ -132,7 +132,7 @@ const addCategories = async () => {
     // await Category.create({
     //     name: "food"
     // });
-}
+// }
 
 // addCategories();
 
