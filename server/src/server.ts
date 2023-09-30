@@ -71,7 +71,8 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
 
 app.get('/list-folder', (req, res) => {
-    const folderPath = path.join('public','uploads');
+    const folderPath = path.join('public');
+    console.log("folderPath: ",folderPath);
     fs.readdir(folderPath, (err, files) => {
       if (err) {
         return res.status(500).json({ error: 'Error reading folder contents' });
