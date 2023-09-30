@@ -1,10 +1,10 @@
 import api from "@/utils/api";
 
 const url = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
-const FILE_SERVER_URI_DEV = process.env.NEXT_PUBLIC_NODE_ENV === "development"
+const FILE_SERVER_URI= process.env.NEXT_PUBLIC_NODE_ENV === "development"
     ? process.env.NEXT_PUBLIC_FILE_SERVER_URI_DEV
     : process.env.NEXT_PUBLIC_FILE_SERVER_URI_PROD;
-console.log("upload server link: ", FILE_SERVER_URI_DEV);
+console.log("upload server link: ", FILE_SERVER_URI);
 
 type sendOtpProps = {
     email: String;
@@ -60,7 +60,7 @@ export const updateProfile = async ({ name, email, dp }: updateProfilePropType) 
 }
 
 export const uploadDp = async (formData: any) => {
-    const { data } = await api.post(`${FILE_SERVER_URI_DEV}/api/upload`, formData, {
+    const { data } = await api.post(`${FILE_SERVER_URI}/api/upload`, formData, {
         headers: {
             "access-token": "6d0b2684f680b4d9e3ea7e1085785bbf"
         }
