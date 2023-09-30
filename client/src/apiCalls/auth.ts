@@ -1,6 +1,8 @@
 import api from "@/utils/api";
 
 const url = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
+const FILE_SERVER_URI_DEV = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? process.env.NEXT_PUBLIC_FILE_SERVER_URI_DEV : "";
+console.log("upload server link: ", FILE_SERVER_URI_DEV);
 
 type sendOtpProps = {
     email: String;
@@ -39,13 +41,28 @@ type signinProps = {
 }
 
 export const userSignin = async ({ email, password }: signinProps) => {
-    console.log("url: ",url);
+    console.log("url: ", url);
     const { data } = await api.post(`${url}/api/auth/signin`, { email, password });
     return data;
 }
 
-export const updateProfile = async(formData:any)=> {
-    const {data} = await api.put(`${url}/api/auth/update-profile`, formData);
+type updateProfilePropType = {
+    name: String;
+    email: String;
+    dp: String | null;
+}
+
+export const updateProfile = async ({ name, email, dp }: updateProfilePropType) => {
+    const { data } = await api.put(`${url}/api/auth/update-profile`, { name, email, dp });
+    return data;
+}
+
+export const uploadDp = async (formData: any) => {
+    const { data } = await api.post(`${FILE_SERVER_URI_DEV}/api/upload`, formData, {
+        headers: {
+            "access-token": "6d0b2684f680b4d9e3ea7e1085785bbf"
+        }
+    });
     return data;
 }
 
@@ -55,8 +72,8 @@ type updatePasswordPropType = {
     confirmPassword: String;
 }
 
-export const updatePassword = async({oldPassword, newPassword, confirmPassword}:updatePasswordPropType)=> {
-    const {data} = await api.put(`${url}/api/auth/change-password`, {oldPassword, newPassword, confirmPassword});
+export const updatePassword = async ({ oldPassword, newPassword, confirmPassword }: updatePasswordPropType) => {
+    const { data } = await api.put(`${url}/api/auth/change-password`, { oldPassword, newPassword, confirmPassword });
     return data;
 }
 
@@ -67,12 +84,12 @@ type resetPasswordPropType = {
     otp: number;
 }
 
-export const resetPassword = async({email, newPassword, confirmPassword, otp}:resetPasswordPropType)=> {
-    const {data} = await api.put(`${url}/api/auth/reset-password`, {email, newPassword, confirmPassword, otp});
+export const resetPassword = async ({ email, newPassword, confirmPassword, otp }: resetPasswordPropType) => {
+    const { data } = await api.put(`${url}/api/auth/reset-password`, { email, newPassword, confirmPassword, otp });
     return data;
 }
 
-export const getProfile = async()=> {
-    const {data} = await api.get(`${url}/api/auth/profile`);
+export const getProfile = async () => {
+    const { data } = await api.get(`${url}/api/auth/profile`);
     return data;
 }

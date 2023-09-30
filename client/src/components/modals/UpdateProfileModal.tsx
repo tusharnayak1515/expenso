@@ -1,6 +1,6 @@
 "use client";
 
-import { updateProfile } from "@/apiCalls/auth";
+import { updateProfile, uploadDp } from "@/apiCalls/auth";
 import { actionCreators } from "@/redux";
 import React, { useState } from "react";
 import ReactDom from "react-dom";
@@ -44,21 +44,23 @@ const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
 
   const onUpdateProfile = async () => {
     setLoading(true);
+    const {name,email} = userDetails;
     try {
-      const formData = new FormData();
-      formData.append("name", userDetails?.name);
-      formData.append("email", userDetails?.email);
-      if (dp && dp === profile?.dp) {
-        formData.append("dp", profile?.dp);
-      } else if (dp) {
-        formData.append("dp", dp);
-      } else {
-        formData.append(
-          "dp",
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-        );
+      let userDp = null;
+      if(dp && dp !== profile?.dp) {
+        const formData = new FormData();
+        if (dp) {
+          formData.append("dp", dp);
+        }
+        const res:any = await uploadDp(formData);
+        if(res.success) {
+          userDp = res.filename;
+        }
       }
-      const res = await updateProfile(formData);
+      else if(dp && dp === profile?.dp) {
+        userDp = profile?.dp;
+      }
+      const res:any = await updateProfile({name,email,dp: userDp});
       if (res.success) {
         dispatch(actionCreators.updateProfile(res.user));
         setLoading(false);
