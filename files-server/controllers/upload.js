@@ -39,7 +39,7 @@ const upload = async (req, res) => {
 
         mv(file.filepath, newPath, (err) => {
           if (err) {
-            return;
+            return res.status(500).json({ success, error: "Something went wrong" });
           }
         });
         success = true;
