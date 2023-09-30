@@ -4,6 +4,9 @@ const mv = require("mv");
 const FILE_SERVER_URL =
   process.env.NODE_ENV === "development" ? process.env.FILE_SERVER_URL_DEV : process.env.FILE_SERVER_URL_PROD;
 
+const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-jet.vercel.app";
+console.log("FRONTEND_URL: ",FRONTEND_URL);
+
 const upload = async (req, res) => {
   console.log("running");
   let success = false;
