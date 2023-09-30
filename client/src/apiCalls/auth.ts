@@ -1,4 +1,5 @@
 import api from "@/utils/api";
+import axios from "axios";
 
 const url = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
 const FILE_SERVER_URI= process.env.NEXT_PUBLIC_NODE_ENV === "development"
@@ -60,7 +61,7 @@ export const updateProfile = async ({ name, email, dp }: updateProfilePropType) 
 }
 
 export const uploadDp = async (formData: any) => {
-    const { data } = await api.post(`${FILE_SERVER_URI}/api/upload`, formData, {
+    const { data } = await axios.post(`${FILE_SERVER_URI}/api/upload`, formData, {
         headers: {
             "access-token": "6d0b2684f680b4d9e3ea7e1085785bbf"
         }
