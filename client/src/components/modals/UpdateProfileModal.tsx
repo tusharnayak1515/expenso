@@ -1,6 +1,6 @@
 "use client";
 
-import { updateProfile, uploadDp } from "@/apiCalls/auth";
+import { updateProfile } from "@/apiCalls/auth";
 import { actionCreators } from "@/redux";
 import React, { useState } from "react";
 import ReactDom from "react-dom";
@@ -8,6 +8,7 @@ import { MdCloudUpload } from "react-icons/md";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../LoadingSpinner";
+import axios from "axios";
 
 const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
   const dispatch: any = useDispatch();
@@ -48,14 +49,12 @@ const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
     try {
       let userDp = null;
       if(dp && dp !== profile?.dp) {
-        const formData = new FormData();
-        if (dp) {
-          formData.append("dp", dp);
-        }
-        const res:any = await uploadDp(formData);
-        if(res.success) {
-          userDp = res.filename;
-        }
+        const data = new FormData();
+        data.append("file", dp);
+        data.append("upload_preset", "just_connect");
+        data.append("cloud_name", "alpha2625");
+        const response = await axios.post("https://api.cloudinary.com/v1_1/alpha2625/image/upload", data);
+        userDp = response.data.secure_url;
       }
       else if(dp && dp === profile?.dp) {
         userDp = profile?.dp;

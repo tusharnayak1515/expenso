@@ -60,15 +60,6 @@ export const updateProfile = async ({ name, email, dp }: updateProfilePropType) 
     return data;
 }
 
-export const uploadDp = async (formData: any) => {
-    const { data } = await axios.post(`${FILE_SERVER_URI}/api/upload`, formData, {
-        headers: {
-            "access-token": "6d0b2684f680b4d9e3ea7e1085785bbf"
-        }
-    });
-    return data;
-}
-
 type updatePasswordPropType = {
     oldPassword: String;
     newPassword: String;
