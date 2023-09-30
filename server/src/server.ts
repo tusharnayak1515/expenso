@@ -14,6 +14,7 @@ import authRoutes from "./routes/auth";
 import expenseRoutes from "./routes/expense";
 import categoryRoutes from "./routes/category";
 import goalRoutes from "./routes/goal";
+import fs from "fs";
 
 const app = express();
 const MongoDBStore = connectMongo(session);
@@ -68,6 +69,16 @@ app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
+
+app.get('/list-folder', (req, res) => {
+    const folderPath = path.join('public','uploads');
+    fs.readdir(folderPath, (err, files) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error reading folder contents' });
+      }
+      res.json({ files });
+    });
+  });
 
 // const updateSchema = async ()=> {
 //     User.updateMany(
