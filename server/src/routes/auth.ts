@@ -75,6 +75,13 @@ router.post('/logout', function (req:any, res:any, next) {
             const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : process.env.CLIENT_URL;
             res.redirect(FRONTEND_URL!);
         });
+        res.cookie("authorization", null, {
+            maxAge: 0,
+            path: "/",
+            httpOnly:  process.env.NODE_ENV === "production" ? true : false,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+            secure:  process.env.NODE_ENV === "production" ? true: false
+        });
     } catch (error) {
         console.log(error);
     }
