@@ -50,8 +50,15 @@ const Home = () => {
     console.log("user: ", user);
 
     if (!user) {
-      router.replace("/signin");
-      localStorage.removeItem("expenso_user_profile");
+      if(token) {
+        setCookie("authorization",token);
+        dispatch(actionCreators.setToken(token));
+        fetchProfile();
+      }
+      else {
+        router.replace("/signin");
+        localStorage.removeItem("expenso_user_profile");
+      }
     }
     else {
       fetchProfile();
