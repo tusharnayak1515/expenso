@@ -13,7 +13,6 @@ const signin = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(`Error in signin route: ${errors.array()[0].msg}`);
       return res.status(422).json({ success, error: errors.array()[0].msg });
     }
 

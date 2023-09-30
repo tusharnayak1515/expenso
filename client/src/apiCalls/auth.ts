@@ -87,3 +87,8 @@ export const getProfile = async () => {
     const { data } = await api.get(`${url}/api/auth/profile`);
     return data;
 }
+
+export const logoutUser = async () => {
+    const res = await api.post(`${url}/api/auth/logout`);
+    return res;
+}

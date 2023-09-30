@@ -25,7 +25,6 @@ const getProfile = async (req: Request, res: Response) => {
     success = true;
     return res.status(200).json({ success, user });
   } catch (error: any) {
-    console.log("error: ",error);
     return res.status(500).json({ success, error: error.message });
   }
 };

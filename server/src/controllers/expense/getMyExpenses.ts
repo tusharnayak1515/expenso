@@ -24,8 +24,6 @@ const getMyExpenses = async (req: Request, res: Response) => {
         if (!month) {
             month = new Date().getMonth() + 1;
         }
-        console.log("year: ",year);
-        console.log("month: ",Number(month));
 
         const startOfMonth = new Date(Number(year), Number(month) - 1, 1);
         const endOfMonth = new Date(Number(year), Number(month), 0);
@@ -42,7 +40,7 @@ const getMyExpenses = async (req: Request, res: Response) => {
             filters.expenseType = expenseType;
         }
 
-        console.log("filters: ",filters);
+        // console.log("filters: ",filters);
 
         let expenses: IExpense[] | any = await Expense.find(filters).sort("-expenseDate");
 

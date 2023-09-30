@@ -20,7 +20,7 @@ Chart.register(CategoryScale);
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllCategories } from "@/apiCalls/category";
 
-const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
+const Dashboard = ({ isUpdated, setIsUpdated, activeDate, setActiveDate }: any) => {
   const dispatch: any = useDispatch();
   const { expenses } = useSelector(
     (state: any) => state.expenseReducer,
@@ -29,10 +29,6 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
 
   const [groupedExpenses, setGroupedExpenses]: any = useState([]);
   const [activeExpenseType, setActiveExpenseType]: any = useState("all");
-  const date = new Date();
-  const [activeDate, setActiveDate]: any = useState(
-    `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}`
-  );
   const [isLoading, setIsLoading]: any = useState(false);
   const [creditAmount, setCreditAmount]: any = useState(0);
   const [spendAmount, setSpendAmount]: any = useState(0);
@@ -170,7 +166,11 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchExpenses(null, null, null);
+    const year = new Date(activeDate).getFullYear();
+    console.log("year: ", year);
+    const month = new Date(activeDate).getMonth()+1;
+    console.log("month: ", month);
+    fetchExpenses(year, month, activeExpenseType);
     getAllCategories();
     const handleResize = () => {
       if (window.innerWidth < 980) {
@@ -185,7 +185,7 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isUpdated]);
+  }, []);
 
   return (
     <>
@@ -238,6 +238,8 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
               const month = e.target.value.split("-")[1];
               console.log("month: ", month);
               console.log(e.target.value);
+              console.log("***************activeDate: ",`${year}-${(month).toString().padStart(2, "0")}`);
+              setActiveDate(`${year}-${(month).toString().padStart(2, "0")}`)
               fetchExpenses(year, month, activeExpenseType);
             }}
             className={`py-2 px-4 border border-slate-400 rounded-md 
@@ -249,6 +251,7 @@ const Dashboard = ({ isUpdated, setIsUpdated }: any) => {
           <AddExpense
             setIsAddExpense={setIsAddExpense}
             setIsUpdated={setIsUpdated}
+            activeDate={activeDate}
           />
         )}
         <div

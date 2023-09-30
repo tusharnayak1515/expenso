@@ -19,9 +19,9 @@ const fetchUser = async (
   }
   try {
     const userToken = token.substring(7, token.length);
-    console.log("userToken: ", userToken);
+    // console.log("userToken: ", userToken);
     const data:any = jwt.verify(userToken, secret!);
-    console.log("data: ",data);
+    // console.log("data: ",data);
 
     // Checking if a user exists with the id received from the jwt
     let user:any = await User.findById(data.user.id);
@@ -32,7 +32,7 @@ const fetchUser = async (
     req.body.user = data.user;
     next();
   } catch (error:any) {
-    console.log("error: ",error);
+    // console.log("error: ",error);
     success = false;
     return res.status(401).json({ success, error: error.message });
   }

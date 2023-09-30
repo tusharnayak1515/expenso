@@ -11,12 +11,10 @@ const signup = async (req: Request, res: Response) => {
     const { name, email, password, otp } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(`Error in signup route: ${errors.array()[0].msg}`);
       return res.status(422).json({ success, error: errors.array()[0].msg });
     }
 
     let token: IToken | null = await Token.findOne({ email }).exec();
-    console.log("token: ",token);
     if (!token) {
       return res.status(404).json({ success, error: "Invalid Token." });
     }

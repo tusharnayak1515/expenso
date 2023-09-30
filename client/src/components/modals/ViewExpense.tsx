@@ -7,7 +7,12 @@ import ReactDom from "react-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ViewExpense = ({ expense, setExpense, setIsUpdated }: any) => {
+const ViewExpense = ({
+  expense,
+  setExpense,
+  setIsUpdated,
+  activeDate,
+}: any) => {
   const dispatch: any = useDispatch();
   const { categories } = useSelector(
     (state: any) => state.expenseReducer,
@@ -41,15 +46,23 @@ const ViewExpense = ({ expense, setExpense, setIsUpdated }: any) => {
 
   const onUpdateExpense = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("activeDate: ", new Date(activeDate).getMonth()+1);
     try {
       const { amount, categoryId, expenseType, expenseDate } = expenseData;
+      console.log("activeDate 2: ", new Date(expenseDate).getMonth() + 1);
       if (
         Number(amount.toString()) > 0 &&
         categoryId !== null &&
         ["credit", "debit", "investment"].indexOf(expenseType) !== -1 &&
         new Date(expenseDate) instanceof Date
       ) {
-        const res: any = await updateExpense({...expenseData, amount: Number(amount), expenseDate: new Date(expenseDate)});
+        const res: any = await updateExpense({
+          ...expenseData,
+          amount: Number(amount),
+          expenseDate: new Date(expenseDate),
+          month: new Date(expenseDate).getMonth() + 1,
+          year: new Date(expenseDate).getFullYear(),
+        });
         if (res.success) {
           console.log("expenseData: ", expenseData);
           dispatch(actionCreators.updateExpense(res.expenses));
@@ -98,7 +111,7 @@ const ViewExpense = ({ expense, setExpense, setIsUpdated }: any) => {
         });
       }
     } catch (error: any) {
-      console.log("error: ",error);
+      console.log("error: ", error);
       toast.error(error.response.data.error, {
         position: "top-right",
         autoClose: 3000,
@@ -127,6 +140,8 @@ const ViewExpense = ({ expense, setExpense, setIsUpdated }: any) => {
       } else {
         const res: any = await deleteExpense({
           expenseId: expenseData?.expenseId,
+          month: new Date(expenseData?.expenseDate).getMonth() + 1,
+          year: new Date(expenseData?.expenseDate).getFullYear(),
         });
         if (res.success) {
           dispatch(actionCreators.deleteExpense(res.expenses));

@@ -245,7 +245,7 @@ const Auth = ({ type }: AuthPropTypes) => {
         <ResetPasswordModal setIsResetPassword={setIsResetPassword} />
       )}
       <div
-        className={`h-auto w-full p-4 md:p-6 flex flex-col justify-center md:justify-start items-center gap-4`}
+        className={`h-auto w-full p-2 sm:p-4 md:p-6 flex flex-col justify-center md:justify-start items-center gap-4`}
       >
         <form
           className={`w-[100%] xxs:w-[400px] xs:w-[450px] p-6 text-slate-300 
@@ -354,12 +354,12 @@ const Auth = ({ type }: AuthPropTypes) => {
           <button
             type="button"
             className={`w-full py-2 px-4 text-slate-400 
-              flex justify-center items-center gap-2 
+              flex justify-center items-center gap-[0.3rem] 
               border border-slate-400 rounded-md
             hover:bg-slate-900 bg-slate-950 transition-all duration-300`}
             onClick={googleAuth}
           >
-            <BiLogoGoogle />
+            <BiLogoGoogle className={`text-2xl`} />
             <span>Continue with Google</span>
           </button>
 

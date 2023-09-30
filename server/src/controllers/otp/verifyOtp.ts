@@ -11,9 +11,6 @@ const verifyOtp = async (req:Request, res:Response)=> {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           success = false;
-          console.log(
-            `Error in verify otp route: ${errors.array()[0].msg}`
-          );
           return res.status(422).json({ success, error: errors.array()[0].msg});
         }
 

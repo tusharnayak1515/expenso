@@ -18,6 +18,10 @@ const Home = () => {
   const dispatch:any = useDispatch();
   const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
   const [isUpdated, setIsUpdated] = useState(false);
+  const date = new Date();
+  const [activeDate, setActiveDate]: any = useState(
+    `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}`
+  );
 
   const fetchProfile = async()=> {
     try {
@@ -34,9 +38,6 @@ const Home = () => {
 
   useEffect(() => {
     const token = Cookies.get('authorization');
-    console.log("js token: ",token);
-    console.log("query token: ",query.get("token"));
-    console.log("cookie token: ",getCookie("authorization"));
     if(query.get("token")) {
       if(!getCookie("authorization")) {
         setCookie("authorization",query.get("token"));
@@ -44,7 +45,6 @@ const Home = () => {
         router.replace("/");
       }
     }
-    console.log("user: ",user);
 
     if (!user) {
       router.replace("/signin");
@@ -58,11 +58,11 @@ const Home = () => {
   return (
     <>
       <div className={`col-span-12 md_link:col-span-8 xl1:col-span-9`}>
-        <Dashboard isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
+        <Dashboard isUpdated={isUpdated} setIsUpdated={setIsUpdated} activeDate={activeDate} setActiveDate={setActiveDate} />
       </div>
 
       <div className={`col-span-12 md_link:col-span-4 xl1:col-span-3`}>
-        <History setIsUpdated={setIsUpdated} />
+        <History setIsUpdated={setIsUpdated} activeDate={activeDate} />
       </div>
     </>
   );

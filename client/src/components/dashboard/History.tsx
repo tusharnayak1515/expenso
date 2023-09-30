@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { useSelector, shallowEqual } from "react-redux";
 
-const ViewExpense = dynamic(()=> import("../modals/ViewExpense"), {ssr: false});
+const ViewExpense = dynamic(() => import("../modals/ViewExpense"), {
+  ssr: false,
+});
 
 import { MdOutlineHistory } from "react-icons/md";
 
-const History = ({setIsUpdated}:any) => {
+const History = ({ setIsUpdated, activeDate }: any) => {
   const { expenses } = useSelector(
     (state: any) => state.expenseReducer,
     shallowEqual
@@ -18,7 +20,14 @@ const History = ({setIsUpdated}:any) => {
 
   return (
     <>
-      {expense && <ViewExpense expense={expense} setExpense={setExpense} setIsUpdated={setIsUpdated} />}
+      {expense && (
+        <ViewExpense
+          expense={expense}
+          setExpense={setExpense}
+          setIsUpdated={setIsUpdated}
+          activeDate={activeDate}
+        />
+      )}
       <div
         className={`h-auto md_link:h-[calc(100vh-120px)] overflow-y-scroll w-full text-[17px] text-slate-400 
     flex flex-col justify-start items-center rounded-md bg-slate-900`}
@@ -40,9 +49,8 @@ const History = ({setIsUpdated}:any) => {
                 className={`w-full py-4 px-6 flex justify-between items-center 
                 border-b border-slate-400 cursor-pointer 
                 hover:bg-slate-950 bg-slate-900`}
-                onClick={()=> setExpense(expense)}
+                onClick={() => setExpense(expense)}
               >
-
                 <p
                   className={`${
                     expense?.expenseType === "credit"

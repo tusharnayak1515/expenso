@@ -9,7 +9,7 @@ const HomeLayout = ({ children }: any) => {
   const pathname = usePathname();
   return (
     <div
-      className={`min-h-[calc(100vh-80px)] w-full p-6 grid grid-cols-12 gap-4 bg-slate-600`}
+      className={`min-h-[calc(100vh-80px)] w-full p-2 sm:p-4 md:p-6 grid grid-cols-12 gap-4 bg-slate-600`}
     >
       {["/signup", "/signin"].indexOf(pathname) === -1 && (
         <div className={`col-span-3 xl:col-span-2 hidden lg1:block`}>

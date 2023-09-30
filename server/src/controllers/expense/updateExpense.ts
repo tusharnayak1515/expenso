@@ -26,8 +26,20 @@ const updateExpense = async (req:Request, res:Response)=> {
 
         expense = await Expense.findByIdAndUpdate(expenseId, {amount,category: categoryId, expenseType, comment, expenseDate}, {new: true}).exec();
 
-        let year : any = new Date().getFullYear();
-        let month : any = new Date().getMonth() + 1;
+        let year: any = req.query.year;
+        let month: any = req.query.month;
+        
+        if ((year && month) && (isNaN(Number(year)) || isNaN(Number(month)))) {
+            return res.status(400).json({ error: "Invalid year or month parameter." });
+        }
+
+        if (!year) {
+            year = new Date().getFullYear();
+        }
+
+        if (!month) {
+            month = new Date().getMonth() + 1;
+        }
 
         const startOfMonth = new Date(Number(year), Number(month) - 1, 1);
         const endOfMonth = new Date(Number(year), Number(month), 0);

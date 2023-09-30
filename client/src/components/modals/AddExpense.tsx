@@ -7,18 +7,14 @@ import { actionCreators } from "@/redux";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { toast } from "react-toastify";
 
-const AddExpense = ({setIsAddExpense, setIsUpdated}:any) => {
+const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
   const dispatch: any = useDispatch();
   const { categories } = useSelector(
     (state: any) => state.expenseReducer,
     shallowEqual
   );
 
-  const expenseTypes = [
-    "credit",
-    "debit",
-    "investment",
-  ];
+  const expenseTypes = ["credit", "debit", "investment"];
 
   const initExpenseData: any = {
     amount: "",
@@ -45,6 +41,7 @@ const AddExpense = ({setIsAddExpense, setIsUpdated}:any) => {
 
   const onAddExpense = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("activeDate: ", activeDate);
     try {
       const { amount, categoryId, expenseType, expenseDate } = expenseData;
       if (
@@ -53,7 +50,13 @@ const AddExpense = ({setIsAddExpense, setIsUpdated}:any) => {
         ["credit", "debit", "investment"].indexOf(expenseType) !== -1 &&
         expenseDate instanceof Date
       ) {
-        const res: any = await addExpense(expenseData);
+        const year = activeDate.split("-")[0];
+        const month = activeDate.split("-")[1];
+        const res: any = await addExpense({
+          ...expenseData,
+          year,
+          month
+        });
         if (res.success) {
           console.log("expenseData: ", expenseData);
           dispatch(actionCreators.addExpense(res.expenses));
@@ -228,7 +231,7 @@ const AddExpense = ({setIsAddExpense, setIsUpdated}:any) => {
           className={`w-full py-2 px-4 font-semibold 
           border border-slate-400 rounded-md hover:bg-slate-950 
           bg-slate-900 transition-all duration-300`}
-          onClick={()=> setIsAddExpense(false)}
+          onClick={() => setIsAddExpense(false)}
         >
           Cancel
         </button>

@@ -11,6 +11,7 @@ import { RiShutDownLine } from "react-icons/ri";
 import { actionCreators } from "@/redux";
 import { toast } from "react-toastify";
 import { IoMdLogIn } from "react-icons/io";
+import { logoutUser } from "@/apiCalls/auth";
 
 const Sidebar = ({ modal, setShowMenu }: any) => {
   const router = useRouter();
@@ -54,11 +55,18 @@ const Sidebar = ({ modal, setShowMenu }: any) => {
     }
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     dispatch(actionCreators.logout());
     if (modal) {
       setShowMenu(false);
     }
+
+    try {
+      await logoutUser();
+    } catch (error:any) {
+      console.log("Error in logout, in sidebar: ",error);
+    }
+
     toast.success("Logged out successfully", {
       position: "top-right",
       autoClose: 3000,

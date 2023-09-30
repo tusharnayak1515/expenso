@@ -8,13 +8,11 @@ import session from "express-session";
 import connectMongo from 'connect-mongodb-session';
 
 import connectToMongo from "./db";
-import "./passport";
 import otpRoutes from "./routes/token";
 import authRoutes from "./routes/auth";
 import expenseRoutes from "./routes/expense";
 import categoryRoutes from "./routes/category";
 import goalRoutes from "./routes/goal";
-import fs from "fs";
 
 const app = express();
 const MongoDBStore = connectMongo(session);
@@ -31,7 +29,7 @@ store.on('error', (error) => {
 });
 
 const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-jet.vercel.app";
-console.log("FRONTEND_URL: ",FRONTEND_URL);
+console.log("FRONTEND_URL: ", FRONTEND_URL);
 
 app.use(cors({
     origin: FRONTEND_URL,
@@ -49,6 +47,8 @@ app.use(
         },
     })
 );
+
+import "./passport";
 
 connectToMongo();
 
@@ -70,17 +70,6 @@ app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
 
-app.get('/list-folder', (req, res) => {
-    const folderPath = path.join('public');
-    console.log("folderPath: ",folderPath);
-    fs.readdir(folderPath, (err, files) => {
-      if (err) {
-        return res.status(500).json({ error: 'Error reading folder contents' });
-      }
-      res.json({ files });
-    });
-  });
-
 // const updateSchema = async ()=> {
 //     User.updateMany(
 //         {},
@@ -98,53 +87,53 @@ app.get('/list-folder', (req, res) => {
 // updateSchema();
 
 // const addCategories = async () => {
-    // await Category.create({
-    //     name: "shopping"
-    // });
+// await Category.create({
+//     name: "shopping"
+// });
 
-    // await Category.create({
-    //     name: "house rent"
-    // });
+// await Category.create({
+//     name: "house rent"
+// });
 
-    // await Category.create({
-    //     name: "recharge"
-    // });
+// await Category.create({
+//     name: "recharge"
+// });
 
-    // await Category.create({
-    //     name: "medicines"
-    // });
+// await Category.create({
+//     name: "medicines"
+// });
 
-    // await Category.create({
-    //     name: "grocery"
-    // });
+// await Category.create({
+//     name: "grocery"
+// });
 
-    // await Category.create({
-    //     name: "gold"
-    // });
+// await Category.create({
+//     name: "gold"
+// });
 
-    // await Category.create({
-    //     name: "mutual fund"
-    // });
+// await Category.create({
+//     name: "mutual fund"
+// });
 
-    // await Category.create({
-    //     name: "stock trading"
-    // });
+// await Category.create({
+//     name: "stock trading"
+// });
 
-    // await Category.create({
-    //     name: "other investment"
-    // });
+// await Category.create({
+//     name: "other investment"
+// });
 
-    // await Category.create({
-    //     name: "salary"
-    // });
+// await Category.create({
+//     name: "salary"
+// });
 
-    // await Category.create({
-    //     name: "other"
-    // });
+// await Category.create({
+//     name: "other"
+// });
 
-    // await Category.create({
-    //     name: "food"
-    // });
+// await Category.create({
+//     name: "food"
+// });
 // }
 
 // addCategories();
