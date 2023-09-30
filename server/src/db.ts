@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 mongoose.set("strictQuery", false);
 const mongoUri = process.env.MONGO_URI || "mongodb://0.0.0.0:27017/expenso?retryWrites=true&w=majority";
 
-
 const connectToMongo = () => {
   mongoose
     .connect(mongoUri!)
