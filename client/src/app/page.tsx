@@ -46,6 +46,8 @@ const Home = () => {
       }
     }
 
+    console.log("user: ", user);
+
     if (!user) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
