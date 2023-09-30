@@ -68,21 +68,21 @@ router.get(
 //     res.redirect(FRONTEND_URL!);
 // });
 
-router.post('/logout', function (req:any, res:any, next) {
+router.post('/logout', function (req: any, res: any, next) {
     try {
-        req.logout(req.user, function (err:any) {
+        req.logout(req.user, function (err: any) {
             if (err) { return next(err); }
         });
         res.cookie("authorization", null, {
             maxAge: 0,
             path: "/",
-            httpOnly:  process.env.NODE_ENV === "production" ? true : false,
+            httpOnly: process.env.NODE_ENV === "production" ? true : false,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-            secure:  process.env.NODE_ENV === "production" ? true: false
+            secure: process.env.NODE_ENV === "production" ? true : false
         });
 
         const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : process.env.CLIENT_URL;
-        return res.status(200).json({success: true});
+        res.redirect(FRONTEND_URL!);
     } catch (error) {
         console.log(error);
     }
