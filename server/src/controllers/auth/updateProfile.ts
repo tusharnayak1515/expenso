@@ -42,10 +42,12 @@ const updateProfile = async (req: Request, res: Response) => {
                       file.originalFilename.lastIndexOf(".")
                     );
             
-                    const myPath = path.join('uploads', file.newFilename + extension);
-                    const newPath = path.join('public', 'uploads', file.newFilename + extension);
+                    // const myPath = path.join('uploads', file.newFilename + extension);
+                    const myPath = `uploads/${file.newFilename + extension}`;
+                    // const newPath = path.join('public', 'uploads', file.newFilename + extension);
+                    const newPath = `public/uploads/${file.newFilename + extension}`;
     
-                    if(user?.dp !== `${APP_URL}/${newPath}`) {
+                    if(user?.dp !== `${APP_URL}/${myPath}`) {
                         mv(file.filepath, newPath, (err) => {
                           if (err) {
                             return;
