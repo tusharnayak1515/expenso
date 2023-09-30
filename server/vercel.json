@@ -12,12 +12,12 @@
       "dest": "src/server.ts"
     },
     {
-      "src": "/public/uploads/(.*)",
+      "src": "/uploads/(.*)",
       "dest": "public/uploads/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "src/server.ts"
+      "dest": "public/$1"
     }
   ]
 }
