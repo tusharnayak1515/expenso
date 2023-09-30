@@ -1,5 +1,4 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import express from "express";
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -8,8 +7,6 @@ import User from "./models/User";
 import sendEmail from "./services/sendEmail";
 
 const secret = process.env.JWT_SECRET;
-
-const app = express();
 
 passport.use(
     new GoogleStrategy(
@@ -77,8 +74,5 @@ passport.serializeUser((user: any, done: any) => {
 passport.deserializeUser((user:any, done: any) => {
     done(null, user);
 });
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 export default passport;
