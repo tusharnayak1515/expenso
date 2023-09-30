@@ -11,7 +11,7 @@ const updateProfile = async (req: Request, res: Response) => {
         let image: string | any = dp;
 
         if (!image) {
-            image = user?.dp || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
+            image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
         }
 
         user = await User.findByIdAndUpdate(userId, { name, email, dp: image }, { new: true }).exec();
