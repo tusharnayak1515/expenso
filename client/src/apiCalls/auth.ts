@@ -1,7 +1,9 @@
 import api from "@/utils/api";
 
 const url = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
-const FILE_SERVER_URI_DEV = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? process.env.NEXT_PUBLIC_FILE_SERVER_URI_DEV : "";
+const FILE_SERVER_URI_DEV = process.env.NEXT_PUBLIC_NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_FILE_SERVER_URI_DEV
+    : process.env.NEXT_PUBLIC_FILE_SERVER_URI_PROD;
 console.log("upload server link: ", FILE_SERVER_URI_DEV);
 
 type sendOtpProps = {

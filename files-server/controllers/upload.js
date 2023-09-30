@@ -2,7 +2,7 @@ const formidable = require("formidable");
 const mv = require("mv");
 
 const FILE_SERVER_URL =
-  process.env.NODE_ENV === "development" ? process.env.FILE_SERVER_URL_DEV : "";
+  process.env.NODE_ENV === "development" ? process.env.FILE_SERVER_URL_DEV : process.env.FILE_SERVER_URL_PROD;
 
 const upload = async (req, res) => {
   console.log("running");
