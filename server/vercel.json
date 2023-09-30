@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "src/server.ts"
+      "dest": "public/$1"
     }
   ]
 }
