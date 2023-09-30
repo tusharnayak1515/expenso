@@ -4,6 +4,7 @@ const nextConfig = {
     domains: [
       "res.cloudinary.com",
       "cdn.pixabay.com",
+      "vercel.app",
       "localhost",
     ],
   },
