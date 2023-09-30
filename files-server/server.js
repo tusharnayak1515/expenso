@@ -12,10 +12,7 @@ const port = process.env.PORT || 8000;
 const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-jet.vercel.app";
 console.log("FRONTEND_URL: ",FRONTEND_URL);
 
-app.use(cors({
-    origin: FRONTEND_URL,
-    credentials: true,
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'uploads')))
