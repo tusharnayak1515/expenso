@@ -22,6 +22,7 @@ const Home = () => {
   const fetchProfile = async()=> {
     try {
       const res:any = await getProfile();
+      console.log("res: ", res);
       if(res?.success) {
         localStorage.setItem("expenso_user_profile", JSON.stringify(res?.user));
         dispatch(actionCreators.userSignin(res?.user));
@@ -45,7 +46,7 @@ const Home = () => {
     }
     console.log("user: ",user);
 
-    if (!token) {
+    if (!user) {
       router.replace("/signin");
       localStorage.removeItem("expenso_user_profile");
     }

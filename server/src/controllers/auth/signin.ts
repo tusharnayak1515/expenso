@@ -45,9 +45,9 @@ const signin = async (req: Request, res: Response) => {
     res.cookie("authorization", `Bearer ${jwtToken}`, {
       maxAge: 60 * 60 * 24 * 1000,
       path: "/",
-      httpOnly: true,
-      sameSite: "none",
-      secure: true
+      httpOnly:  process.env.NODE_ENV === "production" ? true : false,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      secure:  process.env.NODE_ENV === "production" ? true: false
     });
 
     success = true;

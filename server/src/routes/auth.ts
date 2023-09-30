@@ -44,9 +44,9 @@ router.get(
             res.cookie("authorization", token, {
                 maxAge: 60 * 60 * 24 * 1000,
                 path: "/",
-                httpOnly: true,
-                sameSite: "none",
-                secure: true
+                httpOnly:  process.env.NODE_ENV === "production" ? true : false,
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+                secure:  process.env.NODE_ENV === "production" ? true: false
             });
 
             // res.status(200).json({ success: true, token, user });

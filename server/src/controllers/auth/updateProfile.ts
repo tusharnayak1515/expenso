@@ -60,6 +60,8 @@ const updateProfile = async (req: Request, res: Response) => {
                 }
             }
 
+            console.log("image: ", image);
+
             if(!image) {
                 image = user?.dp || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
             }

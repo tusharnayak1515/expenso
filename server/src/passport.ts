@@ -23,7 +23,7 @@ passport.use(
                 email: profile?.emails ? profile?.emails[0]?.value : "email@gmail.com",
             };
 
-            const isUser:any = await User.findOne({$or: [{googleId: user?.id}, {email: user?.email}]}).exec();
+            let isUser:any = await User.findOne({$or: [{googleId: user?.id}, {email: user?.email}]}).exec();
             if(!isUser) {
                 const tempPassword = `Default${user?.id}@`;
                 const salt = await bcrypt.genSalt(10);
@@ -51,6 +51,8 @@ passport.use(
 
                 callback(null, {token: jwtToken, user: newUser});
             }
+
+            isUser = await User.findByIdAndUpdate(isUser?._id, {googleId: user?.id}, {new: true});
 
             const data: any = {
                 user: {
