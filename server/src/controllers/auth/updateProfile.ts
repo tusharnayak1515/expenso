@@ -3,6 +3,7 @@ import { Files, Fields, IncomingForm } from "formidable";
 import mv from "mv";
 import { IUser } from "../../entities/entityInterfaces";
 import User from "../../models/User";
+import path from "path";
 
 const APP_URL = process.env.NODE_ENV === "development" ? "http://localhost:9000" : "https://expenso-server.vercel.app";
 
@@ -41,8 +42,7 @@ const updateProfile = async (req: Request, res: Response) => {
                       file.originalFilename.lastIndexOf(".")
                     );
             
-                    const path = file.newFilename + extension;
-                    const newPath = "src/uploads/" + path;
+                    const newPath = path.join("public", "uploads", file.newFilename + extension);
     
                     if(user?.dp !== `${APP_URL}/${newPath}`) {
                         mv(file.filepath, newPath, (err) => {
