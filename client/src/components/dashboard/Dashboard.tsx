@@ -85,8 +85,6 @@ const Dashboard = ({
         expenseType,
       });
 
-      console.log("res: ", res);
-
       if (res.success) {
         dispatch(actionCreators.setAllExpenses(res.expenses));
         let updatedGroupedExpenses: any = [];
@@ -237,14 +235,7 @@ const Dashboard = ({
             onChange={(e) => {
               e.preventDefault();
               const year = e.target.value.split("-")[0];
-              console.log("year: ", year);
               const month = e.target.value.split("-")[1];
-              console.log("month: ", month);
-              console.log(e.target.value);
-              console.log(
-                "***************activeDate: ",
-                `${year}-${month.toString().padStart(2, "0")}`
-              );
               setActiveDate(`${year}-${month.toString().padStart(2, "0")}`);
               fetchExpenses(year, month, activeExpenseType);
             }}

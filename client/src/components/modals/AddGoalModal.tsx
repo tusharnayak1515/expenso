@@ -21,7 +21,6 @@ const AddGoalModal = ({setIsAddGoal, setLoading}:any) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
-    console.log("event: ", e.target.value);
     const { name, value } = e.target;
     setGoalData({ ...goalData, [name]: value });
   };

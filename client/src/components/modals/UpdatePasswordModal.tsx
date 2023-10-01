@@ -79,7 +79,6 @@ const UpdatePasswordModal = ({ setIsChangePassword }: any) => {
         });
       }
     } catch (error: any) {
-      console.log("error: ", error);
       setLoading(false);
       toast.error(error.response.data.error, {
         position: "top-right",

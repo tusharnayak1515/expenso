@@ -37,7 +37,6 @@ const ViewExpense = ({
     e.preventDefault();
     const { name, value } = e.target;
     if (name === "expenseDate") {
-      console.log("event: ", new Date(value));
       setExpenseData({ ...expenseData, expenseDate: new Date(value) });
     } else {
       setExpenseData({ ...expenseData, [name]: value });
@@ -46,10 +45,8 @@ const ViewExpense = ({
 
   const onUpdateExpense = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("activeDate: ", new Date(activeDate).getMonth()+1);
     try {
       const { amount, categoryId, expenseType, expenseDate } = expenseData;
-      console.log("activeDate 2: ", new Date(expenseDate).getMonth() + 1);
       if (
         Number(amount.toString()) > 0 &&
         categoryId !== null &&
@@ -64,7 +61,6 @@ const ViewExpense = ({
           year: new Date(expenseDate).getFullYear(),
         });
         if (res.success) {
-          console.log("expenseData: ", expenseData);
           // dispatch(actionCreators.updateExpense(res.expenses));
           toast.success("Expense updated successfully", {
             position: "top-right",
@@ -111,7 +107,6 @@ const ViewExpense = ({
         });
       }
     } catch (error: any) {
-      console.log("error: ", error);
       toast.error(error.response.data.error, {
         position: "top-right",
         autoClose: 3000,
@@ -126,7 +121,6 @@ const ViewExpense = ({
 
   const onDeleteExpense = async () => {
     try {
-      console.log(expenseData?.expenseId);
       if (!expenseData?.expenseId) {
         toast.error("Invalid expense", {
           position: "top-right",
@@ -173,8 +167,6 @@ const ViewExpense = ({
 
   useEffect(() => {
     if (expense?._id) {
-      console.log("expenseDate 1: ", new Date(expense?.expenseDate));
-      console.log("expense: ", expense);
       setExpenseData({
         expenseId: expense?._id,
         amount: expense?.amount,
@@ -185,7 +177,6 @@ const ViewExpense = ({
       });
 
       if (expenseData?.expenseId) {
-        console.log("expenseData: ", expenseData);
       }
     }
   }, [expense?._id]);

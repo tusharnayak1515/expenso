@@ -30,7 +30,6 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
-    console.log("event: ", e.target.value);
     const { name, value } = e.target;
     if (name === "expenseDate") {
       setExpenseData({ ...expenseData, expenseDate: new Date(value) });
@@ -41,7 +40,6 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
 
   const onAddExpense = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("activeDate: ", activeDate);
     try {
       const { amount, categoryId, expenseType, expenseDate } = expenseData;
       if (
@@ -58,7 +56,6 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
           month
         });
         if (res.success) {
-          console.log("expenseData: ", expenseData);
           // dispatch(actionCreators.addExpense(res.expenses));
           toast.success("Expense added successfully", {
             position: "top-right",

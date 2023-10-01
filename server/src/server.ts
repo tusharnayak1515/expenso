@@ -58,85 +58,17 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/uploads', express.static(path.join('public', 'uploads')));
 
 import "./models/Token";
-import User from "./models/User";
+import "./models/User";
 import "./models/Category";
 import "./models/Expense";
 import "./models/Goal";
-import Category from "./models/Category";
+import "./models/Category";
 
 app.use("/api/otp", otpRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
-
-// const updateSchema = async ()=> {
-//     User.updateMany(
-//         {},
-//         {
-//             $set: {googleId: null},
-//         },
-//         {upsert: true}
-//         )
-//         .then((data:any)=> {
-//             console.log("Value updated: ",data);
-//         }
-//     );
-// }
-
-// updateSchema();
-
-// const addCategories = async () => {
-// await Category.create({
-//     name: "shopping"
-// });
-
-// await Category.create({
-//     name: "house rent"
-// });
-
-// await Category.create({
-//     name: "recharge"
-// });
-
-// await Category.create({
-//     name: "medicines"
-// });
-
-// await Category.create({
-//     name: "grocery"
-// });
-
-// await Category.create({
-//     name: "gold"
-// });
-
-// await Category.create({
-//     name: "mutual fund"
-// });
-
-// await Category.create({
-//     name: "stock trading"
-// });
-
-// await Category.create({
-//     name: "other investment"
-// });
-
-// await Category.create({
-//     name: "salary"
-// });
-
-// await Category.create({
-//     name: "other"
-// });
-
-// await Category.create({
-//     name: "food"
-// });
-// }
-
-// addCategories();
 
 app.listen(port, () => {
     console.log(`Server started successfully at port ${port}.`);

@@ -43,30 +43,17 @@ router.get(
 
             res.cookie("authorization", token, {
                 maxAge: 60 * 60 * 24 * 1000,
-                path: "/",
+                path: process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : "/",
                 httpOnly: process.env.NODE_ENV === "production" ? true : false,
                 sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                 secure: process.env.NODE_ENV === "production" ? true : false
             });
-
-            // res.status(200).json({ success: true, token, user });
 
             const FRONTEND_URL = process.env.NODE_ENV === "production" ? `https://expenso-jet.vercel.app?token=${token}` : process.env.CLIENT_URL;
 
             res.redirect(FRONTEND_URL!);
         })(req, res, next);
     });
-
-// router.post("/logout", (req, res) => {
-//     req.logout((err) => {
-//         if (err) {
-//             res.status(500).json({ success: false, error: 'Logout failed' });
-//         }
-//         console.log("Logout successfull");
-//     });
-//     const FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : process.env.CLIENT_URL;
-//     res.redirect(FRONTEND_URL!);
-// });
 
 router.post('/logout', function (req: any, res: any, next) {
     try {

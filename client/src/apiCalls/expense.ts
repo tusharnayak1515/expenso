@@ -51,7 +51,6 @@ type deleteExpensePropType = {
 }
 
 export const deleteExpense = async ({ expenseId, year, month }: deleteExpensePropType) => {
-    console.log("expenseId: ",expenseId);
     const { data } = await api.delete(`${url}/api/expense/${expenseId}?year=${year}&month=${month}`);
     return data;
 }
