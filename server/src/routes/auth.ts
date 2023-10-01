@@ -70,9 +70,9 @@ router.get(
 
 router.post('/logout', function (req: any, res: any, next) {
     try {
-        req.logout(req.user, function (err: any) {
-            if (err) { return next(err); }
-        });
+        // req.logout(req.user, function (err: any) {
+        //     if (err) { return next(err); }
+        // });
         res.cookie("authorization", null, {
             maxAge: 0,
             path: "/",
