@@ -59,7 +59,7 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
         });
         if (res.success) {
           console.log("expenseData: ", expenseData);
-          dispatch(actionCreators.addExpense(res.expenses));
+          // dispatch(actionCreators.addExpense(res.expenses));
           toast.success("Expense added successfully", {
             position: "top-right",
             autoClose: 3000,

@@ -20,7 +20,12 @@ Chart.register(CategoryScale);
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllCategories } from "@/apiCalls/category";
 
-const Dashboard = ({ isUpdated, setIsUpdated, activeDate, setActiveDate }: any) => {
+const Dashboard = ({
+  isUpdated,
+  setIsUpdated,
+  activeDate,
+  setActiveDate,
+}: any) => {
   const dispatch: any = useDispatch();
   const { expenses } = useSelector(
     (state: any) => state.expenseReducer,
@@ -166,10 +171,8 @@ const Dashboard = ({ isUpdated, setIsUpdated, activeDate, setActiveDate }: any) 
 
   useEffect(() => {
     setIsLoading(true);
-    const year = new Date(activeDate).getFullYear();
-    console.log("year: ", year);
-    const month = new Date(activeDate).getMonth()+1;
-    console.log("month: ", month);
+    const year = activeDate.split("-")[0];
+    const month = activeDate.split("-")[1];
     fetchExpenses(year, month, activeExpenseType);
     getAllCategories();
     const handleResize = () => {
@@ -185,7 +188,7 @@ const Dashboard = ({ isUpdated, setIsUpdated, activeDate, setActiveDate }: any) 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isUpdated]);
 
   return (
     <>
@@ -238,8 +241,11 @@ const Dashboard = ({ isUpdated, setIsUpdated, activeDate, setActiveDate }: any) 
               const month = e.target.value.split("-")[1];
               console.log("month: ", month);
               console.log(e.target.value);
-              console.log("***************activeDate: ",`${year}-${(month).toString().padStart(2, "0")}`);
-              setActiveDate(`${year}-${(month).toString().padStart(2, "0")}`)
+              console.log(
+                "***************activeDate: ",
+                `${year}-${month.toString().padStart(2, "0")}`
+              );
+              setActiveDate(`${year}-${month.toString().padStart(2, "0")}`);
               fetchExpenses(year, month, activeExpenseType);
             }}
             className={`py-2 px-4 border border-slate-400 rounded-md 

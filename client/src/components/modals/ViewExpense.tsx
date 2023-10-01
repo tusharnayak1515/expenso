@@ -65,7 +65,7 @@ const ViewExpense = ({
         });
         if (res.success) {
           console.log("expenseData: ", expenseData);
-          dispatch(actionCreators.updateExpense(res.expenses));
+          // dispatch(actionCreators.updateExpense(res.expenses));
           toast.success("Expense updated successfully", {
             position: "top-right",
             autoClose: 3000,
@@ -144,7 +144,7 @@ const ViewExpense = ({
           year: new Date(expenseData?.expenseDate).getFullYear(),
         });
         if (res.success) {
-          dispatch(actionCreators.deleteExpense(res.expenses));
+          // dispatch(actionCreators.deleteExpense(res.expenses));
           toast.success("Expense deleted successfully", {
             position: "top-right",
             autoClose: 3000,
