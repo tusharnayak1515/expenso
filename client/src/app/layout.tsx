@@ -12,6 +12,7 @@ const HomeLayout = dynamic(() => import("@/components/layouts/HomeLayout"), {
 
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,12 +29,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       {process.env.NODE_ENV === "production" && (
+        <Script
+          id="Adsense-id"
+          data-ad-client="ca-pub-5735202116103600"
+          async={true}
+          strategy="beforeInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        />
+      )}
+      {/* {process.env.NODE_ENV === "production" && (
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5735202116103600"
           crossOrigin="anonymous"
         ></script>
-      )}
+      )} */}
       <body className={inter.className}>
         <Providers>
           <Navbar />
