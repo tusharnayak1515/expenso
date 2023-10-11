@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { deleteGoal, fetchMyGoals } from "@/apiCalls/goal";
 import { actionCreators } from "@/redux";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -21,7 +21,7 @@ const MyGoals = () => {
   const [goal, setGoal] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchGoals = async () => {
+  const fetchGoals = useCallback(async () => {
     setLoading(true);
     try {
       const res: any = await fetchMyGoals();
@@ -36,7 +36,7 @@ const MyGoals = () => {
         error.response.data.error
       );
     }
-  };
+  }, [dispatch]);
 
   const onDeleteGoal = async (id: string) => {
     setLoading(true);
@@ -71,7 +71,7 @@ const MyGoals = () => {
 
   useEffect(() => {
     fetchGoals();
-  }, []);
+  }, [fetchGoals]);
 
   return (
     <div className={`w-full flex flex-col justify-start items-center gap-4`}>

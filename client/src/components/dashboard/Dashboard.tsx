@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
@@ -58,7 +58,7 @@ const Dashboard = ({
     }
   };
 
-  const getAllCategories = async () => {
+  const getAllCategories = useCallback(async () => {
     try {
       const res: any = await fetchAllCategories();
       if (res.success) {
@@ -70,9 +70,9 @@ const Dashboard = ({
         error.response.data.error
       );
     }
-  };
+  }, [dispatch]);
 
-  const fetchExpenses = async (year: any, month: any, expenseType: any) => {
+  const fetchExpenses = useCallback(async (year: any, month: any, expenseType: any) => {
     setIsLoading(true);
     setCreditAmount(0);
     setSpendAmount(0);
@@ -137,7 +137,7 @@ const Dashboard = ({
       );
       setIsLoading(false);
     }
-  };
+  }, [dispatch]);
 
   const data = {
     labels: [...groupedExpenses?.map((expense: any) => expense?.category)],
@@ -186,6 +186,8 @@ const Dashboard = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+
+    
   }, [isUpdated]);
 
   return (

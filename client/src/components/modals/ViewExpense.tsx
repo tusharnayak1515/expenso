@@ -175,11 +175,8 @@ const ViewExpense = ({
         comment: expense?.comment || "",
         expenseDate: new Date(expense?.expenseDate).toISOString().slice(0, 10),
       });
-
-      if (expenseData?.expenseId) {
-      }
     }
-  }, [expense?._id]);
+  }, [expense?._id, expense?.amount, expense?.category?._id, expense?.comment, expense?.expenseDate, expense?.expenseType]);
 
   return ReactDom.createPortal(
     <div className={`fixed inset-0 bg-[#0000005f] z-[600]`}>

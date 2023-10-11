@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -27,7 +27,7 @@ const Home = () => {
     `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}`
   );
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const res: any = await getProfile();
       if (res?.success) {
@@ -40,7 +40,7 @@ const Home = () => {
         error.response.data.error
       );
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const token = Cookies.get("authorization");
@@ -68,7 +68,7 @@ const Home = () => {
     } else {
       fetchProfile();
     }
-  }, [user, router, query.get("token")]);
+  }, [user, router, query.get("token"), dispatch, query, fetchProfile]);
 
   return (
     <>
