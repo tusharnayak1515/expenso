@@ -43,7 +43,7 @@ router.get(
 
             res.cookie("authorization", token, {
                 maxAge: 60 * 60 * 24 * 1000,
-                path: "/",
+                path: process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : "/",
                 httpOnly: process.env.NODE_ENV === "production" ? true : false,
                 sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                 secure: process.env.NODE_ENV === "production" ? true : false
@@ -62,7 +62,7 @@ router.post('/logout', function (req: any, res: any, next) {
         // });
         res.cookie("authorization", null, {
             maxAge: 0,
-            path: "/",
+            path: process.env.NODE_ENV === "production" ? "https://expenso-jet.vercel.app" : "/",
             httpOnly: process.env.NODE_ENV === "production" ? true : false,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             secure: process.env.NODE_ENV === "production" ? true : false
