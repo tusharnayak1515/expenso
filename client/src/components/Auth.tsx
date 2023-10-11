@@ -179,7 +179,9 @@ const Auth = ({ type }: AuthPropTypes) => {
         const res = await userSignin({ email, password });
         if (res.success) {
           setIsLoading(false);
-          setCookie("authorization",res.token);
+          setCookie("authorization", res.token, {
+            maxAge: 60 * 60 * 24 * 1000,
+          });
           localStorage.setItem(
             "expenso_user_profile",
             JSON.stringify(res.user)
