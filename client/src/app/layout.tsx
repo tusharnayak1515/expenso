@@ -28,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {process.env.NODE_ENV === "production" && (
+      {/* {process.env.NEXT_PUBLIC_NODE_ENV === "production" && (
         <Script
           id="Adsense-id"
           data-ad-client="ca-pub-5735202116103600"
@@ -36,8 +36,8 @@ export default function RootLayout({
           strategy="beforeInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         />
-      )}
-      {/* {process.env.NODE_ENV === "production" && (
+      )} */}
+      {/* {process.env.NEXT_PUBLIC_NODE_ENV === "production" && (
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5735202116103600"
