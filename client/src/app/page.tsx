@@ -47,7 +47,7 @@ const Home = () => {
     if (query.get("token")) {
       if (!getCookie("authorization")) {
         setCookie("authorization", query.get("token"), {
-          maxAge: 60 * 60 * 24 * 1000,
+          maxAge: 60 * 60 * 24,
         });
         dispatch(actionCreators.setToken(query.get("token")));
         router.replace("/");
@@ -57,7 +57,7 @@ const Home = () => {
     if (!user) {
       if (token) {
         setCookie("authorization", token, {
-          maxAge: 60 * 60 * 24 * 1000,
+          maxAge: 60 * 60 * 24,
         });
         dispatch(actionCreators.setToken(token));
         fetchProfile();
