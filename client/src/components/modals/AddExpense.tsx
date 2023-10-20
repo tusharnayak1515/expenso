@@ -68,7 +68,7 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
           });
           setExpenseData(initExpenseData);
           setIsAddExpense(false);
-          setIsUpdated(true);
+          setIsUpdated((prev:boolean)=> !prev);
         }
       } else if (Number(amount.toString()) <= 0) {
         toast.error("Amount must be greater than 0", {

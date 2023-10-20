@@ -73,7 +73,7 @@ const ViewExpense = ({
           });
           setExpenseData(initExpenseData);
           setExpense(null);
-          setIsUpdated(true);
+          setIsUpdated((prev:boolean)=> !prev);
         }
       } else if (Number(amount.toString()) <= 0) {
         toast.error("Amount must be greater than 0", {
@@ -149,7 +149,7 @@ const ViewExpense = ({
             progress: undefined,
           });
           setExpense(null);
-          setIsUpdated(true);
+          setIsUpdated((prev:boolean)=> !prev);
         }
       }
     } catch (error: any) {

@@ -126,9 +126,9 @@ const Dashboard = ({
         console.log("updatedGroupedExpenses: ", updatedGroupedExpenses);
         setGroupedExpenses(updatedGroupedExpenses);
         setIsLoading(false);
-        if (isUpdated) {
-          setIsUpdated(false);
-        }
+        // if (isUpdated) {
+        //   setIsUpdated(false);
+        // }
       }
     } catch (error: any) {
       console.log(
