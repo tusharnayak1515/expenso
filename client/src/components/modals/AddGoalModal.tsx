@@ -92,7 +92,7 @@ const AddGoalModal = ({setIsAddGoal, setLoading}:any) => {
   return ReactDom.createPortal(
     <div className={`fixed inset-0 bg-[#0000005f] z-[600]`}>
       <form
-        className={`w-[100%] xxs:w-[400px] xs:w-[450px] md:w-[500px] my-24 mx-auto text-slate-400
+        className={`w-[95%] xxs:w-[400px] xs:w-[450px] md:w-[500px] my-24 mx-auto text-slate-400
         p-6 flex flex-col justify-start items-center 
         gap-4 rounded-md shadow-md shadow-slate-500 bg-slate-950`}
         onSubmit={onAddGoal}

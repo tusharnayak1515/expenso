@@ -148,7 +148,7 @@ const ResetPasswordModal = ({ setIsResetPassword }: any) => {
     <div className={`fixed inset-0 p-6 bg-[#0000005f] z-[600]`}>
       {loading && <LoadingSpinner />}
       <form
-        className={`h-auto w-[100%] xxs:w-[350px] xs:w-[400px] md:w-[450px] overflow-y-scroll
+        className={`h-auto w-[95%] xxs:w-[350px] xs:w-[400px] md:w-[450px] overflow-y-scroll
         my-16 mx-auto text-slate-400 p-6 
         flex flex-col justify-start items-center gap-4 
         rounded-md shadow-md shadow-slate-500 bg-slate-950`}
