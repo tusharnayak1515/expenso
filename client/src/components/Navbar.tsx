@@ -23,7 +23,7 @@ const Navbar = () => {
       <div
         className={`sticky top-0 left-0 right-0 h-[80px] w-full py-2 px-8
     text-slate-400 flex justify-between items-center
-    bg-slate-900 z-[500]`}
+    bg-slate-900 z-[500] shadow-md shadow-gray-600`}
       >
         <span onClick={() => setShowMenu(true)} className={`block lg1:hidden`}>
           <HiOutlineMenu
