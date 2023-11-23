@@ -31,10 +31,23 @@ store.on('error', (error) => {
 const FRONTEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://expenso-jet.vercel.app";
 console.log("FRONTEND_URL: ", FRONTEND_URL);
 
-app.use(cors({
-    origin: FRONTEND_URL,
+const allowedOrigins = [
+    FRONTEND_URL,
+    'exp://127.0.0.1:19000',
+];
+
+const corsOptions: cors.CorsOptions = {
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
 
 app.use(
     session({

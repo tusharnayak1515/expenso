@@ -7,6 +7,7 @@ import resetPassword from "../controllers/auth/resetPassword";
 import updateProfile from "../controllers/auth/updateProfile";
 import passport from "passport";
 import getProfile from "../controllers/auth/getProfile";
+import User from "../models/User";
 
 const router = express.Router();
 
@@ -29,10 +30,9 @@ router.get("/login/failed", (req, res) => {
     });
 });
 
-router.get("/google", passport.authenticate("google"));
-
 router.get(
-    "/google/callback", (req, res, next) => {
+    "/google/callback",
+    (req, res, next) => {
         passport.authenticate("google", (err: any, authInfo: any) => {
             if (err) {
                 return res.redirect('/api/auth/login/failed');
@@ -41,19 +41,31 @@ router.get(
             const token = `Bearer ${authInfo?.token}`;
             const user = authInfo?.user;
 
-            res.cookie("authorization", token, {
-                maxAge: 60 * 60 * 24 * 1000,
-                path: "/",
-                httpOnly: process.env.NODE_ENV === "production" ? true : false,
-                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-                secure: process.env.NODE_ENV === "production" ? true : false
-            });
+            if (isReactNativeApp(req)) {
+                // For React Native, send JSON response
+                res.status(200).json({ token, user });
+            } else {
+                // For Next.js, set cookie and redirect
+                res.cookie("authorization", token, {
+                    maxAge: 60 * 60 * 24 * 1000,
+                    path: "/",
+                    httpOnly: process.env.NODE_ENV === "production" ? true : false,
+                    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+                    secure: process.env.NODE_ENV === "production" ? true : false
+                });
 
-            const FRONTEND_URL = process.env.NODE_ENV === "production" ? `https://expenso-jet.vercel.app?token=${token}` : process.env.CLIENT_URL;
+                const FRONTEND_URL = process.env.NODE_ENV === "production" ? `https://expenso-jet.vercel.app?token=${token}` : process.env.CLIENT_URL;
 
-            res.redirect(FRONTEND_URL!);
+                res.redirect(FRONTEND_URL!);
+            }
         })(req, res, next);
-    });
+    }
+);
+
+export const isReactNativeApp = (req: Request) => {
+    console.log("agent: ", req.headers["user-agent"]);
+    return req.headers["user-agent"]?.includes("ReactNative") || false;
+}
 
 router.post('/logout', function (req: any, res: any, next) {
     try {

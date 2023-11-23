@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../../models/User";
 import { IUser } from "../../entities/entityInterfaces";
+import { isReactNativeApp } from "../../routes/auth";
 
 const secret = process.env.JWT_SECRET;
 
@@ -41,13 +42,15 @@ const signin = async (req: Request, res: Response) => {
 
     const jwtToken = jwt.sign(data, secret!);
 
-    res.cookie("authorization", `Bearer ${jwtToken}`, {
-      maxAge: 60 * 60 * 24 * 1000,
-      path: "/",
-      httpOnly:  process.env.NODE_ENV === "production" ? true : false,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      secure:  process.env.NODE_ENV === "production" ? true: false
-    });
+    if (!isReactNativeApp(req)) {
+      res.cookie("authorization", `Bearer ${jwtToken}`, {
+        maxAge: 60 * 60 * 24 * 1000,
+        path: "/",
+        httpOnly: process.env.NODE_ENV === "production" ? true : false,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        secure: process.env.NODE_ENV === "production" ? true : false
+      });
+    }
 
     success = true;
     return res.status(200).json({ success, user, token: `Bearer ${jwtToken}` });
