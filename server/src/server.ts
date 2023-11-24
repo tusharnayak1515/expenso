@@ -33,7 +33,7 @@ console.log("FRONTEND_URL: ", FRONTEND_URL);
 
 const allowedOrigins = [
     FRONTEND_URL,
-    'exp://127.0.0.1:19000',
+    'exp://192.168.0.194:8081',
 ];
 
 const corsOptions: cors.CorsOptions = {
