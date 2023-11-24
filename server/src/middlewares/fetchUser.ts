@@ -11,6 +11,7 @@ const fetchUser = async (
   ) => {
   let success = false;
   const token =  req.headers.authorization || req.cookies.authorization;
+  console.log("token: ",token);
   if (!token) {
     return res.status(401).json({
       success,
