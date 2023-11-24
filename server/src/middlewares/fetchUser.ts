@@ -10,7 +10,7 @@ const fetchUser = async (
     next: NextFunction
   ) => {
   let success = false;
-  const token =  req.headers.authorization || req.cookies.authorization;
+  const token = req.cookies.authorization || req.headers.authorization;
   if (!token) {
     return res.status(401).json({
       success,
