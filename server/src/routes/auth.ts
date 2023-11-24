@@ -7,7 +7,6 @@ import resetPassword from "../controllers/auth/resetPassword";
 import updateProfile from "../controllers/auth/updateProfile";
 import passport from "passport";
 import getProfile from "../controllers/auth/getProfile";
-import User from "../models/User";
 
 const router = express.Router();
 
@@ -64,7 +63,7 @@ router.get(
 
 export const isReactNativeApp = (req: Request) => {
     console.log("agent: ", req.headers["user-agent"]);
-    return req.headers["user-agent"]?.includes("ReactNative") || false;
+    return req.headers["user-agent"]?.includes("okhttp/4.9.2") || false;
 }
 
 router.post('/logout', function (req: any, res: any, next) {
