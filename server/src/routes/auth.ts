@@ -63,7 +63,7 @@ router.get(
 
 export const isReactNativeApp = (req: Request) => {
     console.log("agent: ", req.headers["user-agent"]);
-    return req.headers["user-agent"]?.includes("okhttp/4.9.2") || false;
+    return req.headers["user-agent"]?.includes("ReactNative") || false;
 }
 
 router.post('/logout', function (req: any, res: any, next) {
