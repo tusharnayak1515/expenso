@@ -16,6 +16,8 @@ const updateProfile = async (req: Request, res: Response) => {
 
         user = await User.findByIdAndUpdate(userId, { name, email, dp: image }, { new: true }).exec();
 
+        user = await User.findById(userId).select("-password");
+
         success = true;
         return res.status(200).json({ success, user });
     } catch (error: any) {
