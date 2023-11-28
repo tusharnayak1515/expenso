@@ -12,7 +12,7 @@ const getProfile = async (req: Request, res: Response) => {
   try {
     const userId= req.body.user.id;
 
-    let user: IUser | null = await User.findById(userId).exec();
+    let user: any = await User.findById(userId).exec();
     if (!user) {
       return res
         .status(404)
@@ -21,6 +21,8 @@ const getProfile = async (req: Request, res: Response) => {
           error: "User not found",
         });
     }
+
+    user = await User.findById(userId).select("-password");
 
     success = true;
     return res.status(200).json({ success, user });
