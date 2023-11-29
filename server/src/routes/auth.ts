@@ -42,7 +42,11 @@ router.get(
 
             if (isReactNativeApp(req)) {
                 // For React Native, send JSON response
-                res.status(200).json({ token, user });
+                // res.status(200).json({ token, user });
+                const redirectUrl = `exp://192.168.0.194:8081?token=${token}&user=${JSON.stringify(user)}`;
+
+                res.redirect(redirectUrl);
+
             } else {
                 // For Next.js, set cookie and redirect
                 res.cookie("authorization", token, {
