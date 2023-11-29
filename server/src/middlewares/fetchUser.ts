@@ -11,6 +11,7 @@ const fetchUser = async (
   ) => {
   let success = false;
   const token = req.headers.authorization || req.cookies.authorization;
+  console.log("token: ",token);
   if (!token) {
     return res.status(401).json({
       success,
@@ -19,7 +20,7 @@ const fetchUser = async (
   }
   try {
     const userToken = token.substring(7, token.length);
-    // console.log("userToken: ", userToken);
+    console.log("userToken: ", userToken);
     const data:any = jwt.verify(userToken, secret!);
     // console.log("data: ",data);
 
