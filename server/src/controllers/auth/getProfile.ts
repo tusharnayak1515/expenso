@@ -1,9 +1,5 @@
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 import User from "../../models/User";
-import { IUser } from "../../entities/entityInterfaces";
 
 const secret = process.env.JWT_SECRET;
 

@@ -34,6 +34,7 @@ const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
   const onDpChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files?.length !== 0) {
+      console.log("dp: ",e.target.files);
       setImage(e.target.files && URL.createObjectURL(e.target.files[0]));
       setDp(e.target.files && e.target.files[0]);
     }
