@@ -17,7 +17,7 @@ const signin = async (req: Request, res: Response) => {
       return res.status(422).json({ success, error: errors.array()[0].msg });
     }
 
-    let user: IUser | null = await User.findOne({ email }).exec();
+    let user: IUser | null = await User.findOne({ email: email.toLowerCase() }).exec();
     if (!user) {
       return res
         .status(404)

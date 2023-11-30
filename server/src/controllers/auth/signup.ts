@@ -14,7 +14,7 @@ const signup = async (req: Request, res: Response) => {
       return res.status(422).json({ success, error: errors.array()[0].msg });
     }
 
-    let token: IToken | null = await Token.findOne({ email }).exec();
+    let token: IToken | null = await Token.findOne({ email: email.toLowerCase() }).exec();
     if (!token) {
       return res.status(404).json({ success, error: "Invalid Token." });
     }
@@ -23,7 +23,7 @@ const signup = async (req: Request, res: Response) => {
       return res.status(403).json({ success, error: "Incorrect otp." });
     }
 
-    let user: IUser | null = await User.findOne({ email }).exec();
+    let user: IUser | null = await User.findOne({ email: email.toLowerCase() }).exec();
     if (user) {
       return res
         .status(403)
@@ -38,7 +38,7 @@ const signup = async (req: Request, res: Response) => {
 
     user = await User.create({
       name,
-      email,
+      email: email.toLowerCase(),
       password: hashedPassword
     });
 
