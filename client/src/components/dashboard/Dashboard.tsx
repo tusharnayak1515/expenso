@@ -19,6 +19,8 @@ Chart.register(CategoryScale);
 
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllCategories } from "@/apiCalls/category";
+import * as XLSX from "xlsx";
+import { MdFileDownload } from "react-icons/md";
 
 const Dashboard = ({
   isUpdated,
@@ -72,72 +74,75 @@ const Dashboard = ({
     }
   }, [dispatch]);
 
-  const fetchExpenses = useCallback(async (year: any, month: any, expenseType: any) => {
-    setIsLoading(true);
-    setCreditAmount(0);
-    setSpendAmount(0);
-    setInvestmentAmount(0);
-    try {
-      const date = new Date();
-      const res: any = await fetchMyExpenses({
-        year: year || date.getFullYear(),
-        month: month || date.getMonth() + 1,
-        expenseType,
-      });
-
-      if (res.success) {
-        dispatch(actionCreators.setAllExpenses(res.expenses));
-        let updatedGroupedExpenses: any = [];
-        res.expenses.forEach((expense: any) => {
-          const categoryName = expense.category.name;
-          const expenseType = expense.expenseType;
-
-          const isExpense = updatedGroupedExpenses.some(
-            (item: any) => item?.category === categoryName
-          );
-          const expObj = updatedGroupedExpenses.filter(
-            (item: any) => item?.category === categoryName
-          );
-
-          if (!isExpense) {
-            updatedGroupedExpenses = [
-              ...updatedGroupedExpenses,
-              { category: categoryName, total: expense?.amount },
-            ];
-          } else {
-            updatedGroupedExpenses = updatedGroupedExpenses?.map((exp: any) =>
-              exp?.category === categoryName
-                ? {
-                    category: categoryName,
-                    total: expObj[0].total + expense?.amount,
-                  }
-                : exp
-            );
-          }
-
-          if (expenseType === "credit") {
-            setCreditAmount((prev: number) => prev + expense.amount);
-          } else if (expenseType === "debit") {
-            setSpendAmount((prev: number) => prev + expense.amount);
-          } else if (expenseType === "investment") {
-            setInvestmentAmount((prev: number) => prev + expense.amount);
-          }
+  const fetchExpenses = useCallback(
+    async (year: any, month: any, expenseType: any) => {
+      setIsLoading(true);
+      setCreditAmount(0);
+      setSpendAmount(0);
+      setInvestmentAmount(0);
+      try {
+        const date = new Date();
+        const res: any = await fetchMyExpenses({
+          year: year || date.getFullYear(),
+          month: month || date.getMonth() + 1,
+          expenseType,
         });
-        console.log("updatedGroupedExpenses: ", updatedGroupedExpenses);
-        setGroupedExpenses(updatedGroupedExpenses);
+
+        if (res.success) {
+          dispatch(actionCreators.setAllExpenses(res.expenses));
+          let updatedGroupedExpenses: any = [];
+          res.expenses.forEach((expense: any) => {
+            const categoryName = expense.category.name;
+            const expenseType = expense.expenseType;
+
+            const isExpense = updatedGroupedExpenses.some(
+              (item: any) => item?.category === categoryName
+            );
+            const expObj = updatedGroupedExpenses.filter(
+              (item: any) => item?.category === categoryName
+            );
+
+            if (!isExpense) {
+              updatedGroupedExpenses = [
+                ...updatedGroupedExpenses,
+                { category: categoryName, total: expense?.amount },
+              ];
+            } else {
+              updatedGroupedExpenses = updatedGroupedExpenses?.map((exp: any) =>
+                exp?.category === categoryName
+                  ? {
+                      category: categoryName,
+                      total: expObj[0].total + expense?.amount,
+                    }
+                  : exp
+              );
+            }
+
+            if (expenseType === "credit") {
+              setCreditAmount((prev: number) => prev + expense.amount);
+            } else if (expenseType === "debit") {
+              setSpendAmount((prev: number) => prev + expense.amount);
+            } else if (expenseType === "investment") {
+              setInvestmentAmount((prev: number) => prev + expense.amount);
+            }
+          });
+          console.log("updatedGroupedExpenses: ", updatedGroupedExpenses);
+          setGroupedExpenses(updatedGroupedExpenses);
+          setIsLoading(false);
+          // if (isUpdated) {
+          //   setIsUpdated(false);
+          // }
+        }
+      } catch (error: any) {
+        console.log(
+          "Error in dashboard component, fetchExpenses: ",
+          error.response.data.error
+        );
         setIsLoading(false);
-        // if (isUpdated) {
-        //   setIsUpdated(false);
-        // }
       }
-    } catch (error: any) {
-      console.log(
-        "Error in dashboard component, fetchExpenses: ",
-        error.response.data.error
-      );
-      setIsLoading(false);
-    }
-  }, [dispatch]);
+    },
+    [dispatch]
+  );
 
   const data = {
     labels: [...groupedExpenses?.map((expense: any) => expense?.category)],
@@ -166,6 +171,33 @@ const Dashboard = ({
     ],
   };
 
+  const downloadExcel = () => {
+
+    const mydata = expenses;
+
+    mydata.sort((a: any, b: any) => {
+      const dateA:any = a?.expenseDate ? new Date(a?.expenseDate) : new Date(0);
+      const dateB:any = b?.expenseDate ? new Date(b?.expenseDate) : new Date(0);
+      return dateA - dateB;
+    });
+
+    const selectedFields:any[] = mydata.map((expense:any) => ({
+      "Expense Type": expense?.expenseType,
+      "Category": expense?.category?.name,
+      "Amount (in Rs)": expense?.amount,
+      "Comment": expense?.comment || "None",
+      "Expense Date": new Date(expense?.expenseDate).toLocaleDateString(),
+    }));
+
+    const year = new Date(activeDate)?.getFullYear();
+    const month = new Date(activeDate)?.getMonth() + 1;
+
+    const worksheet = XLSX.utils.json_to_sheet(selectedFields);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    XLSX.writeFile(workbook, `ExpenseSheet-${month}/${year}.xlsx`);
+  };
+
   useEffect(() => {
     setIsLoading(true);
     const year = activeDate.split("-")[0];
@@ -185,8 +217,6 @@ const Dashboard = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-
-    
   }, [isUpdated]);
 
   return (
@@ -243,6 +273,16 @@ const Dashboard = ({
             className={`py-2 px-4 border border-slate-400 rounded-md 
             outline-none bg-slate-800`}
           />
+
+          <button
+            className={`self-start py-2 px-4 
+            flex justify-start items-center gap-2 
+            text-slate-400 border border-slate-400 rounded-md 
+            hover:bg-slate-950 bg-slate-900 transition-all duration-300`}
+            onClick={downloadExcel}
+          >
+            <MdFileDownload /> Download report
+          </button>
         </div>
 
         {isAddExpense && (
