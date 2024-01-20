@@ -36,7 +36,7 @@ const History = ({ setIsUpdated, activeDate }: any) => {
           className={`w-full p-4 flex justify-center items-center gap-2 border-b border-slate-400`}
         >
           <MdOutlineHistory className={`text-2xl`} />
-          <p>Your Expense History</p>
+          <p className={`w-full py-4 px-6 flex justify-between items-center`}>Your Expense History</p>
         </div>
 
         {expenses?.length === 0 ? (
