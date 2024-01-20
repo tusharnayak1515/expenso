@@ -40,7 +40,7 @@ const History = ({ setIsUpdated, activeDate }: any) => {
         </div>
 
         {expenses?.length === 0 ? (
-          <p className={`w-full py-4 px-6 flex justify-between items-center`}>No expenses to show</p>
+          <p className={`w-full py-4 px-6 flex justify-center items-center`}>No expenses to show</p>
         ) : (
           expenses?.map((expense: any) => {
             return (
