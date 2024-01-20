@@ -13,6 +13,7 @@ import authRoutes from "./routes/auth";
 import expenseRoutes from "./routes/expense";
 import categoryRoutes from "./routes/category";
 import goalRoutes from "./routes/goal";
+import cron from 'node-cron';
 
 const app = express();
 const MongoDBStore = connectMongo(session);
@@ -22,7 +23,6 @@ const store = new MongoDBStore({
     uri: process.env.MONGO_URI!,
     collection: 'sessions',
 });
-
 
 store.on('error', (error) => {
     console.error('MongoDB session store error:', error);
@@ -71,17 +71,119 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/uploads', express.static(path.join('public', 'uploads')));
 
 import "./models/Token";
-import "./models/User";
+import User from "./models/User";
 import "./models/Category";
-import "./models/Expense";
+import Expense from "./models/Expense";
 import "./models/Goal";
-import "./models/Category";
+import Category from "./models/Category";
+import { IExpense } from "./entities/entityInterfaces";
+import sendEmail from "./services/sendEmail";
 
 app.use("/api/otp", otpRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
+
+const getMonthlyExpenseReport = async (userId:string)=> {
+    try {
+        const date = new Date();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+
+        if(month === 1) {
+            month = 12;
+            year = year - 1;
+        }
+        else {
+            month -= 1;
+        }
+
+        const startOfMonth = new Date(Number(year), Number(month) - 1, 1);
+        const endOfMonth = new Date(Number(year), Number(month), 0);
+
+        const filters: any = {
+            user: userId,
+            expenseDate: {
+                $gte: startOfMonth,
+                $lte: endOfMonth,
+            },
+        };
+
+        let expenses: IExpense[] | any = await Expense.find(filters).sort("-expenseDate");
+
+        expenses = await Category.populate(expenses, { path: "category" });
+
+        expenses = await Category.populate(expenses, { path: "category" });
+
+        return expenses;
+    } catch (error:any) {
+        console.log("Error in fetching monthly expense report: ",error?.message);
+        return null;
+    }
+}
+
+cron.schedule('0 0 1 * *', async () => {
+    try {
+      const users = await User.find();
+      for(let user of users) {
+        const monthlyExpenseReport = await getMonthlyExpenseReport(user?._id?.toString());
+        if(!monthlyExpenseReport) {
+            console.log("Error in fetching monthly expense report");
+        }
+        else {
+            if(monthlyExpenseReport?.length === 0) {
+                return;
+            }
+            const date = new Date();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+
+            if(month === 1) {
+                month = 12;
+                year = year - 1;
+            }
+            else {
+                month -= 1;
+            }
+            const lastMonth = new Date(year, month);
+            const fullMonthName = lastMonth.toLocaleString('en-US', { month: 'long' });
+
+            let creditAmount = 0;
+            let debitAmount = 0;
+            let investmentAmount = 0;
+
+            for(let expense of monthlyExpenseReport) {
+                if(expense?.expenseType === "credit") {
+                    creditAmount += expense?.amount;
+                }
+                else if(expense?.expenseType === "debit") {
+                    debitAmount += expense?.amount;
+                }
+                else if(expense?.expenseType === "investment"){
+                    investmentAmount += expense?.amount;
+                }
+            }
+
+            const emailContent = `
+                <h2>Monthly Expense Report</h2>
+                <p>Here is your expense report for the previous month:</p>
+                <p>Credit Amount <b>₹${creditAmount}</b></p>
+                <p>Debit Amount <b>₹${debitAmount}</b></p>
+                <p>Investment Amount <b>₹${investmentAmount}</b></p>
+            `;
+
+            await sendEmail({
+                subject: `Monthly expense report for the month of ${fullMonthName}, ${year}`,
+                html: emailContent, 
+                email: user?.email
+            });
+        }
+      }
+    } catch (error:any) {
+      console.error('Error sending email:', error?.message);
+    }
+  });
 
 app.listen(port, () => {
     console.log(`Server started successfully at port ${port}.`);

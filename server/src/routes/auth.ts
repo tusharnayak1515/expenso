@@ -47,14 +47,17 @@ router.get(
             } else {
                 // For Next.js, set cookie and redirect
                 res.cookie("authorization", token, {
-                    maxAge: 60 * 60 * 24 * 1000,
+                    maxAge: 60 * 60 * 24 * 1000 * 7,
                     path: "/",
                     httpOnly: process.env.NODE_ENV === "production" ? true : false,
                     sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                     secure: process.env.NODE_ENV === "production" ? true : false
                 });
 
-                const FRONTEND_URL = process.env.NODE_ENV === "production" ? `https://expenso-jet.vercel.app?token=${token}` : process.env.CLIENT_URL;
+                const FRONTEND_URL = process.env.NODE_ENV ===
+                    "production" ?
+                    `https://expenso-jet.vercel.app/token?token=${token}` :
+                    `${process.env.CLIENT_URL}/token?token=${token}`;
 
                 res.redirect(FRONTEND_URL!);
             }

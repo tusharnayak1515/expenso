@@ -144,48 +144,59 @@ const Dashboard = ({
     [dispatch]
   );
 
+  const getRandomValue = (min:number, max:number)=> {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const generateBrightBgColors = (count:number)=> {
+    const brightColors = [];
+    for (let i = 0; i < count; i++) {
+      const randomColor = `rgba(${getRandomValue(20, 255)}, ${getRandomValue(20, 255)}, ${getRandomValue(20, 255)}, 0.2)`;
+      brightColors.push(randomColor);
+    }
+    return brightColors;
+  }
+
+  const generateBrightBorderColors = (count:number)=> {
+    const brightColors = [];
+    for (let i = 0; i < count; i++) {
+      const randomColor = `rgba(${getRandomValue(20, 255)}, ${getRandomValue(20, 255)}, ${getRandomValue(20, 255)}, 1)`;
+      brightColors.push(randomColor);
+    }
+    return brightColors;
+  }
+
   const data = {
-    labels: [...groupedExpenses?.map((expense: any) => expense?.category)],
+    labels: groupedExpenses?.map((expense: any) => expense?.category) || [],
     datasets: [
       {
         label: "Amount",
-        data: [...groupedExpenses?.map((expense: any) => expense?.total)],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        data: groupedExpenses?.map((expense: any) => expense?.total) || [],
+        backgroundColor: generateBrightBgColors(groupedExpenses?.length || 0),
+        borderColor: generateBrightBorderColors(groupedExpenses?.length || 0),
         borderWidth: 2,
       },
     ],
   };
 
   const downloadExcel = () => {
-
     const mydata = expenses;
 
     mydata.sort((a: any, b: any) => {
-      const dateA:any = a?.expenseDate ? new Date(a?.expenseDate) : new Date(0);
-      const dateB:any = b?.expenseDate ? new Date(b?.expenseDate) : new Date(0);
+      const dateA: any = a?.expenseDate
+        ? new Date(a?.expenseDate)
+        : new Date(0);
+      const dateB: any = b?.expenseDate
+        ? new Date(b?.expenseDate)
+        : new Date(0);
       return dateA - dateB;
     });
 
-    const selectedFields:any[] = mydata.map((expense:any) => ({
+    const selectedFields: any[] = mydata.map((expense: any) => ({
       "Expense Type": expense?.expenseType,
-      "Category": expense?.category?.name,
+      Category: expense?.category?.name,
       "Amount (in Rs)": expense?.amount,
-      "Comment": expense?.comment || "None",
+      Comment: expense?.comment || "None",
       "Expense Date": new Date(expense?.expenseDate).toLocaleDateString(),
     }));
 
@@ -217,7 +228,13 @@ const Dashboard = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isUpdated]);
+  }, [
+    isUpdated,
+    activeDate,
+    activeExpenseType,
+    fetchExpenses,
+    getAllCategories,
+  ]);
 
   return (
     <>

@@ -44,7 +44,7 @@ const signin = async (req: Request, res: Response) => {
 
     if (!isReactNativeApp(req)) {
       res.cookie("authorization", `Bearer ${jwtToken}`, {
-        maxAge: 60 * 60 * 24 * 1000,
+        maxAge: 60 * 60 * 24 * 1000 * 7,
         path: "/",
         httpOnly: process.env.NODE_ENV === "production" ? true : false,
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",

@@ -180,7 +180,7 @@ const Auth = ({ type }: AuthPropTypes) => {
         if (res.success) {
           setIsLoading(false);
           setCookie("authorization", res.token, {
-            maxAge: 60 * 60 * 24,
+            maxAge: 60 * 60 * 24 * 7,
           });
           localStorage.setItem(
             "expenso_user_profile",
