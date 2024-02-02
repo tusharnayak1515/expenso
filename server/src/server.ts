@@ -85,13 +85,13 @@ app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
 
-const getMonthlyExpenseReport = async (userId:string)=> {
+const getMonthlyExpenseReport = async (userId: string) => {
     try {
         const date = new Date();
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
 
-        if(month === 1) {
+        if (month === 1) {
             month = 12;
             year = year - 1;
         }
@@ -117,73 +117,105 @@ const getMonthlyExpenseReport = async (userId:string)=> {
         expenses = await Category.populate(expenses, { path: "category" });
 
         return expenses;
-    } catch (error:any) {
-        console.log("Error in fetching monthly expense report: ",error?.message);
+    } catch (error: any) {
+        console.log("Error in fetching monthly expense report: ", error?.message);
         return null;
     }
 }
 
-cron.schedule('0 0 1 * *', async () => {
+const cronJob = cron.schedule('0 0 1 1 *', async () => {
+    console.log("run");
     try {
-      const users = await User.find();
-      for(let user of users) {
-        const monthlyExpenseReport = await getMonthlyExpenseReport(user?._id?.toString());
-        if(!monthlyExpenseReport) {
-            console.log("Error in fetching monthly expense report");
-        }
-        else {
-            if(monthlyExpenseReport?.length === 0) {
-                return;
-            }
-            const date = new Date();
-            let month = date.getMonth() + 1;
-            let year = date.getFullYear();
-
-            if(month === 1) {
-                month = 12;
-                year = year - 1;
+        const users = await User.find();
+        for (let user of users) {
+            const monthlyExpenseReport = await getMonthlyExpenseReport(user?._id?.toString());
+            if (!monthlyExpenseReport) {
+                console.log("Error in fetching monthly expense report");
             }
             else {
-                month -= 1;
-            }
-            const lastMonth = new Date(year, month);
-            const fullMonthName = lastMonth.toLocaleString('en-US', { month: 'long' });
-
-            let creditAmount = 0;
-            let debitAmount = 0;
-            let investmentAmount = 0;
-
-            for(let expense of monthlyExpenseReport) {
-                if(expense?.expenseType === "credit") {
-                    creditAmount += expense?.amount;
+                if (monthlyExpenseReport?.length === 0) {
+                    return;
                 }
-                else if(expense?.expenseType === "debit") {
-                    debitAmount += expense?.amount;
-                }
-                else if(expense?.expenseType === "investment"){
-                    investmentAmount += expense?.amount;
-                }
-            }
+                const date = new Date();
+                let month = date.getMonth() + 1;
+                let year = date.getFullYear();
 
-            const emailContent = `
+                if (month === 1) {
+                    month = 12;
+                    year = year - 1;
+                }
+                else {
+                    month -= 1;
+                }
+                const lastMonth = new Date(year, month - 1);
+                const fullMonthName = lastMonth.toLocaleString('en-US', { month: 'long' });
+
+                let creditAmount = 0;
+                let debitAmount = 0;
+                let investmentAmount = 0;
+
+                for (let expense of monthlyExpenseReport) {
+                    if (expense?.expenseType === "credit") {
+                        creditAmount += expense?.amount;
+                    }
+                    else if (expense?.expenseType === "debit") {
+                        debitAmount += expense?.amount;
+                    }
+                    else if (expense?.expenseType === "investment") {
+                        investmentAmount += expense?.amount;
+                    }
+                }
+
+                const groupedExpenses: any = [];
+
+                for (let expObj of monthlyExpenseReport) {
+                    if (groupedExpenses.some((obj: any) => obj?.category === expObj?.category?.name)) {
+                        const data: any = {
+                            category: expObj?.category?.name
+                        };
+                        groupedExpenses?.map((expenseObj: any) => 
+                        expenseObj?.category === expObj?.category?.name ? 
+                        { ...data, amount: expenseObj?.amount + expObj?.amount } : 
+                        expenseObj);
+                    }
+                    else {
+                        const data: any = {
+                            category: expObj?.category?.name,
+                            amount: expObj?.amount
+                        };
+                        groupedExpenses.push(data);
+                    }
+                }
+
+                let categorizedExpense = ``;
+
+                for (let expObj of groupedExpenses) {
+                    let item = `<p>${expObj?.category}: <b>₹${expObj?.amount}</b></p>`;
+                    categorizedExpense += `${item}\n`;
+                }
+
+                const emailContent = `
                 <h2>Monthly Expense Report</h2>
                 <p>Here is your expense report for the previous month:</p>
-                <p>Credit Amount <b>₹${creditAmount}</b></p>
-                <p>Debit Amount <b>₹${debitAmount}</b></p>
-                <p>Investment Amount <b>₹${investmentAmount}</b></p>
+                <p>Credit Amount: <b>₹${creditAmount}</b></p>
+                <p>Debit Amount: <b>₹${debitAmount}</b></p>
+                <p>Investment Amount: <b>₹${investmentAmount}</b></p>
+                ${categorizedExpense}
             `;
 
-            await sendEmail({
-                subject: `Monthly expense report for the month of ${fullMonthName}, ${year}`,
-                html: emailContent, 
-                email: user?.email
-            });
+                await sendEmail({
+                    subject: `Monthly expense report for the month of ${fullMonthName}, ${year}`,
+                    html: emailContent,
+                    email: user?.email
+                });
+            }
         }
-      }
-    } catch (error:any) {
-      console.error('Error sending email:', error?.message);
+    } catch (error: any) {
+        console.error('Error sending email:', error?.message);
     }
-  });
+}, { timezone: "Asia/Kolkata" });
+
+cronJob.start();
 
 app.listen(port, () => {
     console.log(`Server started successfully at port ${port}.`);
