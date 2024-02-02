@@ -76,6 +76,7 @@ const Dashboard = ({
 
   const fetchExpenses = useCallback(
     async (year: any, month: any, expenseType: any) => {
+      console.log("yes running");
       setIsLoading(true);
       setCreditAmount(0);
       setSpendAmount(0);
@@ -285,10 +286,7 @@ const Dashboard = ({
               const year = e.target.value.split("-")[0];
               const month = e.target.value.split("-")[1];
               setActiveDate(`${year}-${month.toString().padStart(2, "0")}`);
-              setCreditAmount(0);
-              setSpendAmount(0);
-              setInvestmentAmount(0);
-              fetchExpenses(year, month, activeExpenseType);
+              // fetchExpenses(year, month, activeExpenseType);
             }}
             className={`py-2 px-4 border border-slate-400 rounded-md 
             outline-none bg-slate-800`}
