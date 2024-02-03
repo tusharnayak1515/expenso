@@ -7,6 +7,7 @@ import { setCookie } from "cookies-next";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const FetchTokenPage = () => {
   const query: any = useSearchParams();
@@ -38,13 +39,31 @@ const FetchTokenPage = () => {
         });
         dispatch(actionCreators.setToken(token));
         fetchProfile();
-        router.replace("/");
+        router.replace("/dashboard");
+        toast.success("Welcome to Expenso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         router.replace("/signin");
         localStorage.removeItem("expenso_user_profile");
       }
     } else {
-      router.replace("/");
+      router.replace("/dashboard");
+      toast.success("Welcome to Expenso", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }, [token, user, dispatch, fetchProfile, router]);
 

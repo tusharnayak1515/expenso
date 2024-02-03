@@ -5,7 +5,9 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector, shallowEqual } from "react-redux";
-const SidebarModal = dynamic(()=> import("./modals/SidebarModal"), {ssr: false});
+const SidebarModal = dynamic(() => import("./modals/SidebarModal"), {
+  ssr: false,
+});
 
 import { HiOutlineMenu } from "react-icons/hi";
 
@@ -39,10 +41,24 @@ const Navbar = () => {
         </Link>
 
         <div className={`flex justify-start items-center gap-6`}>
-          {profile && (
-            <div className={`relative h-12 w-12 rounded-full`}>
-              <Image src={profile?.dp} alt="DP" fill className="rounded-full" />
-            </div>
+          {!profile ? (
+            <Link href={"/signin"} className={`text-lg font-semibold`}>
+              Signin
+            </Link>
+          ) : (
+            <>
+              <Link href={"/dashboard"} className={`text-lg font-semibold`}>
+                Dashboard
+              </Link>
+              <div className={`relative h-12 w-12 rounded-full`}>
+                <Image
+                  src={profile?.dp}
+                  alt="DP"
+                  fill
+                  className="rounded-full"
+                />
+              </div>
+            </>
           )}
         </div>
       </div>

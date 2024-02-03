@@ -9,6 +9,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../LoadingSpinner";
 import axios from "axios";
+import Image from "next/image";
 
 const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
   const dispatch: any = useDispatch();
@@ -102,16 +103,17 @@ const UpdateProfileModal = ({ setIsUpdateProfile }: any) => {
 
         <label htmlFor="dp" className={`w-full`}>
           <div
-            className={`h-[40vh] w-full flex justify-center items-center border-[2px] border-dashed border-[#9099ff] rounded-md`}
+            className={`relative h-[40vh] w-full flex justify-center items-center border-[2px] border-dashed border-[#9099ff] rounded-md`}
           >
             {!dp || dp === "" ? (
               <MdCloudUpload
                 className={`text-[6rem] text-[#9099ff] cursor-pointer hover:text-[#7e89ff]`}
               />
             ) : (
-              <img
+              <Image
                 src={image}
                 alt="Dp"
+                fill
                 className={`h-full w-full rounded-md`}
               />
             )}
