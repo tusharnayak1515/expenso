@@ -38,6 +38,7 @@ const config: Config = {
       boxShadow: {
         menuShadow: "0px 1px 2px 0px #9099ff",
         btnShadow: "0px 1px 3px 0px #5b65d1",
+        heroShadow: "0px 0px 2px 2px #8493A8",
       }
     },
   },

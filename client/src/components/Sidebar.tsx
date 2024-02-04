@@ -12,6 +12,7 @@ import { actionCreators } from "@/redux";
 import { toast } from "react-toastify";
 import { IoMdLogIn } from "react-icons/io";
 import { logoutUser } from "@/apiCalls/auth";
+import Link from "next/link";
 
 const Sidebar = ({ modal, setShowMenu }: any) => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const Sidebar = ({ modal, setShowMenu }: any) => {
   const onLinkClick = (route: string) => {
     switch (route) {
       case "dashboard":
-        router.push("/");
+        router.push("/dashboard");
         break;
       case "credits":
         router.push("/credits");
@@ -86,16 +87,16 @@ const Sidebar = ({ modal, setShowMenu }: any) => {
     flex flex-col justify-start items-start gap-2 rounded-md bg-slate-900`}
     >
       {modal && (
-        <h1 className={`my-4 text-3xl text-slate-400 font-bold mx-auto`}>
+        <p onClick={() => onLinkClick("")} className={`my-4 text-3xl text-slate-400 font-bold mx-auto`}>
           Expenso
-        </h1>
+        </p>
       )}
 
       {user && (
         <div
           className={`w-full p-3 flex justify-start items-center gap-4 
       cursor-pointer rounded-md ${
-        params === "/" ? "bg-slate-600" : "bg-transparent"
+        params === "/dashboard" ? "bg-slate-600" : "bg-transparent"
       } hover:bg-slate-600 transition-all`}
           onClick={() => onLinkClick("dashboard")}
         >

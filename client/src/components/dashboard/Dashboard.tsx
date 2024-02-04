@@ -216,6 +216,15 @@ const Dashboard = ({
     const month = activeDate.split("-")[1];
     fetchExpenses(year, month, activeExpenseType);
     getAllCategories();
+  }, [
+    isUpdated,
+    activeDate,
+    activeExpenseType,
+    fetchExpenses,
+    getAllCategories,
+  ]);
+
+  useEffect(()=> {
     const handleResize = () => {
       if (window.innerWidth < 980) {
         setLegendPosition("bottom");
@@ -229,13 +238,7 @@ const Dashboard = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [
-    isUpdated,
-    activeDate,
-    activeExpenseType,
-    fetchExpenses,
-    getAllCategories,
-  ]);
+  }, []);
 
   return (
     <>

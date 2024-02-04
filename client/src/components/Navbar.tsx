@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,24 +41,10 @@ const Navbar = () => {
         </Link>
 
         <div className={`flex justify-start items-center gap-6`}>
-          {!profile ? (
-            <Link href={"/signin"} className={`text-lg font-semibold`}>
-              Signin
-            </Link>
-          ) : (
-            <>
-              <Link href={"/dashboard"} className={`text-lg font-semibold`}>
-                Dashboard
-              </Link>
-              <div className={`relative h-12 w-12 rounded-full`}>
-                <Image
-                  src={profile?.dp}
-                  alt="DP"
-                  fill
-                  className="rounded-full"
-                />
-              </div>
-            </>
+          {profile && (
+            <div className={`relative h-12 w-12 rounded-full`}>
+              <Image src={profile?.dp} alt="DP" fill className="rounded-full" />
+            </div>
           )}
         </div>
       </div>
