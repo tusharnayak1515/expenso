@@ -16,13 +16,7 @@ const Footer = () => {
         </Link>
       </div>
 
-      {/* <p className={`max-w-full sm:max-w-[500px] md:max-w-[600px] text-slate-400 text-center`}>
-        Expenso app makes managing personal finances easy. Track spending,
-        create budgets, analyze patterns, monitor investments, sync data - all
-        in one simple, intuitive platform. Let me know if you need any assistance!
-      </p> */}
-
-      <p className={`text-slate-400`}>
+      <p className={`text-center text-slate-400`}>
         Copyright © 2023 Expenso. All rights reserved
       </p>
 
