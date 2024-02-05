@@ -39,16 +39,6 @@ const FetchTokenPage = () => {
         });
         dispatch(actionCreators.setToken(token));
         fetchProfile();
-        router.replace("/dashboard");
-        toast.success("Welcome to Expenso", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
       } else {
         router.replace("/signin");
         localStorage.removeItem("expenso_user_profile");
