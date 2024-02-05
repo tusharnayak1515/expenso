@@ -45,6 +45,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
       )} */}
+      <head>
+        <title>Expenso - Track Expenses</title>
+        <meta name="description" content="Expenso helps you track personal finances and expenses online. Monitor spending, create budgets, visualize expenses, and reach your financial goals."/>
+      </head>
       <body className={inter.className}>
         <RouteChangeHandler />
         <Providers>
