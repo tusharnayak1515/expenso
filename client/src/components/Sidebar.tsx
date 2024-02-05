@@ -87,7 +87,7 @@ const Sidebar = ({ modal, setShowMenu }: any) => {
     flex flex-col justify-start items-start gap-2 rounded-md bg-slate-900`}
     >
       {modal && (
-        <p onClick={() => onLinkClick("")} className={`my-4 text-3xl text-slate-400 font-bold mx-auto`}>
+        <p onClick={() => onLinkClick("")} className={`my-4 text-2xl text-slate-400 font-bold mx-auto`}>
           Expenso
         </p>
       )}

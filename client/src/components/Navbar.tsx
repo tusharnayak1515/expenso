@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <>
-      {showMenu && <SidebarModal setShowMenu={setShowMenu} />}
+      <SidebarModal showMenu={showMenu} setShowMenu={setShowMenu} />
       <div
         className={`sticky top-0 left-0 right-0 h-[80px] w-full py-2 px-8
     text-slate-400 flex justify-between items-center

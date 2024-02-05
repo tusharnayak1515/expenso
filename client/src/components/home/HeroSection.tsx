@@ -47,7 +47,7 @@ const HeroSection = () => {
 
   return (
     <div
-      className={`min-h-[70vh] m-6 w-[calc(100%-30px)] sm:w-[calc(100%-50px)] text-slate-300 rounded-md shadow-heroShadow 
+      className={`min-h-[70vh] my-6 w-[calc(100%-30px)] sm:w-[calc(100%-50px)] text-slate-300 rounded-md shadow-heroShadow 
       grid grid-cols-1 md_link:grid-cols-2 bg-slate-900`}
     >
       <div
