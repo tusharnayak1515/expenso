@@ -13,6 +13,7 @@ const HomeLayout = dynamic(() => import("@/components/layouts/HomeLayout"), {
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Script from "next/script";
+import RouteChangeHandler from "@/components/RouteChangeHandler";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
         ></script>
       )} */}
       <body className={inter.className}>
+        <RouteChangeHandler />
         <Providers>
           <Navbar />
           <HomeLayout>{children}</HomeLayout>
