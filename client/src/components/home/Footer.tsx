@@ -17,7 +17,7 @@ const Footer = () => {
       </div>
 
       <p className={`text-center text-slate-400`}>
-        Copyright © 2023 Expenso. All rights reserved
+        Made with ❤️ by Tushar Ranjan Nayak
       </p>
 
       <div className={`flex justify-start items-center gap-8`}>

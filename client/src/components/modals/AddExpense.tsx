@@ -132,7 +132,7 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
             type="number"
             name="amount"
             id="amount"
-            placeholder="1000"
+            placeholder="Amount"
             value={expenseData.amount}
             onChange={onChangeHandler}
             className={`w-full py-2 px-4 border border-slate-400 rounded-md 
@@ -192,7 +192,7 @@ const AddExpense = ({ setIsAddExpense, setIsUpdated, activeDate }: any) => {
             type="text"
             name="comment"
             id="comment"
-            placeholder="Sent to Amit"
+            placeholder="Comment..."
             value={expenseData.comment}
             onChange={onChangeHandler}
             className={`w-full py-2 px-4 border border-slate-400 rounded-md 
