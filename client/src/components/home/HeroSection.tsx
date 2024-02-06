@@ -46,53 +46,55 @@ const HeroSection = () => {
   };
 
   return (
-    <div
-      className={`min-h-[70vh] my-6 w-[calc(100%-30px)] sm:w-[calc(100%-50px)] text-slate-300 rounded-md shadow-heroShadow 
-      grid grid-cols-1 md_link:grid-cols-2 bg-slate-900`}
-    >
+    <div className={`h-auto w-full bg-slate-900`}>
       <div
-        className={`min-h-[50vh] md:min-h-[55vh] md_link:min-h-full w-full p-6 sm:p-12 lg1:p-14 flex justify-center items-center 
-        border-b border-r-0 md_link:border-r md_link:border-b-0 border-slate-400`}
+        className={`min-h-[70vh] w-[calc(100%-30px)] sm:w-[calc(100%-50px)] mx-auto text-slate-300 
+        grid grid-cols-1 md_link:grid-cols-2 `}
       >
         <div
-          className={`w-full xl:w-[85%] flex flex-col justify-start items-center md_link:items-start gap-4`}
+          className={`min-h-[50vh] md:min-h-[55vh] md_link:min-h-full w-full p-6 sm:p-12 lg1:p-14 flex justify-center items-center 
+          border-b border-r-0 md_link:border-r md_link:border-b-0 border-slate-400`}
         >
-          <p className={`text-2xl sm:text-3xl md:text-4xl text-center md_link:text-left font-bold`}>
-            Manage your expenses easily with Expenso
-          </p>
-
-          <p className={`w-full xs:w-[400px] sm:w-[500px] md_link:w-full text-slate-400 text-center md_link:text-left`}>
-            We are providing easiest way to manage and track your expenses,
-            anytime, and anywhere.
-          </p>
-
-          <button
-            onClick={onGetStarted}
-            className={`py-3 px-6 text-slate-200 rounded-sm bg-slate-700 hover:bg-slate-600`}
+          <div
+            className={`w-full xl:w-[85%] flex flex-col justify-start items-center md_link:items-start gap-4`}
           >
-            Get Started
-          </button>
-        </div>
-      </div>
+            <p className={`text-2xl sm:text-3xl md:text-4xl text-center md_link:text-left font-bold`}>
+              Manage your expenses easily with Expenso
+            </p>
 
-      <div className={`h-full w-full p-6 sm:p-12 lg1:p-14 flex justify-center items-center`}>
-        <Pie
-          data={data}
-          width={200}
-          height={200}
-          options={{
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: legendPosition,
-                labels: {
-                  padding: 30,
-                  boxPadding: 20,
+            <p className={`w-full xs:w-[400px] sm:w-[500px] md_link:w-full text-slate-400 text-center md_link:text-left`}>
+              We are providing easiest way to manage and track your expenses,
+              anytime, and anywhere.
+            </p>
+
+            <button
+              onClick={onGetStarted}
+              className={`py-3 px-6 text-slate-200 rounded-sm bg-slate-700 hover:bg-slate-600`}
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
+
+        <div className={`h-full w-full p-6 sm:p-12 lg1:p-14 flex justify-center items-center`}>
+          <Pie
+            data={data}
+            width={200}
+            height={200}
+            options={{
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: legendPosition,
+                  labels: {
+                    padding: 30,
+                    boxPadding: 20,
+                  },
                 },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,32 +1,19 @@
-"use client";
+import React from "react";
+import { Metadata } from "next";
+import dynamic from "next/dynamic";
+const GoalsContainer = dynamic(
+  () => import("@/components/goals/GoalsContainer"),
+  {
+    ssr: false,
+  }
+);
 
-import React, { useEffect } from "react";
-import MyGoals from "@/components/goals/MyGoals";
-import { useRouter } from "next/navigation";
-import { shallowEqual, useSelector } from "react-redux";
+export const metadata: Metadata = {
+  title: "Goals",
+};
 
 const Goals = () => {
-  const router = useRouter();
-  const { user } = useSelector(
-    (state: any) => state.userReducer,
-    shallowEqual
-  );
-
-  useEffect(()=> {
-    if(!user) {
-      router.replace("/signin");
-    }
-  }, [user,router]);
-  return (
-    <div
-      className={`col-span-12 p-6 text-slate-400 
-  flex flex-col justify-start items-center gap-4
-  rounded-md bg-slate-900`}
-    >
-      <h1 className={`text-3xl font-bold`}>My Goals</h1>
-      <MyGoals />
-    </div>
-  );
+  return <GoalsContainer />;
 };
 
 export default Goals;

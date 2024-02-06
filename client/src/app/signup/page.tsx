@@ -1,27 +1,20 @@
-"use client";
+import React from "react";
+import { Metadata } from "next";
+import dynamic from "next/dynamic";
+const AuthContainer = dynamic(
+  () => import("@/components/AuthContainer"),
+  {
+    ssr: false,
+  }
+);
 
-import React, {useEffect} from "react";
-import { shallowEqual, useSelector } from "react-redux";
-import Auth from "@/components/Auth";
-import { useRouter } from "next/navigation";
+export const metadata: Metadata = {
+  title: "Signup",
+};
 
 const Signup = () => {
-  const router = useRouter();
-  const { user } = useSelector(
-    (state: any) => state.userReducer,
-    shallowEqual
-  );
-
-  useEffect(()=> {
-    if(user) {
-      router.replace("/dashboard");
-    }
-  }, [user,router]);
-  
   return (
-    <div className={`h-full col-span-12`}>
-      <Auth type="signup" />
-    </div>
+    <AuthContainer type={"signup"} />
   );
 };
 

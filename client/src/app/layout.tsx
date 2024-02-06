@@ -18,8 +18,12 @@ import RouteChangeHandler from "@/components/RouteChangeHandler";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Expenso - Track your expenses online",
+  title: {
+    default: "Expenso",
+    template: "Expenso - %s"
+  },
   description: "Expenso helps you track personal finances and expenses online. Monitor spending, create budgets, visualize expenses, and reach your financial goals.",
+  keywords: "expenso, expenso jet, expense tracker, budget"
 };
 
 export default function RootLayout({
@@ -45,11 +49,6 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
       )} */}
-      <head>
-        <title>Expenso - Track Expenses</title>
-        <meta name="description" content="Expenso helps you track personal finances and expenses online. Monitor spending, create budgets, visualize expenses, and reach your financial goals."/>
-        <meta name="keywords" content="expenso, expenso jet, jet, expense tracker" />
-      </head>
       <body className={inter.className}>
         <RouteChangeHandler />
         <Providers>

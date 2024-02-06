@@ -7,8 +7,8 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
     <div
-      className={`w-full h-fit] text-slate-200 p-6 
-    flex flex-col justify-center items-center gap-4 bg-slate-900`}
+      className={`w-full h-fit] text-slate-200 py-6 
+    flex flex-col justify-center items-center gap-2 bg-slate-900`}
     >
       <div className={`flex justify-start items-center gap-2`}>
         <Link href={"/"} className={`text-2xl font-bold cursor-pointer`}>

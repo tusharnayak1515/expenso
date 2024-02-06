@@ -33,6 +33,7 @@ const FetchTokenPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    console.log("isNewUser: ",isNewUser);
     if (!user) {
       if (token) {
         setCookie("authorization", token, {
@@ -46,7 +47,7 @@ const FetchTokenPage = () => {
       }
     } else {
       router.replace("/dashboard");
-      if(isNewUser) {
+      if(isNewUser === "true") {
         toast.success("Welcome to Expenso", {
           position: "top-right",
           autoClose: 3000,
