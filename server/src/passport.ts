@@ -16,15 +16,17 @@ passport.use(
             callbackURL: "/api/auth/google/callback",
             scope: ["profile", "email"],
         },
-        async function (accessToken, refreshToken, profile, callback) {
-            const user = {
+        async function (accessToken, refreshToken, profile:any, callback) {
+            const user:any = {
                 id: profile?.id,
                 name: profile?.displayName,
                 email: profile?.emails ? profile?.emails[0]?.value : "email@gmail.com",
             };
-
+            
+            let isNewUser = false;
             let isUser: any = await User.findOne({ $or: [{ googleId: user?.id }, { email: user?.email }] }).exec();
             if (!isUser) {
+                isNewUser = true;
                 const tempPassword = `Default${user?.id}@`;
                 const salt = await bcrypt.genSalt(10);
                 const hashedPassword = await bcrypt.hash(tempPassword, salt);
@@ -62,7 +64,7 @@ passport.use(
 
             const jwtToken = jwt.sign(data, secret!);
 
-            callback(null, { token: jwtToken, user: isUser });
+            callback(null, { token: jwtToken, user: isUser, isNewUser });
         }
     )
 );

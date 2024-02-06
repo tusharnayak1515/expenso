@@ -39,6 +39,7 @@ router.get(
 
             const token = `Bearer ${authInfo?.token}`;
             const user = authInfo?.user;
+            const isNewUser = authInfo?.isNewUser;
 
             if (isReactNativeApp(req)) {
                 const redirectUrl = `exp://192.168.0.194:8081/--/?token=${token}&user=${JSON.stringify(user)}`;
@@ -56,8 +57,8 @@ router.get(
 
                 const FRONTEND_URL = process.env.NODE_ENV ===
                     "production" ?
-                    `https://expenso-jet.vercel.app/token?token=${token}` :
-                    `${process.env.CLIENT_URL}/token?token=${token}`;
+                    `https://expenso-jet.vercel.app/token?token=${token}&isNewUser=${isNewUser}` :
+                    `${process.env.CLIENT_URL}/token?token=${token}&isNewUser=${isNewUser}`;
 
                 res.redirect(FRONTEND_URL!);
             }

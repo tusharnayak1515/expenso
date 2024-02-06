@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 const FetchTokenPage = () => {
   const query: any = useSearchParams();
   const token = query.get("token");
+  const isNewUser = query.get("isNewUser");
   const router = useRouter();
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.userReducer, shallowEqual);
@@ -45,17 +46,30 @@ const FetchTokenPage = () => {
       }
     } else {
       router.replace("/dashboard");
-      toast.success("Welcome to Expenso", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      if(isNewUser) {
+        toast.success("Welcome to Expenso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      else {
+        toast.success("Welcome Back", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
-  }, [token, user, dispatch, fetchProfile, router]);
+  }, [token, user, dispatch, fetchProfile, router, isNewUser]);
 
   return (
     <div className={`min-h-[100vh] w-full flex justify-center items-center`}>
