@@ -123,7 +123,7 @@ const getMonthlyExpenseReport = async (userId: string) => {
     }
 }
 
-const cronJob = cron.schedule('0 0 1 1 *', async () => {
+const cronJob = cron.schedule('* * 1 * *', async () => {
     console.log("run");
     try {
         const users = await User.find();
