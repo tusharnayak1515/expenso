@@ -45,3 +45,26 @@ export interface IGoal {
     createdAt?: number;
     updatedAt?: number;
 }
+
+export interface IContact {
+    [x: string]: any;
+    name: string;
+    type: string;
+    phone: string;
+    user: Types.ObjectId | string;
+    createdAt?: number;
+    updatedAt?: number;
+}
+
+export interface ICreditTransaction {
+    [x: string]: any;
+    amount: number;
+    date: Date;
+    comment: string;
+    paymentDate: Date;
+    paymentStatus: string;
+    contact: Types.ObjectId | string;
+    user: Types.ObjectId | string;
+    createdAt?: number;
+    updatedAt?: number;
+}

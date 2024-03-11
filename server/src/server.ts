@@ -13,6 +13,8 @@ import authRoutes from "./routes/auth";
 import expenseRoutes from "./routes/expense";
 import categoryRoutes from "./routes/category";
 import goalRoutes from "./routes/goal";
+import contactRoutes from "./routes/contact";
+import creditTransactionsRoute from "./routes/creditTransaction";
 import cron from 'node-cron';
 
 const app = express();
@@ -20,7 +22,7 @@ const MongoDBStore = connectMongo(session);
 const port = process.env.PORT || 9000;
 
 const store = new MongoDBStore({
-    uri: process.env.MONGO_URI!,
+    uri: process.env.MONGO_URI || "mongodb://0.0.0.0:27017/expenso?retryWrites=true&w=majority",
     collection: 'sessions',
 });
 
@@ -76,6 +78,8 @@ import "./models/Category";
 import Expense from "./models/Expense";
 import "./models/Goal";
 import Category from "./models/Category";
+import "./models/Contact";
+import "./models/CreditTransaction";
 import { IExpense } from "./entities/entityInterfaces";
 import sendEmail from "./services/sendEmail";
 
@@ -84,6 +88,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/goals", goalRoutes);
+app.use("/api/contacts", contactRoutes);
+app.use("/api/credit-transactions", creditTransactionsRoute);
 
 const getMonthlyExpenseReport = async (userId: string) => {
     try {
