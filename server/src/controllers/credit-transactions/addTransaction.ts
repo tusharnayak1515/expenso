@@ -29,6 +29,7 @@ const addTransaction = async(req: Request, res: Response)=> {
             amount,
             date,
             comment,
+            paymentStatus: "pending",
             contact: contactId,
             user: userId
         });

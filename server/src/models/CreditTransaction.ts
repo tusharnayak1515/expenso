@@ -20,7 +20,7 @@ const CreditTransactionSchema = new Schema<ICreditTransactionDocument, ICreditTr
     },
     paymentDate: {
         type: Date,
-        required: true
+        default: null
     },
     paymentStatus: {
         type: String,

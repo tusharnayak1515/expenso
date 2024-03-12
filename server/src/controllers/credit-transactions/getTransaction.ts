@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import Contact from "../../models/Contact";
-import { ICreditTransaction } from "../../entities/entityInterfaces";
 import CreditTransaction from "../../models/CreditTransaction";
 
 const getTransactions = async(req: Request, res: Response)=> {
