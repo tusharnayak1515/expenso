@@ -125,3 +125,43 @@ export const setGoal = (goal:any)=>  async(dispatch:any)=> {
         }
     });
 }
+
+// ************************************* Contacts Section *********************************************** \\
+
+export const setMyContacts = (contacts:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-contacts",
+        payload: {
+            contacts
+        }
+    });
+}
+
+export const setContact = (contact:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-contact",
+        payload: {
+            contact
+        }
+    });
+}
+
+// ************************************* Credit Transactions Section *********************************************** \\
+
+export const setTransactions = (transactions:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-transactions",
+        payload: {
+            transactions
+        }
+    });
+}
+
+export const setTransaction = (transaction:any)=>  async(dispatch:any)=> {
+    dispatch({
+        type: "set-transaction",
+        payload: {
+            transaction
+        }
+    });
+}

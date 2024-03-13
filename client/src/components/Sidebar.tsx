@@ -10,7 +10,7 @@ import { GoGoal } from "react-icons/go";
 import { RiShutDownLine } from "react-icons/ri";
 import { actionCreators } from "@/redux";
 import { toast } from "react-toastify";
-import { IoMdLogIn } from "react-icons/io";
+import { IoMdContacts, IoMdLogIn } from "react-icons/io";
 import { logoutUser } from "@/apiCalls/auth";
 import Link from "next/link";
 
@@ -74,6 +74,21 @@ const Sidebar = ({ modal, setShowMenu }: any) => {
           <div className={`w-full p-3 flex justify-start items-center gap-4`}>
             <RxDashboard className={`text-2xl`} />
             <p>Dashboard</p>
+          </div>
+        </Link>
+      )}
+
+      {user && (
+        <Link
+          href="/contacts"
+          onClick={onLinkClick}
+          className={`w-full cursor-pointer rounded-md ${
+            pathName === "/contacts" ? "bg-slate-600" : "bg-transparent"
+          } hover:bg-slate-600 transition-all`}
+        >
+          <div className={`w-full p-3 flex justify-start items-center gap-4`}>
+            <IoMdContacts className={`text-2xl`} />
+            <p>Contacts</p>
           </div>
         </Link>
       )}
