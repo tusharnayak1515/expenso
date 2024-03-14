@@ -3,7 +3,7 @@ import Contact from "../../models/Contact";
 import { ICreditTransaction } from "../../entities/entityInterfaces";
 import CreditTransaction from "../../models/CreditTransaction";
 
-const getTransaction = async(req: Request, res: Response)=> {
+const getTransactions = async(req: Request, res: Response)=> {
     let success = false;
     try {
         const userId = req.body.user.id;
@@ -54,4 +54,4 @@ const getTransaction = async(req: Request, res: Response)=> {
     }
 }
 
-export default getTransaction;
+export default getTransactions;

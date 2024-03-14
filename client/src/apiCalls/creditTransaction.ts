@@ -21,7 +21,7 @@ export const fetchTransaction = async (id: string) => {
 type addTransactionType = {
     contactId: string;
     amount: number;
-    date: Date;
+    date: string;
     comment: string;
     month: number;
     year: number;
@@ -35,16 +35,17 @@ export const addTransaction = async ({ contactId, amount, date, comment, month, 
 type updateTransactionType = {
     id: string;
     amount: number;
-    date: Date;
+    date: string;
     comment: string;
     paymentStatus: string;
+    paymentDate: string;
     month: number;
     year: number;
 }
 
-export const updateTransaction = async ({ id, amount, date, comment, paymentStatus, month, year }: updateTransactionType) => {
+export const updateTransaction = async ({ id, amount, date, comment, paymentStatus, paymentDate, month, year }: updateTransactionType) => {
     const { data } = await api.put(`${url}/api/credit-transactions/${id}?month=${month}&year=${year}`,
-        { amount, date, comment, paymentStatus });
+        { amount, date, comment, paymentStatus, paymentDate });
     return data;
 }
 

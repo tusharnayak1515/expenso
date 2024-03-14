@@ -102,7 +102,7 @@ const ContactsPageContainer = () => {
         />
       )}
 
-      <p className={`text-3xl font-bold`}>Contacts</p>
+      <p className={`text-2xl md:text-3xl font-bold`}>Contacts</p>
 
       <button
         className={`py-2 px-4 text-slate-400 border border-slate-400 rounded-md bg-slate-950`}
