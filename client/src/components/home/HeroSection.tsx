@@ -105,6 +105,7 @@ const HeroSection = () => {
                   labels: {
                     padding: 30,
                     boxPadding: 20,
+                    color: "#f2f8ff"
                   },
                 },
               },
