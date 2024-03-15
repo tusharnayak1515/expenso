@@ -30,6 +30,12 @@ const ExpenseSchema = new Schema<IExpenseDocument, IExpenseModel>({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+    transactions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Transaction"
+        }
+    ],
     createdAt: Number,
     updatedAt: Number,
 }, { timestamps: true, versionKey: false });

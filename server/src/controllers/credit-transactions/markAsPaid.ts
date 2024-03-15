@@ -59,7 +59,8 @@ const markAsPaid = async (req: Request, res: Response) => {
                 expenseType: "debit",
                 comment: `Due amount paid to Contact: ${contact?.name} for ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`,
                 expenseDate: new Date(paymentDate),
-                user: userId
+                user: userId,
+                transactions: [...matchedTransactions?.map((obj:any)=> obj?._id?.toString())]
             });
         }
 

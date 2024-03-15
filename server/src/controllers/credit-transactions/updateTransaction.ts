@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import CreditTransaction from "../../models/CreditTransaction";
 import { ICreditTransaction } from "../../entities/entityInterfaces";
+import Expense from "../../models/Expense";
 
 const updateTransaction = async (req: Request, res: Response) => {
     let success = false;
@@ -22,6 +23,33 @@ const updateTransaction = async (req: Request, res: Response) => {
 
         if (creditTransaction?.user?.toString() !== userId) {
             return res.status(401).json({ success, error: "Not allowed" });
+        }
+
+        creditTransaction = await CreditTransaction.findById(transactionId).populate("contact");
+
+        if(creditTransaction?.paymentStatus === "pending" && paymentStatus === "paid") {
+            await Expense.create({
+                amount,
+                category: "6503d4c85065a2de0df7df10",
+                expenseType: "debit",
+                comment: `Due amount paid to Contact: ${creditTransaction?.contact?.name} for ${new Date(creditTransaction?.date).toLocaleDateString()}`,
+                expenseDate: new Date(paymentDate),
+                user: userId,
+                transactions: [creditTransaction?._id?.toString()]
+            });
+        }
+        else if(creditTransaction?.paymentStatus === "paid" && paymentStatus === "pending") {
+            const expense:any = await Expense.findOne({transactions: {$in: [creditTransaction?._id?.toString()]}});
+            
+            if(expense) {
+                const expenseId = expense?._id?.toString();
+                if(expense?.amount === creditTransaction?.amount) {
+                    await Expense.findByIdAndDelete(expenseId);
+                }
+                else {
+                    await Expense.findByIdAndUpdate(expenseId, {amount: expense?.amount - creditTransaction?.amount}, {new: true});
+                }
+            }
         }
 
         creditTransaction = await CreditTransaction.findByIdAndUpdate(transactionId, {

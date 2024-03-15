@@ -261,7 +261,7 @@ const ManageTransactionModal = ({
   return ReactDom.createPortal(
     <div className={`fixed inset-0 bg-[#0000005f] z-[600]`}>
       <form
-        className={`w-[95%] xxs:w-[400px] xs:w-[450px] md:w-[500px] my-24 mx-auto text-slate-400
+        className={`w-[95%] xxs:w-[400px] xs:w-[450px] md:w-[500px] my-6 mx-auto text-slate-400
         p-6 flex flex-col justify-start items-center 
         gap-4 rounded-md shadow-md shadow-slate-500 bg-slate-950`}
         onSubmit={transaction ? onUpdateTransaction : onAddTransaction}
@@ -345,6 +345,8 @@ const ManageTransactionModal = ({
               type="date"
               name="paymentDate"
               id="paymentDate"
+              min={new Date(transactionData?.date).toISOString().split("T")[0]}
+              max={new Date().toISOString().split("T")[0]}
               defaultValue={transactionData?.paymentDate}
               onChange={onChangeHandler}
               className={`w-full py-2 px-4 border border-slate-400 rounded-md 
