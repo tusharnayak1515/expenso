@@ -13,6 +13,11 @@ export const fetchTransactions = async ({ contactId, month, year }: fetchTransac
     return data;
 }
 
+export const fetchAllTransactions = async (id:string) => {
+    const { data } = await api.get(`${url}/api/credit-transactions/all/${id}`);
+    return data;
+}
+
 export const fetchTransaction = async (id: string) => {
     const { data } = await api.get(`${url}/api/credit-transactions/${id}`);
     return data;
@@ -51,9 +56,9 @@ export const updateTransaction = async ({ id, amount, date, comment, paymentStat
 
 type markAsPaidType = {
     contactId: string;
-    fromDate: Date;
-    toDate: Date;
-    paymentDate: Date;
+    fromDate: string;
+    toDate: string;
+    paymentDate: string;
     month: number;
     year: number;
 }

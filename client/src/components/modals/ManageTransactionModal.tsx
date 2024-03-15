@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { addContact, updateContact } from "@/apiCalls/contact";
 import {
   addTransaction,
+  deleteTransaction,
   updateTransaction,
 } from "@/apiCalls/creditTransaction";
 
@@ -225,6 +226,38 @@ const ManageTransactionModal = ({
     }
   };
 
+  const onDeleteTransaction = async () => {
+    setLoading(true);
+    try {
+      const res: any = await deleteTransaction(transaction?._id);
+      if (res?.success) {
+        dispatch(actionCreators.setTransactions(res?.creditTransactions));
+        setLoading(false);
+        toast.success("Transaction deleted successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTransaction(null);
+      }
+    } catch (error: any) {
+      setLoading(false);
+      toast.error(error?.response?.data?.error, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   return ReactDom.createPortal(
     <div className={`fixed inset-0 bg-[#0000005f] z-[600]`}>
       <form
@@ -328,6 +361,18 @@ const ManageTransactionModal = ({
         >
           Submit
         </button>
+
+        {transaction && (
+          <button
+            onClick={onDeleteTransaction}
+            type="button"
+            className={`w-full py-2 px-4 font-semibold 
+          border border-slate-400 rounded-md hover:bg-red-700 
+          bg-red-800 transition-all duration-300`}
+          >
+            Delete
+          </button>
+        )}
 
         <button
           type="button"

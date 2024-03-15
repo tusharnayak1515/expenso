@@ -9,8 +9,10 @@ import { actionCreators } from "@/redux";
 import { IoMdAdd } from "react-icons/io";
 import { MdFileDownload } from "react-icons/md";
 import { fetchTransactions } from "@/apiCalls/creditTransaction";
-import Transaction from "../transactions/Transaction";
 import ManageTransactionModal from "../modals/ManageTransactionModal";
+import Transactions from "../transactions/Transactions";
+import MarkAsPaid from "../transactions/MarkAsPaid";
+import * as XLSX from "xlsx";
 
 const ContactDetailPageContainer = () => {
   const router = useRouter();
@@ -77,7 +79,29 @@ const ContactDetailPageContainer = () => {
     [dispatch, params?.id]
   );
 
-  const downloadExcel = () => {};
+  const downloadExcel = () => {
+    const mydata = transactions;
+
+    if (transactions?.length > 0) {
+      const selectedFields: any[] = mydata.map((transaction: any) => ({
+        "Amount (in Rs)": transaction?.amount,
+        Date: new Date(transaction?.date).toISOString().slice(0, 10),
+        Comment: transaction?.comment || "None",
+        "Payment Status": transaction?.paymentStatus,
+        "Payment Date": new Date(transaction?.paymentDate)
+          .toISOString()
+          .slice(0, 10),
+      }));
+
+      const year = new Date(activeDate)?.getFullYear();
+      const month = new Date(activeDate)?.getMonth() + 1;
+
+      const worksheet = XLSX.utils.json_to_sheet(selectedFields);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, `TransactionSheet-${month}/${year}.xlsx`);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -109,7 +133,7 @@ const ContactDetailPageContainer = () => {
       )}
 
       <div className={`w-full`}>
-        <p className={`text-2xl text-slate-300 font-semibold`}>
+        <p className={`text-xl md:text-2xl text-slate-300 font-semibold`}>
           {contact?.name}
         </p>
 
@@ -154,44 +178,12 @@ const ContactDetailPageContainer = () => {
       </div>
 
       <div className={`h-full w-full grid grid-cols-12 gap-4`}>
-        <div
-          className={`h-full col-span-12 md_link:col-span-9 p-6 text-slate-400 
-          flex flex-col justify-start items-start gap-4
-          rounded-md bg-slate-900`}
-        >
-          {transactions?.length === 0 ? (
-            <p>No transactions to show</p>
-          ) : (
-            <div
-              className={`h-full w-full flex flex-col justify-start items-start gap-3`}
-            >
-              <div
-                className={`w-full py-2 px-4 flex justify-between items-center gap-6 rounded-md bg-slate-600`}
-              >
-                <p className={`w-[10%] font-bold`}>Amount</p>
-                <p className={`w-[30%] font-bold`}>Date</p>
-                <p className={`w-[20%] font-bold`}>Comment</p>
-                <p className={`w-[10%] font-bold`}>Paid</p>
-                <p className={`w-[30%] font-bold`}>Payment Date</p>
-              </div>
-              {transactions?.map((transactionObj: any) => {
-                return (
-                  <Transaction
-                    key={transactionObj?._id}
-                    transaction={transactionObj}
-                    setTransaction={setTransaction}
-                  />
-                );
-              })}
-            </div>
-          )}
-        </div>
+        <Transactions
+          transactions={transactions}
+          setTransaction={setTransaction}
+        />
 
-        <div
-          className={`h-full col-span-12 md_link:col-span-3 p-6 text-slate-400 
-          flex flex-col justify-start items-start gap-4 overflow-y-hidden md_link:overflow-y-scroll
-          rounded-md bg-slate-900`}
-        ></div>
+        <MarkAsPaid setIsLoading={setIsLoading} activeDate={activeDate} />
       </div>
     </div>
   );

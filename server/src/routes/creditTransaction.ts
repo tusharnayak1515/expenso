@@ -7,9 +7,11 @@ import { body } from "express-validator";
 import deleteTransaction from "../controllers/credit-transactions/deleteTransaction";
 import markAsPaid from "../controllers/credit-transactions/markAsPaid";
 import getTransaction from "../controllers/credit-transactions/getTransaction";
+import getAllTransactions from "../controllers/credit-transactions/getAllTransactions";
 
 const router = express.Router();
 
+router.get("/all/:id", fetchUser, getAllTransactions);
 router.get("/:id", fetchUser, getTransactions);
 
 router.get("/get/:id", fetchUser, getTransaction);
