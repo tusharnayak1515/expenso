@@ -142,6 +142,7 @@ const MarkAsPaid = ({ setIsLoading, activeDate }: any) => {
             id="toDate"
             defaultValue={new Date(fromDate).toISOString().split("T")[0]}
             min={new Date(fromDate).toISOString().split("T")[0]}
+            max={new Date().toISOString().split("T")[0]}
             onChange={onToDateChange}
             className={`w-full py-2 px-4 border border-slate-400 rounded-md 
             outline-none bg-slate-800`}
@@ -178,6 +179,7 @@ const MarkAsPaid = ({ setIsLoading, activeDate }: any) => {
                 id="paymentDate"
                 defaultValue={new Date(toDate).toISOString().split("T")[0]}
                 min={new Date(toDate).toISOString().split("T")[0]}
+                max={new Date().toISOString().split("T")[0]}
                 onChange={onPaymentDateChange}
                 className={`w-full sm:w-fit md_link:w-full py-2 px-4 border border-slate-400 rounded-md 
                 outline-none bg-slate-800`}
@@ -187,7 +189,7 @@ const MarkAsPaid = ({ setIsLoading, activeDate }: any) => {
             <button
               onClick={onMarkAsPaid}
               className={`w-full xs:w-[120px] md_link:w-full py-2 px-4 text-slate-200 rounded-sm 
-        hover:bg-slate-500 bg-slate-600 transition-all duration-300`}
+            hover:bg-slate-500 bg-slate-600 transition-all duration-300`}
             >
               Mark as paid
             </button>
