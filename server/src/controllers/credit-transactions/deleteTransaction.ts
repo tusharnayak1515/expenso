@@ -3,6 +3,7 @@ import Contact from "../../models/Contact";
 import { validationResult } from "express-validator";
 import CreditTransaction from "../../models/CreditTransaction";
 import { ICreditTransaction } from "../../entities/entityInterfaces";
+import Expense from "../../models/Expense";
 
 const deleteTransaction = async(req: Request, res: Response)=> {
     let success = false;
@@ -17,6 +18,18 @@ const deleteTransaction = async(req: Request, res: Response)=> {
 
         if(creditTransaction?.user?.toString() !== userId) {
             return res.status(401).json({success, error: "Not allowed"});
+        }
+
+        const expense:any = await Expense.findOne({transactions: {$in: [transactionId]}});
+            
+        if(expense) {
+            const expenseId = expense?._id?.toString();
+            if(expense?.amount === creditTransaction?.amount) {
+                await Expense.findByIdAndDelete(expenseId);
+            }
+            else {
+                await Expense.findByIdAndUpdate(expenseId, {amount: expense?.amount - creditTransaction?.amount}, {new: true});
+            }
         }
 
         await CreditTransaction.findByIdAndDelete(transactionId, {new: true});

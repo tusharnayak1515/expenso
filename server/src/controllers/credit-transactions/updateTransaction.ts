@@ -39,7 +39,7 @@ const updateTransaction = async (req: Request, res: Response) => {
             });
         }
         else if(creditTransaction?.paymentStatus === "paid" && paymentStatus === "pending") {
-            const expense:any = await Expense.findOne({transactions: {$in: [creditTransaction?._id?.toString()]}});
+            const expense:any = await Expense.findOne({transactions: {$in: [transactionId]}});
             
             if(expense) {
                 const expenseId = expense?._id?.toString();

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Contact from "../../models/Contact";
-import { IContact } from "../../entities/entityInterfaces";
+import { IContact, ICreditTransaction } from "../../entities/entityInterfaces";
+import CreditTransaction from "../../models/CreditTransaction";
+import Expense from "../../models/Expense";
 
 const deleteContact = async (req: Request, res: Response) => {
     let success = false;
@@ -16,6 +18,18 @@ const deleteContact = async (req: Request, res: Response) => {
         if(contact?.user?.toString() !== userId) {
             return res.status(401).json({success, error: "Not allowed"});
         }
+
+        const transactions:ICreditTransaction[] = await CreditTransaction.find({contact: contactId});
+
+        const transactionIds = transactions?.map((obj:any)=> obj?._id?.toString());
+        
+        await Expense.deleteMany({
+            transactions: {
+              $in: transactionIds,
+            },
+        });
+
+        await CreditTransaction.deleteMany({contact: contactId});
 
         await Contact.findByIdAndDelete(contactId, {new: true});
 
