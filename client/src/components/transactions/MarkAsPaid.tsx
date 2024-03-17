@@ -44,8 +44,8 @@ const MarkAsPaid = ({ setIsLoading, activeDate }: any) => {
         const creditTransactions = res?.creditTransactions;
         const data = creditTransactions?.filter(
           (obj: any) =>
-            new Date(obj?.date).getTime() >= new Date(fromDate).getTime() &&
-            new Date(obj?.date).getTime() <= new Date(toDate).getTime() &&
+            new Date(obj?.date).getTime() >= new Date(fromDate.setHours(0,0,0,0)).getTime() &&
+            new Date(obj?.date).getTime() <= new Date(toDate.setHours(23, 59, 59, 999)).getTime() &&
             obj?.paymentStatus === "pending"
         );
 
