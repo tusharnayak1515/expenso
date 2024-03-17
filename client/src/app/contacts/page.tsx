@@ -5,6 +5,12 @@ const ContactsPageContainer = dynamic(
   { ssr: false }
 );
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contacts",
+};
+
 const ContactsPage = () => {
   return <ContactsPageContainer />;
 };
