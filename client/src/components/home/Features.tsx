@@ -17,10 +17,12 @@ const Features = () => {
         >
           <div
             className={`min-h-[150px] w-full p-4
-              flex flex-col justify-center items-center gap-2 
+              flex flex-col justify-start items-center gap-2 
               rounded-md shadow-featureShadow bg-slate-900`}
           >
-            <p className={`text-lg text-center font-semibold`}>Track Expenses Seamlessly</p>
+            <p className={`text-lg text-center font-semibold`}>
+              Track Expenses Seamlessly
+            </p>
             <p className={`text-slate-400 text-sm text-center`}>
               Log expenses on-the-go. Expenso syncs across devices so you can
               track from anywhere.
@@ -29,22 +31,26 @@ const Features = () => {
 
           <div
             className={`min-h-[150px] w-full p-4
-              flex flex-col justify-center items-center gap-2 
+              flex flex-col justify-start items-center gap-2 
               rounded-md shadow-featureShadow bg-slate-900`}
           >
-            <p className={`text-lg text-center font-semibold`}>Visualize Spending Patterns</p>
+            <p className={`text-lg text-center font-semibold`}>
+              Visualize Spending Patterns
+            </p>
             <p className={`text-slate-400 text-sm text-center`}>
-              See expense data visualized in easy-to-understand charts and graphs.
-              Get insights into spending categories and trends.
+              See expense data visualized in easy-to-understand charts and
+              graphs. Get insights into spending categories and trends.
             </p>
           </div>
 
           <div
             className={`min-h-[150px] w-full p-4
-              flex flex-col justify-center items-center gap-2 
+              flex flex-col justify-start items-center gap-2 
               rounded-md shadow-featureShadow bg-slate-900`}
           >
-            <p className={`text-lg text-center font-semibold`}>Access Expense Data Anytime</p>
+            <p className={`text-lg text-center font-semibold`}>
+              Access Expense Data Anytime
+            </p>
             <p className={`text-slate-400 text-sm text-center`}>
               Expenso backs up data securely in the cloud. Download expense
               information conveniently anytime, from any device.
@@ -53,13 +59,29 @@ const Features = () => {
 
           <div
             className={`min-h-[150px] w-full p-4
-              flex flex-col justify-center items-center gap-2 
+              flex flex-col justify-start items-center gap-2 
               rounded-md shadow-featureShadow bg-slate-900`}
           >
-            <p className={`text-lg text-center font-semibold`}>Automated Monthly Reports</p>
+            <p className={`text-lg text-center font-semibold`}>
+              Contacts & Credit Tracking
+            </p>
             <p className={`text-slate-400 text-sm text-center`}>
-              Receive a summarized monthly expense report delivered to your inbox.
-              Stay on top of spending without extra effort.
+              Easily add and organize your contacts, including vendors and
+              clients, within Expenso.
+            </p>
+          </div>
+
+          <div
+            className={`min-h-[150px] w-full p-4
+              flex flex-col justify-start items-center gap-2 
+              rounded-md shadow-featureShadow bg-slate-900`}
+          >
+            <p className={`text-lg text-center font-semibold`}>
+              Automated Monthly Reports
+            </p>
+            <p className={`text-slate-400 text-sm text-center`}>
+              Receive a summarized monthly expense report delivered to your
+              inbox. Stay on top of spending without extra effort.
             </p>
           </div>
         </div>
